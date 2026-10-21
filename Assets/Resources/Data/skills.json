@@ -1,0 +1,1624 @@
+{
+ "skills": [
+  {
+   "id": "endurance",
+   "name": "Выносливость",
+   "group": "Физика",
+   "desc": "Качается бегом. Больше запас сил, медленнее устаёшь.",
+   "perLevel": {
+    "maxStamina": 0.02,
+    "staminaDrain": -0.006
+   },
+   "milestones": {
+    "10": "Дыхание не сбивается при прицеливании после бега",
+    "20": "+10% к скорости восстановления сил",
+    "30": "Прыжки не тратят силы",
+    "40": "Иммунитет к одышке",
+    "50": "Бесконечный бег с лёгким грузом"
+   },
+   "maxLevel": 51
+  },
+  {
+   "id": "strength",
+   "name": "Сила",
+   "group": "Физика",
+   "desc": "Качается переноской тяжестей и ближним боем. Больше грузоподъёмность и урон в ближнем бою.",
+   "perLevel": {
+    "carryWeight": 0.015,
+    "meleeDamage": 0.01,
+    "throwDistance": 0.01
+   },
+   "milestones": {
+    "10": "+5 кг к переносимому весу",
+    "20": "Скорость бега с перегрузом выше",
+    "30": "Удар кулаком/ножом сбивает с ног",
+    "40": "+20 кг к переносимому весу",
+    "50": "Перегруз не замедляет"
+   },
+   "maxLevel": 51
+  },
+  {
+   "id": "vitality",
+   "name": "Живучесть",
+   "group": "Физика",
+   "desc": "Качается получением урона. Ниже шанс кровотечения, выше здоровье.",
+   "perLevel": {
+    "bleedChance": -0.012,
+    "maxHealth": 0.003
+   },
+   "milestones": {
+    "10": "Кровотечения останавливаются сами через 60 с",
+    "20": "Шанс перелома −30%",
+    "30": "+5% к общему здоровью",
+    "40": "Лёгкие кровотечения останавливаются сами",
+    "50": "Урон от падения −50%"
+   },
+   "maxLevel": 51
+  },
+  {
+   "id": "health",
+   "name": "Здоровье",
+   "group": "Физика",
+   "desc": "Качается лечением. Быстрее регенерация и лечение.",
+   "perLevel": {
+    "healSpeed": 0.015,
+    "regen": 0.01
+   },
+   "milestones": {
+    "10": "Пассивная регенерация 0.5 хп/с",
+    "20": "Еда даёт на 20% больше энергии",
+    "30": "Переломы не замедляют",
+    "40": "Регенерация 1 хп/с",
+    "50": "Лечение не прерывается уроном"
+   },
+   "maxLevel": 51
+  },
+  {
+   "id": "metabolism",
+   "name": "Метаболизм",
+   "group": "Физика",
+   "desc": "Качается едой. Медленнее голод и жажда.",
+   "perLevel": {
+    "hungerRate": -0.01,
+    "hydrationRate": -0.01
+   },
+   "milestones": {
+    "10": "Еда действует быстрее",
+    "20": "Еда не портится (−вес)",
+    "30": "Жажда на 30% медленнее",
+    "40": "Плохие эффекты от еды отсутствуют",
+    "50": "Голод и жажда замедлены вдвое"
+   },
+   "maxLevel": 51
+  },
+  {
+   "id": "stress",
+   "name": "Стрессоустойчивость",
+   "group": "Ментальное",
+   "desc": "Качается получением боли и близкими попаданиями. Меньше тряска и шок.",
+   "perLevel": {
+    "painTolerance": 0.015,
+    "swayHurt": -0.012
+   },
+   "milestones": {
+    "10": "Боль не сбивает прицел",
+    "20": "Тремор при низком здоровье снижен",
+    "30": "Иммунитет к шоку от взрыва",
+    "40": "Светошумовые действуют вдвое меньше",
+    "50": "Нет штрафа к точности от боли"
+   },
+   "maxLevel": 51
+  },
+  {
+   "id": "perception",
+   "name": "Восприятие",
+   "group": "Ментальное",
+   "desc": "Качается осмотром контейнеров и дальними попаданиями. Дальше слышно и видно лут.",
+   "perLevel": {
+    "hearRange": 0.01,
+    "lootHighlight": 0.02
+   },
+   "milestones": {
+    "10": "Лут подсвечивается с 10 м",
+    "20": "Шаги врагов слышно дальше",
+    "30": "Компас показывает выходы",
+    "40": "Лут подсвечивается с 20 м",
+    "50": "Видно тип лута сквозь стены (5 м)"
+   },
+   "maxLevel": 51
+  },
+  {
+   "id": "attention",
+   "name": "Внимательность",
+   "group": "Ментальное",
+   "desc": "Качается поиском. Быстрее осмотр контейнеров, лучше находки.",
+   "perLevel": {
+    "searchSpeed": 0.015,
+    "lootQuality": 0.005
+   },
+   "milestones": {
+    "10": "Осмотр −10% времени",
+    "20": "Шанс редкого предмета +5%",
+    "30": "Видно содержимое ящика без осмотра",
+    "40": "Осмотр −30%",
+    "50": "Редкий лут +15%"
+   },
+   "maxLevel": 51
+  },
+  {
+   "id": "search",
+   "name": "Мародёрство",
+   "group": "Ментальное",
+   "desc": "Качается сбором предметов. Быстрее подбор и больше находок.",
+   "perLevel": {
+    "pickupSpeed": 0.02,
+    "lootCount": 0.005
+   },
+   "milestones": {
+    "10": "Подбор на бегу",
+    "20": "Карманы трупов открываются мгновенно",
+    "30": "+1 предмет в ящиках (шанс 10%)",
+    "40": "Подбор мгновенный",
+    "50": "+1 предмет в ящиках (шанс 30%)"
+   },
+   "maxLevel": 51
+  },
+  {
+   "id": "charisma",
+   "name": "Харизма",
+   "group": "Ментальное",
+   "desc": "Качается торговлей и квестами. Лучшие цены и репутация.",
+   "perLevel": {
+    "tradePrice": -0.006,
+    "sellPrice": 0.006,
+    "repGain": 0.01
+   },
+   "milestones": {
+    "10": "Цены −5%",
+    "20": "Торговцы дают квесты раньше",
+    "30": "Скупка +10%",
+    "40": "Цены −15%",
+    "50": "Доступ к секретному ассортименту"
+   },
+   "maxLevel": 51
+  },
+  {
+   "id": "intellect",
+   "name": "Интеллект",
+   "group": "Ментальное",
+   "desc": "Качается крафтом и осмотром предметов. Быстрее крафт и осмотр.",
+   "perLevel": {
+    "craftSpeed": 0.02,
+    "examineSpeed": 0.02,
+    "hideoutSpeed": 0.01
+   },
+   "milestones": {
+    "10": "Крафт −10% времени",
+    "20": "Все предметы известны",
+    "30": "Улучшение убежища −20% ресурсов",
+    "40": "Крафт −30%",
+    "50": "Крафт выдаёт +1 (шанс 25%)"
+   },
+   "maxLevel": 51
+  },
+  {
+   "id": "memory",
+   "name": "Память",
+   "group": "Ментальное",
+   "desc": "Качается игрой. Навыки медленнее забываются при длительном простое.",
+   "perLevel": {
+    "skillDecay": -0.02
+   },
+   "milestones": {
+    "10": "Ваши навыки не падают 3 дня",
+    "20": "Карты запоминают найденные ключевые точки",
+    "30": "Квестовые точки отмечаются на компасе",
+    "40": "Навыки не падают 7 дней",
+    "50": "Навыки никогда не падают"
+   },
+   "maxLevel": 51
+  },
+  {
+   "id": "crafting",
+   "name": "Ремесло",
+   "group": "Практика",
+   "desc": "Качается крафтом в убежище. Дешевле и быстрее рецепты.",
+   "perLevel": {
+    "craftCost": -0.01,
+    "craftSpeed": 0.01
+   },
+   "milestones": {
+    "10": "Открыты рецепты 2 уровня",
+    "20": "Разборка предметов возвращает больше",
+    "30": "Открыты рецепты 3 уровня",
+    "40": "Двойной крафт патронов",
+    "50": "Легендарные рецепты"
+   },
+   "maxLevel": 51
+  },
+  {
+   "id": "surgery",
+   "name": "Хирургия",
+   "group": "Практика",
+   "desc": "Качается хирургией. Быстрее и лучше восстановление частей тела.",
+   "perLevel": {
+    "surgerySpeed": 0.02,
+    "surgeryMaxHp": 0.01
+   },
+   "milestones": {
+    "10": "Хирургия −10% времени",
+    "20": "Часть тела после операции 60% хп",
+    "30": "Хирургия не прерывается",
+    "40": "Хирургия −30%",
+    "50": "Часть тела после операции 100% хп"
+   },
+   "maxLevel": 51
+  },
+  {
+   "id": "covert",
+   "name": "Скрытность",
+   "group": "Практика",
+   "desc": "Качается тихим передвижением. Тише шаги, меньше заметность.",
+   "perLevel": {
+    "noise": -0.012,
+    "aiDetect": -0.01
+   },
+   "milestones": {
+    "10": "Шаги в присяде беззвучны",
+    "20": "Боты замечают на 20% позже",
+    "30": "Открытие дверей бесшумно",
+    "40": "Шаги на ходу вдвое тише",
+    "50": "Невидимость для ботов при стоянии в тени"
+   },
+   "maxLevel": 51
+  },
+  {
+   "id": "immunity",
+   "name": "Иммунитет",
+   "group": "Практика",
+   "desc": "Качается отравлениями и стимуляторами. Меньше негативных эффектов.",
+   "perLevel": {
+    "poisonResist": 0.02,
+    "debuffDuration": -0.01
+   },
+   "milestones": {
+    "10": "Еда не вызывает отравления",
+    "20": "Стимуляторы −негатив 50%",
+    "30": "Радиация −30%",
+    "40": "Иммунитет к тошноте",
+    "50": "Иммунитет к отравлениям"
+   },
+   "maxLevel": 51
+  },
+  {
+   "id": "recoil",
+   "name": "Контроль отдачи",
+   "group": "Оружие",
+   "desc": "Качается стрельбой. Меньше отдача всего оружия.",
+   "perLevel": {
+    "recoil": -0.004
+   },
+   "milestones": {
+    "10": "Горизонтальная отдача −10%",
+    "20": "Быстрее возврат ствола",
+    "30": "Отдача первых 3 выстрелов −20%",
+    "40": "Вертикальная отдача −15%",
+    "50": "Отдача −30%"
+   },
+   "maxLevel": 51
+  },
+  {
+   "id": "maintenance",
+   "name": "Уход за оружием",
+   "group": "Оружие",
+   "desc": "Качается ремонтом и стрельбой. Оружие изнашивается медленнее.",
+   "perLevel": {
+    "durabilityLoss": -0.015,
+    "jamChance": -0.01
+   },
+   "milestones": {
+    "10": "Ремонт в убежище дешевле",
+    "20": "Осечек меньше на 30%",
+    "30": "Ремкомплект чинит до 100%",
+    "40": "Износ −50%",
+    "50": "Оружие не клинит"
+   },
+   "maxLevel": 51
+  },
+  {
+   "id": "pistols",
+   "name": "Пистолеты",
+   "group": "Оружие",
+   "desc": "Качается стрельбой из класса «Пистолеты». Эргономика, отдача и перезарядка.",
+   "perLevel": {
+    "ergo_pistol": 0.4,
+    "recoil_pistol": -0.004,
+    "reload_pistol": -0.004,
+    "ads_pistol": -0.004
+   },
+   "milestones": {
+    "10": "Смена магазина быстрее",
+    "20": "Прицеливание быстрее",
+    "30": "Разброс при стрельбе от бедра −20%",
+    "40": "Отдача −15%",
+    "50": "Мастерство: особая анимация и −30% отдача"
+   },
+   "maxLevel": 51
+  },
+  {
+   "id": "smg",
+   "name": "Пистолеты-пулемёты",
+   "group": "Оружие",
+   "desc": "Качается стрельбой из класса «Пистолеты-пулемёты». Эргономика, отдача и перезарядка.",
+   "perLevel": {
+    "ergo_smg": 0.4,
+    "recoil_smg": -0.004,
+    "reload_smg": -0.004,
+    "ads_smg": -0.004
+   },
+   "milestones": {
+    "10": "Смена магазина быстрее",
+    "20": "Прицеливание быстрее",
+    "30": "Разброс при стрельбе от бедра −20%",
+    "40": "Отдача −15%",
+    "50": "Мастерство: особая анимация и −30% отдача"
+   },
+   "maxLevel": 51
+  },
+  {
+   "id": "ar",
+   "name": "Штурмовые винтовки",
+   "group": "Оружие",
+   "desc": "Качается стрельбой из класса «Штурмовые винтовки». Эргономика, отдача и перезарядка.",
+   "perLevel": {
+    "ergo_ar": 0.4,
+    "recoil_ar": -0.004,
+    "reload_ar": -0.004,
+    "ads_ar": -0.004
+   },
+   "milestones": {
+    "10": "Смена магазина быстрее",
+    "20": "Прицеливание быстрее",
+    "30": "Разброс при стрельбе от бедра −20%",
+    "40": "Отдача −15%",
+    "50": "Мастерство: особая анимация и −30% отдача"
+   },
+   "maxLevel": 51
+  },
+  {
+   "id": "shotguns",
+   "name": "Дробовики",
+   "group": "Оружие",
+   "desc": "Качается стрельбой из класса «Дробовики». Эргономика, отдача и перезарядка.",
+   "perLevel": {
+    "ergo_shotgun": 0.4,
+    "recoil_shotgun": -0.004,
+    "reload_shotgun": -0.004,
+    "ads_shotgun": -0.004
+   },
+   "milestones": {
+    "10": "Смена магазина быстрее",
+    "20": "Прицеливание быстрее",
+    "30": "Разброс при стрельбе от бедра −20%",
+    "40": "Отдача −15%",
+    "50": "Мастерство: особая анимация и −30% отдача"
+   },
+   "maxLevel": 51
+  },
+  {
+   "id": "dmr",
+   "name": "Марксманские винтовки",
+   "group": "Оружие",
+   "desc": "Качается стрельбой из класса «Марксманские винтовки». Эргономика, отдача и перезарядка.",
+   "perLevel": {
+    "ergo_dmr": 0.4,
+    "recoil_dmr": -0.004,
+    "reload_dmr": -0.004,
+    "ads_dmr": -0.004
+   },
+   "milestones": {
+    "10": "Смена магазина быстрее",
+    "20": "Прицеливание быстрее",
+    "30": "Разброс при стрельбе от бедра −20%",
+    "40": "Отдача −15%",
+    "50": "Мастерство: особая анимация и −30% отдача"
+   },
+   "maxLevel": 51
+  },
+  {
+   "id": "sniper",
+   "name": "Снайперские винтовки",
+   "group": "Оружие",
+   "desc": "Качается стрельбой из класса «Снайперские винтовки». Эргономика, отдача и перезарядка.",
+   "perLevel": {
+    "ergo_sniper": 0.4,
+    "recoil_sniper": -0.004,
+    "reload_sniper": -0.004,
+    "ads_sniper": -0.004
+   },
+   "milestones": {
+    "10": "Смена магазина быстрее",
+    "20": "Прицеливание быстрее",
+    "30": "Разброс при стрельбе от бедра −20%",
+    "40": "Отдача −15%",
+    "50": "Мастерство: особая анимация и −30% отдача"
+   },
+   "maxLevel": 51
+  },
+  {
+   "id": "lmg",
+   "name": "Пулемёты",
+   "group": "Оружие",
+   "desc": "Качается стрельбой из класса «Пулемёты». Эргономика, отдача и перезарядка.",
+   "perLevel": {
+    "ergo_lmg": 0.4,
+    "recoil_lmg": -0.004,
+    "reload_lmg": -0.004,
+    "ads_lmg": -0.004
+   },
+   "milestones": {
+    "10": "Смена магазина быстрее",
+    "20": "Прицеливание быстрее",
+    "30": "Разброс при стрельбе от бедра −20%",
+    "40": "Отдача −15%",
+    "50": "Мастерство: особая анимация и −30% отдача"
+   },
+   "maxLevel": 51
+  },
+  {
+   "id": "melee",
+   "name": "Ближний бой",
+   "group": "Оружие",
+   "desc": "Качается стрельбой из класса «Ближний бой». Эргономика, отдача и перезарядка.",
+   "perLevel": {
+    "ergo_melee": 0.4,
+    "recoil_melee": -0.004,
+    "reload_melee": -0.004,
+    "ads_melee": -0.004
+   },
+   "milestones": {
+    "10": "Смена магазина быстрее",
+    "20": "Прицеливание быстрее",
+    "30": "Разброс при стрельбе от бедра −20%",
+    "40": "Отдача −15%",
+    "50": "Мастерство: особая анимация и −30% отдача"
+   },
+   "maxLevel": 51
+  },
+  {
+   "id": "throwables",
+   "name": "Метание",
+   "group": "Оружие",
+   "desc": "Качается бросками. Дальше и точнее броски гранат.",
+   "perLevel": {
+    "throwDistance": 0.015,
+    "throwAccuracy": 0.01
+   },
+   "milestones": {
+    "10": "Траектория броска видна",
+    "20": "Бросок на 15% дальше",
+    "30": "Гранаты не выпадают при ранении",
+    "40": "Бросок на 30% дальше",
+    "50": "Задержка взрывателя регулируется"
+   },
+   "maxLevel": 51
+  }
+ ],
+ "perks": [
+  {
+   "id": "assault_steady_hands",
+   "branch": "assault",
+   "tier": 1,
+   "name": "Твёрдые руки",
+   "desc": "Отдача −5%",
+   "effects": {
+    "recoil": -0.05
+   },
+   "requires": [],
+   "cost": 1
+  },
+  {
+   "id": "assault_quick_draw",
+   "branch": "assault",
+   "tier": 1,
+   "name": "Быстрая смена",
+   "desc": "Смена оружия +25%",
+   "effects": {
+    "swapSpeed": 0.25
+   },
+   "requires": [],
+   "cost": 1
+  },
+  {
+   "id": "assault_ammo_pouch",
+   "branch": "assault",
+   "tier": 1,
+   "name": "Подсумок",
+   "desc": "+30% патронов в стаке",
+   "effects": {
+    "ammoStack": 0.3
+   },
+   "requires": [],
+   "cost": 1
+  },
+  {
+   "id": "assault_suppressive",
+   "branch": "assault",
+   "tier": 2,
+   "name": "Подавление",
+   "desc": "Урон по врагам в укрытии +10%",
+   "effects": {
+    "damage": 0.05
+   },
+   "requires": [
+    "assault_steady_hands",
+    "assault_quick_draw",
+    "assault_ammo_pouch"
+   ],
+   "cost": 2
+  },
+  {
+   "id": "assault_fast_mags",
+   "branch": "assault",
+   "tier": 2,
+   "name": "Быстрые магазины",
+   "desc": "Перезарядка −15%",
+   "effects": {
+    "reload": -0.15
+   },
+   "requires": [
+    "assault_steady_hands",
+    "assault_quick_draw",
+    "assault_ammo_pouch"
+   ],
+   "cost": 2
+  },
+  {
+   "id": "assault_hip_master",
+   "branch": "assault",
+   "tier": 2,
+   "name": "Стрельба от бедра",
+   "desc": "Разброс от бедра −25%",
+   "effects": {
+    "hipSpread": -0.25
+   },
+   "requires": [
+    "assault_steady_hands",
+    "assault_quick_draw",
+    "assault_ammo_pouch"
+   ],
+   "cost": 2
+  },
+  {
+   "id": "assault_juggernaut",
+   "branch": "assault",
+   "tier": 3,
+   "name": "Джаггернаут",
+   "desc": "Броня изнашивается на 25% медленнее",
+   "effects": {
+    "armorWear": -0.25
+   },
+   "requires": [
+    "assault_suppressive",
+    "assault_fast_mags",
+    "assault_hip_master"
+   ],
+   "cost": 3
+  },
+  {
+   "id": "assault_double_tap",
+   "branch": "assault",
+   "tier": 3,
+   "name": "Двойной выстрел",
+   "desc": "Первые два выстрела в очереди без отдачи",
+   "effects": {
+    "firstShotRecoil": -0.5
+   },
+   "requires": [
+    "assault_suppressive",
+    "assault_fast_mags",
+    "assault_hip_master"
+   ],
+   "cost": 3
+  },
+  {
+   "id": "assault_heavy_gunner",
+   "branch": "assault",
+   "tier": 3,
+   "name": "Тяжёлый стрелок",
+   "desc": "Пулемёты и .338: эргономика +15",
+   "effects": {
+    "ergo_lmg": 15,
+    "ergo_sniper": 10
+   },
+   "requires": [
+    "assault_suppressive",
+    "assault_fast_mags",
+    "assault_hip_master"
+   ],
+   "cost": 3
+  },
+  {
+   "id": "assault_berserk",
+   "branch": "assault",
+   "tier": 4,
+   "name": "Берсерк",
+   "desc": "При хп < 30%: урон +20%, отдача −20%",
+   "effects": {
+    "lowHpDamage": 0.2,
+    "lowHpRecoil": -0.2
+   },
+   "requires": [
+    "assault_juggernaut",
+    "assault_double_tap",
+    "assault_heavy_gunner"
+   ],
+   "cost": 4
+  },
+  {
+   "id": "assault_commander",
+   "branch": "assault",
+   "tier": 4,
+   "name": "Командир",
+   "desc": "Сопартийцы в радиусе 20 м получают отдачу −10%",
+   "effects": {
+    "squadRecoil": -0.1
+   },
+   "requires": [
+    "assault_juggernaut",
+    "assault_double_tap",
+    "assault_heavy_gunner"
+   ],
+   "cost": 4
+  },
+  {
+   "id": "assault_last_stand",
+   "branch": "assault",
+   "tier": 4,
+   "name": "Последний рубеж",
+   "desc": "Смертельное ранение один раз за рейд оставляет 1 хп",
+   "effects": {
+    "lastStand": 1
+   },
+   "requires": [
+    "assault_juggernaut",
+    "assault_double_tap",
+    "assault_heavy_gunner"
+   ],
+   "cost": 4
+  },
+  {
+   "id": "scout_light_step",
+   "branch": "scout",
+   "tier": 1,
+   "name": "Лёгкий шаг",
+   "desc": "Шум шагов −20%",
+   "effects": {
+    "noise": -0.2
+   },
+   "requires": [],
+   "cost": 1
+  },
+  {
+   "id": "scout_marathon",
+   "branch": "scout",
+   "tier": 1,
+   "name": "Марафонец",
+   "desc": "Выносливость +15%",
+   "effects": {
+    "maxStamina": 0.15
+   },
+   "requires": [],
+   "cost": 1
+  },
+  {
+   "id": "scout_eagle_eye",
+   "branch": "scout",
+   "tier": 1,
+   "name": "Орлиный глаз",
+   "desc": "Зум прицелов +10%, лут видно дальше",
+   "effects": {
+    "zoom": 0.1,
+    "lootHighlight": 0.3
+   },
+   "requires": [],
+   "cost": 1
+  },
+  {
+   "id": "scout_sprinter",
+   "branch": "scout",
+   "tier": 2,
+   "name": "Спринтер",
+   "desc": "Скорость бега +8%",
+   "effects": {
+    "sprintSpeed": 0.08
+   },
+   "requires": [
+    "scout_light_step",
+    "scout_marathon",
+    "scout_eagle_eye"
+   ],
+   "cost": 2
+  },
+  {
+   "id": "scout_climber",
+   "branch": "scout",
+   "tier": 2,
+   "name": "Альпинист",
+   "desc": "Высота прыжка +20%, урон от падения −30%",
+   "effects": {
+    "jump": 0.2,
+    "fallDamage": -0.3
+   },
+   "requires": [
+    "scout_light_step",
+    "scout_marathon",
+    "scout_eagle_eye"
+   ],
+   "cost": 2
+  },
+  {
+   "id": "scout_tracker",
+   "branch": "scout",
+   "tier": 2,
+   "name": "Следопыт",
+   "desc": "Враги, попавшие в вас, подсвечиваются 3 с",
+   "effects": {
+    "trackHit": 1
+   },
+   "requires": [
+    "scout_light_step",
+    "scout_marathon",
+    "scout_eagle_eye"
+   ],
+   "cost": 2
+  },
+  {
+   "id": "scout_ghost",
+   "branch": "scout",
+   "tier": 3,
+   "name": "Призрак",
+   "desc": "Боты замечают на 30% позже",
+   "effects": {
+    "aiDetect": -0.3
+   },
+   "requires": [
+    "scout_sprinter",
+    "scout_climber",
+    "scout_tracker"
+   ],
+   "cost": 3
+  },
+  {
+   "id": "scout_sixth_sense",
+   "branch": "scout",
+   "tier": 3,
+   "name": "Шестое чувство",
+   "desc": "Предупреждение, когда вас видит бот",
+   "effects": {
+    "sixthSense": 1
+   },
+   "requires": [
+    "scout_sprinter",
+    "scout_climber",
+    "scout_tracker"
+   ],
+   "cost": 3
+  },
+  {
+   "id": "scout_exfil_expert",
+   "branch": "scout",
+   "tier": 3,
+   "name": "Мастер выхода",
+   "desc": "Время экстракции −50%",
+   "effects": {
+    "extractTime": -0.5
+   },
+   "requires": [
+    "scout_sprinter",
+    "scout_climber",
+    "scout_tracker"
+   ],
+   "cost": 3
+  },
+  {
+   "id": "scout_shadow",
+   "branch": "scout",
+   "tier": 4,
+   "name": "Тень",
+   "desc": "Прицел не светится, ЛЦУ не видно врагам, бесшумный присед",
+   "effects": {
+    "noise": -0.4,
+    "aiDetect": -0.2
+   },
+   "requires": [
+    "scout_ghost",
+    "scout_sixth_sense",
+    "scout_exfil_expert"
+   ],
+   "cost": 4
+  },
+  {
+   "id": "scout_cartographer",
+   "branch": "scout",
+   "tier": 4,
+   "name": "Картограф",
+   "desc": "Все выходы и точки квестов видны на компасе",
+   "effects": {
+    "showExtracts": 1
+   },
+   "requires": [
+    "scout_ghost",
+    "scout_sixth_sense",
+    "scout_exfil_expert"
+   ],
+   "cost": 4
+  },
+  {
+   "id": "scout_survival_instinct",
+   "branch": "scout",
+   "tier": 4,
+   "name": "Инстинкт",
+   "desc": "Выносливость восстанавливается при хп < 40% вдвое быстрее",
+   "effects": {
+    "lowHpStamina": 1
+   },
+   "requires": [
+    "scout_ghost",
+    "scout_sixth_sense",
+    "scout_exfil_expert"
+   ],
+   "cost": 4
+  },
+  {
+   "id": "medic_first_aid",
+   "branch": "medic",
+   "tier": 1,
+   "name": "Первая помощь",
+   "desc": "Лечение на 15% быстрее",
+   "effects": {
+    "healSpeed": 0.15
+   },
+   "requires": [],
+   "cost": 1
+  },
+  {
+   "id": "medic_thick_skin",
+   "branch": "medic",
+   "tier": 1,
+   "name": "Толстая кожа",
+   "desc": "Шанс кровотечения −15%",
+   "effects": {
+    "bleedChance": -0.15
+   },
+   "requires": [],
+   "cost": 1
+  },
+  {
+   "id": "medic_field_medic",
+   "branch": "medic",
+   "tier": 1,
+   "name": "Полевой медик",
+   "desc": "Аптечки +20% запаса",
+   "effects": {
+    "medUses": 0.2
+   },
+   "requires": [],
+   "cost": 1
+  },
+  {
+   "id": "medic_combat_medic",
+   "branch": "medic",
+   "tier": 2,
+   "name": "Боевой медик",
+   "desc": "Лечение сопартийцев в 2 раза быстрее",
+   "effects": {
+    "allyHeal": 1
+   },
+   "requires": [
+    "medic_first_aid",
+    "medic_thick_skin",
+    "medic_field_medic"
+   ],
+   "cost": 2
+  },
+  {
+   "id": "medic_painless",
+   "branch": "medic",
+   "tier": 2,
+   "name": "Без боли",
+   "desc": "Обезболивающие действуют дольше на 50%",
+   "effects": {
+    "painDuration": 0.5
+   },
+   "requires": [
+    "medic_first_aid",
+    "medic_thick_skin",
+    "medic_field_medic"
+   ],
+   "cost": 2
+  },
+  {
+   "id": "medic_regen",
+   "branch": "medic",
+   "tier": 2,
+   "name": "Регенерация",
+   "desc": "0.3 хп/с пассивно",
+   "effects": {
+    "regen": 0.3
+   },
+   "requires": [
+    "medic_first_aid",
+    "medic_thick_skin",
+    "medic_field_medic"
+   ],
+   "cost": 2
+  },
+  {
+   "id": "medic_surgeon",
+   "branch": "medic",
+   "tier": 3,
+   "name": "Хирург",
+   "desc": "Хирургия на 40% быстрее",
+   "effects": {
+    "surgerySpeed": 0.4
+   },
+   "requires": [
+    "medic_combat_medic",
+    "medic_painless",
+    "medic_regen"
+   ],
+   "cost": 3
+  },
+  {
+   "id": "medic_adrenaline_rush",
+   "branch": "medic",
+   "tier": 3,
+   "name": "Адреналин",
+   "desc": "При ранении на 5 с скорость +20%",
+   "effects": {
+    "hitSpeed": 0.2
+   },
+   "requires": [
+    "medic_combat_medic",
+    "medic_painless",
+    "medic_regen"
+   ],
+   "cost": 3
+  },
+  {
+   "id": "medic_iron_lungs",
+   "branch": "medic",
+   "tier": 3,
+   "name": "Железные лёгкие",
+   "desc": "Задержка дыхания при прицеливании +100%",
+   "effects": {
+    "holdBreath": 1.0
+   },
+   "requires": [
+    "medic_combat_medic",
+    "medic_painless",
+    "medic_regen"
+   ],
+   "cost": 3
+  },
+  {
+   "id": "medic_second_wind",
+   "branch": "medic",
+   "tier": 4,
+   "name": "Второе дыхание",
+   "desc": "Раз в рейд при смерти восстанавливается 50% хп",
+   "effects": {
+    "secondWind": 1
+   },
+   "requires": [
+    "medic_surgeon",
+    "medic_adrenaline_rush",
+    "medic_iron_lungs"
+   ],
+   "cost": 4
+  },
+  {
+   "id": "medic_guardian_angel",
+   "branch": "medic",
+   "tier": 4,
+   "name": "Ангел-хранитель",
+   "desc": "Сопартийцы получают +10% хп",
+   "effects": {
+    "squadHp": 0.1
+   },
+   "requires": [
+    "medic_surgeon",
+    "medic_adrenaline_rush",
+    "medic_iron_lungs"
+   ],
+   "cost": 4
+  },
+  {
+   "id": "medic_immortal",
+   "branch": "medic",
+   "tier": 4,
+   "name": "Бессмертный",
+   "desc": "Макс. здоровье +15%",
+   "effects": {
+    "maxHealth": 0.15
+   },
+   "requires": [
+    "medic_surgeon",
+    "medic_adrenaline_rush",
+    "medic_iron_lungs"
+   ],
+   "cost": 4
+  },
+  {
+   "id": "engineer_gunsmith",
+   "branch": "engineer",
+   "tier": 1,
+   "name": "Оружейник",
+   "desc": "Износ оружия −20%",
+   "effects": {
+    "durabilityLoss": -0.2
+   },
+   "requires": [],
+   "cost": 1
+  },
+  {
+   "id": "engineer_tinker",
+   "branch": "engineer",
+   "tier": 1,
+   "name": "Самоделкин",
+   "desc": "Крафт на 20% быстрее",
+   "effects": {
+    "craftSpeed": 0.2
+   },
+   "requires": [],
+   "cost": 1
+  },
+  {
+   "id": "engineer_scrapper",
+   "branch": "engineer",
+   "tier": 1,
+   "name": "Разборщик",
+   "desc": "Разборка возвращает +30% ресурсов",
+   "effects": {
+    "scrap": 0.3
+   },
+   "requires": [],
+   "cost": 1
+  },
+  {
+   "id": "engineer_mod_expert",
+   "branch": "engineer",
+   "tier": 2,
+   "name": "Эксперт по модулям",
+   "desc": "Эргономика модулей +15%",
+   "effects": {
+    "modErgo": 0.15
+   },
+   "requires": [
+    "engineer_gunsmith",
+    "engineer_tinker",
+    "engineer_scrapper"
+   ],
+   "cost": 2
+  },
+  {
+   "id": "engineer_lockpick",
+   "branch": "engineer",
+   "tier": 2,
+   "name": "Отмычка",
+   "desc": "Можно вскрывать двери без ключа (30 с)",
+   "effects": {
+    "lockpick": 1
+   },
+   "requires": [
+    "engineer_gunsmith",
+    "engineer_tinker",
+    "engineer_scrapper"
+   ],
+   "cost": 2
+  },
+  {
+   "id": "engineer_demolition",
+   "branch": "engineer",
+   "tier": 2,
+   "name": "Подрывник",
+   "desc": "Урон гранат +25%",
+   "effects": {
+    "grenadeDamage": 0.25
+   },
+   "requires": [
+    "engineer_gunsmith",
+    "engineer_tinker",
+    "engineer_scrapper"
+   ],
+   "cost": 2
+  },
+  {
+   "id": "engineer_master_gunsmith",
+   "branch": "engineer",
+   "tier": 3,
+   "name": "Мастер-оружейник",
+   "desc": "Модификации дешевле на 20%",
+   "effects": {
+    "modPrice": -0.2
+   },
+   "requires": [
+    "engineer_mod_expert",
+    "engineer_lockpick",
+    "engineer_demolition"
+   ],
+   "cost": 3
+  },
+  {
+   "id": "engineer_builder",
+   "branch": "engineer",
+   "tier": 3,
+   "name": "Строитель",
+   "desc": "Улучшения убежища −25% ресурсов",
+   "effects": {
+    "hideoutCost": -0.25
+   },
+   "requires": [
+    "engineer_mod_expert",
+    "engineer_lockpick",
+    "engineer_demolition"
+   ],
+   "cost": 3
+  },
+  {
+   "id": "engineer_hacker_perk",
+   "branch": "engineer",
+   "tier": 3,
+   "name": "Взломщик",
+   "desc": "Электронные замки открываются за 5 с",
+   "effects": {
+    "hackSpeed": 1
+   },
+   "requires": [
+    "engineer_mod_expert",
+    "engineer_lockpick",
+    "engineer_demolition"
+   ],
+   "cost": 3
+  },
+  {
+   "id": "engineer_legendary_craft",
+   "branch": "engineer",
+   "tier": 4,
+   "name": "Легендарное ремесло",
+   "desc": "Доступны легендарные рецепты",
+   "effects": {
+    "legendaryCraft": 1
+   },
+   "requires": [
+    "engineer_master_gunsmith",
+    "engineer_builder",
+    "engineer_hacker_perk"
+   ],
+   "cost": 4
+  },
+  {
+   "id": "engineer_overclock",
+   "branch": "engineer",
+   "tier": 4,
+   "name": "Разгон",
+   "desc": "Оружие не клинит, скорострельность +5%",
+   "effects": {
+    "jamChance": -1,
+    "rpm": 0.05
+   },
+   "requires": [
+    "engineer_master_gunsmith",
+    "engineer_builder",
+    "engineer_hacker_perk"
+   ],
+   "cost": 4
+  },
+  {
+   "id": "engineer_quartermaster",
+   "branch": "engineer",
+   "tier": 4,
+   "name": "Завхоз",
+   "desc": "Склад +50 ячеек",
+   "effects": {
+    "stashBonus": 50
+   },
+   "requires": [
+    "engineer_master_gunsmith",
+    "engineer_builder",
+    "engineer_hacker_perk"
+   ],
+   "cost": 4
+  },
+  {
+   "id": "trader_bargain",
+   "branch": "trader",
+   "tier": 1,
+   "name": "Торг",
+   "desc": "Цены у торговцев −5%",
+   "effects": {
+    "tradePrice": -0.05
+   },
+   "requires": [],
+   "cost": 1
+  },
+  {
+   "id": "trader_appraiser",
+   "branch": "trader",
+   "tier": 1,
+   "name": "Оценщик",
+   "desc": "Скупка +10%",
+   "effects": {
+    "sellPrice": 0.1
+   },
+   "requires": [],
+   "cost": 1
+  },
+  {
+   "id": "trader_connections",
+   "branch": "trader",
+   "tier": 1,
+   "name": "Связи",
+   "desc": "Репутация растёт на 20% быстрее",
+   "effects": {
+    "repGain": 0.2
+   },
+   "requires": [],
+   "cost": 1
+  },
+  {
+   "id": "trader_fence_friend",
+   "branch": "trader",
+   "tier": 2,
+   "name": "Друг барыги",
+   "desc": "Ассортимент Гоши обновляется вдвое чаще",
+   "effects": {
+    "fenceRefresh": 1
+   },
+   "requires": [
+    "trader_bargain",
+    "trader_appraiser",
+    "trader_connections"
+   ],
+   "cost": 2
+  },
+  {
+   "id": "trader_insurance",
+   "branch": "trader",
+   "tier": 2,
+   "name": "Страховка",
+   "desc": "Застрахованное оружие возвращается в 80% случаев",
+   "effects": {
+    "insurance": 0.8
+   },
+   "requires": [
+    "trader_bargain",
+    "trader_appraiser",
+    "trader_connections"
+   ],
+   "cost": 2
+  },
+  {
+   "id": "trader_collector",
+   "branch": "trader",
+   "tier": 2,
+   "name": "Коллекционер",
+   "desc": "Ценности занимают меньше места (вес −30%)",
+   "effects": {
+    "valuableWeight": -0.3
+   },
+   "requires": [
+    "trader_bargain",
+    "trader_appraiser",
+    "trader_connections"
+   ],
+   "cost": 2
+  },
+  {
+   "id": "trader_wholesale",
+   "branch": "trader",
+   "tier": 3,
+   "name": "Опт",
+   "desc": "Патроны и медицина −15%",
+   "effects": {
+    "ammoPrice": -0.15,
+    "medPrice": -0.15
+   },
+   "requires": [
+    "trader_fence_friend",
+    "trader_insurance",
+    "trader_collector"
+   ],
+   "cost": 3
+  },
+  {
+   "id": "trader_black_market",
+   "branch": "trader",
+   "tier": 3,
+   "name": "Чёрный рынок",
+   "desc": "Секретный ассортимент у всех торговцев",
+   "effects": {
+    "blackMarket": 1
+   },
+   "requires": [
+    "trader_fence_friend",
+    "trader_insurance",
+    "trader_collector"
+   ],
+   "cost": 3
+  },
+  {
+   "id": "trader_xp_dealer",
+   "branch": "trader",
+   "tier": 3,
+   "name": "Делец",
+   "desc": "Опыт за квесты +20%",
+   "effects": {
+    "questXp": 0.2
+   },
+   "requires": [
+    "trader_fence_friend",
+    "trader_insurance",
+    "trader_collector"
+   ],
+   "cost": 3
+  },
+  {
+   "id": "trader_tycoon",
+   "branch": "trader",
+   "tier": 4,
+   "name": "Магнат",
+   "desc": "Цены −15%, скупка +20%",
+   "effects": {
+    "tradePrice": -0.15,
+    "sellPrice": 0.2
+   },
+   "requires": [
+    "trader_wholesale",
+    "trader_black_market",
+    "trader_xp_dealer"
+   ],
+   "cost": 4
+  },
+  {
+   "id": "trader_smuggler",
+   "branch": "trader",
+   "tier": 4,
+   "name": "Контрабандист",
+   "desc": "Защищённый контейнер +1 ряд",
+   "effects": {
+    "secureBonus": 1
+   },
+   "requires": [
+    "trader_wholesale",
+    "trader_black_market",
+    "trader_xp_dealer"
+   ],
+   "cost": 4
+  },
+  {
+   "id": "trader_reputation",
+   "branch": "trader",
+   "tier": 4,
+   "name": "Репутация",
+   "desc": "Все торговцы +1 уровень лояльности",
+   "effects": {
+    "traderLevelBonus": 1
+   },
+   "requires": [
+    "trader_wholesale",
+    "trader_black_market",
+    "trader_xp_dealer"
+   ],
+   "cost": 4
+  },
+  {
+   "id": "survivor_camel",
+   "branch": "survivor",
+   "tier": 1,
+   "name": "Верблюд",
+   "desc": "Жажда −25%",
+   "effects": {
+    "hydrationRate": -0.25
+   },
+   "requires": [],
+   "cost": 1
+  },
+  {
+   "id": "survivor_strong_back",
+   "branch": "survivor",
+   "tier": 1,
+   "name": "Крепкая спина",
+   "desc": "+10 кг к переносимому весу",
+   "effects": {
+    "carryWeightFlat": 10
+   },
+   "requires": [],
+   "cost": 1
+  },
+  {
+   "id": "survivor_night_owl",
+   "branch": "survivor",
+   "tier": 1,
+   "name": "Сова",
+   "desc": "Ночью видно лучше",
+   "effects": {
+    "night": 0.3
+   },
+   "requires": [],
+   "cost": 1
+  },
+  {
+   "id": "survivor_scavenger",
+   "branch": "survivor",
+   "tier": 2,
+   "name": "Падальщик",
+   "desc": "+1 предмет в ящиках с шансом 15%",
+   "effects": {
+    "lootCount": 0.15
+   },
+   "requires": [
+    "survivor_camel",
+    "survivor_strong_back",
+    "survivor_night_owl"
+   ],
+   "cost": 2
+  },
+  {
+   "id": "survivor_cook",
+   "branch": "survivor",
+   "tier": 2,
+   "name": "Повар",
+   "desc": "Еда даёт +30%",
+   "effects": {
+    "foodBonus": 0.3
+   },
+   "requires": [
+    "survivor_camel",
+    "survivor_strong_back",
+    "survivor_night_owl"
+   ],
+   "cost": 2
+  },
+  {
+   "id": "survivor_weatherproof",
+   "branch": "survivor",
+   "tier": 2,
+   "name": "Непромокаемый",
+   "desc": "Дождь и холод не влияют",
+   "effects": {
+    "weather": 1
+   },
+   "requires": [
+    "survivor_camel",
+    "survivor_strong_back",
+    "survivor_night_owl"
+   ],
+   "cost": 2
+  },
+  {
+   "id": "survivor_lucky",
+   "branch": "survivor",
+   "tier": 3,
+   "name": "Везунчик",
+   "desc": "Редкий лут +10%",
+   "effects": {
+    "lootQuality": 0.1
+   },
+   "requires": [
+    "survivor_scavenger",
+    "survivor_cook",
+    "survivor_weatherproof"
+   ],
+   "cost": 3
+  },
+  {
+   "id": "survivor_hardened",
+   "branch": "survivor",
+   "tier": 3,
+   "name": "Закалённый",
+   "desc": "Переломы −50%, кровотечения останавливаются сами",
+   "effects": {
+    "fractureChance": -0.5,
+    "autoStopBleed": 1
+   },
+   "requires": [
+    "survivor_scavenger",
+    "survivor_cook",
+    "survivor_weatherproof"
+   ],
+   "cost": 3
+  },
+  {
+   "id": "survivor_packrat",
+   "branch": "survivor",
+   "tier": 3,
+   "name": "Хомяк",
+   "desc": "Рюкзаки +2 ячейки",
+   "effects": {
+    "bagBonus": 2
+   },
+   "requires": [
+    "survivor_scavenger",
+    "survivor_cook",
+    "survivor_weatherproof"
+   ],
+   "cost": 3
+  },
+  {
+   "id": "survivor_nine_lives",
+   "branch": "survivor",
+   "tier": 4,
+   "name": "Девять жизней",
+   "desc": "После смерти сохраняется разгрузка",
+   "effects": {
+    "keepRig": 1
+   },
+   "requires": [
+    "survivor_lucky",
+    "survivor_hardened",
+    "survivor_packrat"
+   ],
+   "cost": 4
+  },
+  {
+   "id": "survivor_wasteland_king",
+   "branch": "survivor",
+   "tier": 4,
+   "name": "Король пустоши",
+   "desc": "Боссы роняют гарантированный редкий предмет",
+   "effects": {
+    "bossLoot": 1
+   },
+   "requires": [
+    "survivor_lucky",
+    "survivor_hardened",
+    "survivor_packrat"
+   ],
+   "cost": 4
+  },
+  {
+   "id": "survivor_iron_will",
+   "branch": "survivor",
+   "tier": 4,
+   "name": "Железная воля",
+   "desc": "Все навыки качаются на 25% быстрее",
+   "effects": {
+    "skillXp": 0.25
+   },
+   "requires": [
+    "survivor_lucky",
+    "survivor_hardened",
+    "survivor_packrat"
+   ],
+   "cost": 4
+  }
+ ],
+ "branches": [
+  {
+   "id": "assault",
+   "name": "Штурмовик"
+  },
+  {
+   "id": "scout",
+   "name": "Разведчик"
+  },
+  {
+   "id": "medic",
+   "name": "Медик"
+  },
+  {
+   "id": "engineer",
+   "name": "Инженер"
+  },
+  {
+   "id": "trader",
+   "name": "Торговец"
+  },
+  {
+   "id": "survivor",
+   "name": "Выживальщик"
+  }
+ ]
+}

@@ -1,0 +1,3475 @@
+[
+ {
+  "id": "brake_pist9_1",
+  "name": "Дульный тормоз 9 мм «Шторм»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.08,
+   "ergo": -2
+  },
+  "price": 9000,
+  "lvl": 1,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "9x18",
+    "9x19",
+    ".357"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "muzzle",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 1
+ },
+ {
+  "id": "brake_pist9_2",
+  "name": "Компенсатор 9 мм «Титан»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.14,
+   "ergo": -4
+  },
+  "price": 24000,
+  "lvl": 3,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "9x18",
+    "9x19",
+    ".357"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "muzzle",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 3
+ },
+ {
+  "id": "flash_pist9",
+  "name": "Пламегаситель 9 мм",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.03,
+   "flash": 0.5
+  },
+  "price": 6000,
+  "lvl": 1,
+  "trader": "komendant",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "9x18",
+    "9x19",
+    ".357"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "muzzle",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 1
+ },
+ {
+  "id": "supp_pist9_1",
+  "name": "Глушитель 9 мм «Шёпот»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.06,
+   "ergo": -8,
+   "suppressed": 1,
+   "loud": -0.6,
+   "velocity": 0.02
+  },
+  "price": 40000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "9x18",
+    "9x19",
+    ".357"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "suppressor",
+  "w": 2,
+  "h": 1,
+  "weight": 0.5,
+  "rarity": 2
+ },
+ {
+  "id": "supp_pist9_2",
+  "name": "Глушитель 9 мм «Тишина Pro»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.11,
+   "ergo": -5,
+   "suppressed": 1,
+   "loud": -0.75,
+   "velocity": 0.03,
+   "moa": -0.05
+  },
+  "price": 95000,
+  "lvl": 4,
+  "trader": "hacker",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "9x18",
+    "9x19",
+    ".357"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "suppressor",
+  "w": 2,
+  "h": 1,
+  "weight": 0.45,
+  "rarity": 4
+ },
+ {
+  "id": "mag_pist9_ext",
+  "name": "Магазин удлинённый 9 мм",
+  "slot": "mag",
+  "stats": {
+   "capacity": 8,
+   "ergo": -4
+  },
+  "price": 9000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "9x18",
+    "9x19",
+    ".357"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "mag",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 2
+ },
+ {
+  "id": "brake_pist45_1",
+  "name": "Дульный тормоз .45/7.62x25 «Шторм»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.08,
+   "ergo": -2
+  },
+  "price": 9000,
+  "lvl": 1,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    ".45",
+    "7.62x25"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "muzzle",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 1
+ },
+ {
+  "id": "brake_pist45_2",
+  "name": "Компенсатор .45/7.62x25 «Титан»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.14,
+   "ergo": -4
+  },
+  "price": 24000,
+  "lvl": 3,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    ".45",
+    "7.62x25"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "muzzle",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 3
+ },
+ {
+  "id": "flash_pist45",
+  "name": "Пламегаситель .45/7.62x25",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.03,
+   "flash": 0.5
+  },
+  "price": 6000,
+  "lvl": 1,
+  "trader": "komendant",
+  "fits": {
+   "cls": [],
+   "cal": [
+    ".45",
+    "7.62x25"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "muzzle",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 1
+ },
+ {
+  "id": "supp_pist45_1",
+  "name": "Глушитель .45/7.62x25 «Шёпот»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.06,
+   "ergo": -8,
+   "suppressed": 1,
+   "loud": -0.6,
+   "velocity": 0.02
+  },
+  "price": 40000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    ".45",
+    "7.62x25"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "suppressor",
+  "w": 2,
+  "h": 1,
+  "weight": 0.5,
+  "rarity": 2
+ },
+ {
+  "id": "supp_pist45_2",
+  "name": "Глушитель .45/7.62x25 «Тишина Pro»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.11,
+   "ergo": -5,
+   "suppressed": 1,
+   "loud": -0.75,
+   "velocity": 0.03,
+   "moa": -0.05
+  },
+  "price": 95000,
+  "lvl": 4,
+  "trader": "hacker",
+  "fits": {
+   "cls": [],
+   "cal": [
+    ".45",
+    "7.62x25"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "suppressor",
+  "w": 2,
+  "h": 1,
+  "weight": 0.45,
+  "rarity": 4
+ },
+ {
+  "id": "mag_pist45_ext",
+  "name": "Магазин удлинённый .45/7.62x25",
+  "slot": "mag",
+  "stats": {
+   "capacity": 8,
+   "ergo": -4
+  },
+  "price": 9000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    ".45",
+    "7.62x25"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "mag",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 2
+ },
+ {
+  "id": "brake_pdw_1",
+  "name": "Дульный тормоз PDW «Шторм»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.08,
+   "ergo": -2
+  },
+  "price": 9000,
+  "lvl": 1,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "5.7x28",
+    "4.6x30"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "muzzle",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 1
+ },
+ {
+  "id": "brake_pdw_2",
+  "name": "Компенсатор PDW «Титан»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.14,
+   "ergo": -4
+  },
+  "price": 24000,
+  "lvl": 3,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "5.7x28",
+    "4.6x30"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "muzzle",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 3
+ },
+ {
+  "id": "flash_pdw",
+  "name": "Пламегаситель PDW",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.03,
+   "flash": 0.5
+  },
+  "price": 6000,
+  "lvl": 1,
+  "trader": "komendant",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "5.7x28",
+    "4.6x30"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "muzzle",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 1
+ },
+ {
+  "id": "supp_pdw_1",
+  "name": "Глушитель PDW «Шёпот»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.06,
+   "ergo": -8,
+   "suppressed": 1,
+   "loud": -0.6,
+   "velocity": 0.02
+  },
+  "price": 40000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "5.7x28",
+    "4.6x30"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "suppressor",
+  "w": 2,
+  "h": 1,
+  "weight": 0.5,
+  "rarity": 2
+ },
+ {
+  "id": "supp_pdw_2",
+  "name": "Глушитель PDW «Тишина Pro»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.11,
+   "ergo": -5,
+   "suppressed": 1,
+   "loud": -0.75,
+   "velocity": 0.03,
+   "moa": -0.05
+  },
+  "price": 95000,
+  "lvl": 4,
+  "trader": "hacker",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "5.7x28",
+    "4.6x30"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "suppressor",
+  "w": 2,
+  "h": 1,
+  "weight": 0.45,
+  "rarity": 4
+ },
+ {
+  "id": "mag_pdw_ext",
+  "name": "Магазин удлинённый PDW",
+  "slot": "mag",
+  "stats": {
+   "capacity": 8,
+   "ergo": -4
+  },
+  "price": 9000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "5.7x28",
+    "4.6x30"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "mag",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 2
+ },
+ {
+  "id": "brake_int545_1",
+  "name": "Дульный тормоз 5.45 «Шторм»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.08,
+   "ergo": -2
+  },
+  "price": 9000,
+  "lvl": 1,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "5.45x39"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "muzzle",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 1
+ },
+ {
+  "id": "brake_int545_2",
+  "name": "Компенсатор 5.45 «Титан»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.14,
+   "ergo": -4
+  },
+  "price": 24000,
+  "lvl": 3,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "5.45x39"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "muzzle",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 3
+ },
+ {
+  "id": "flash_int545",
+  "name": "Пламегаситель 5.45",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.03,
+   "flash": 0.5
+  },
+  "price": 6000,
+  "lvl": 1,
+  "trader": "komendant",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "5.45x39"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "muzzle",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 1
+ },
+ {
+  "id": "supp_int545_1",
+  "name": "Глушитель 5.45 «Шёпот»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.06,
+   "ergo": -8,
+   "suppressed": 1,
+   "loud": -0.6,
+   "velocity": 0.02
+  },
+  "price": 40000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "5.45x39"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "suppressor",
+  "w": 2,
+  "h": 1,
+  "weight": 0.5,
+  "rarity": 2
+ },
+ {
+  "id": "supp_int545_2",
+  "name": "Глушитель 5.45 «Тишина Pro»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.11,
+   "ergo": -5,
+   "suppressed": 1,
+   "loud": -0.75,
+   "velocity": 0.03,
+   "moa": -0.05
+  },
+  "price": 95000,
+  "lvl": 4,
+  "trader": "hacker",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "5.45x39"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "suppressor",
+  "w": 2,
+  "h": 1,
+  "weight": 0.45,
+  "rarity": 4
+ },
+ {
+  "id": "mag_int545_ext",
+  "name": "Магазин увеличенный 5.45",
+  "slot": "mag",
+  "stats": {
+   "capacity": 15,
+   "ergo": -6,
+   "weight": 0.3
+  },
+  "price": 14000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "5.45x39"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "mag",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 2
+ },
+ {
+  "id": "mag_int545_drum",
+  "name": "Барабанный магазин 5.45",
+  "slot": "mag",
+  "stats": {
+   "capacity": 45,
+   "ergo": -18,
+   "weight": 0.9
+  },
+  "price": 55000,
+  "lvl": 4,
+  "trader": "komendant",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "5.45x39"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "mag",
+  "w": 2,
+  "h": 2,
+  "weight": 0.2,
+  "rarity": 4
+ },
+ {
+  "id": "mag_int545_quick",
+  "name": "Магазин облегчённый 5.45",
+  "slot": "mag",
+  "stats": {
+   "capacity": 0,
+   "ergo": 4,
+   "reload": -0.12
+  },
+  "price": 18000,
+  "lvl": 3,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "5.45x39"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "mag",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 3
+ },
+ {
+  "id": "brake_int556_1",
+  "name": "Дульный тормоз 5.56 «Шторм»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.08,
+   "ergo": -2
+  },
+  "price": 9000,
+  "lvl": 1,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "5.56x45"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "muzzle",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 1
+ },
+ {
+  "id": "brake_int556_2",
+  "name": "Компенсатор 5.56 «Титан»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.14,
+   "ergo": -4
+  },
+  "price": 24000,
+  "lvl": 3,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "5.56x45"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "muzzle",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 3
+ },
+ {
+  "id": "flash_int556",
+  "name": "Пламегаситель 5.56",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.03,
+   "flash": 0.5
+  },
+  "price": 6000,
+  "lvl": 1,
+  "trader": "komendant",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "5.56x45"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "muzzle",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 1
+ },
+ {
+  "id": "supp_int556_1",
+  "name": "Глушитель 5.56 «Шёпот»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.06,
+   "ergo": -8,
+   "suppressed": 1,
+   "loud": -0.6,
+   "velocity": 0.02
+  },
+  "price": 40000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "5.56x45"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "suppressor",
+  "w": 2,
+  "h": 1,
+  "weight": 0.5,
+  "rarity": 2
+ },
+ {
+  "id": "supp_int556_2",
+  "name": "Глушитель 5.56 «Тишина Pro»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.11,
+   "ergo": -5,
+   "suppressed": 1,
+   "loud": -0.75,
+   "velocity": 0.03,
+   "moa": -0.05
+  },
+  "price": 95000,
+  "lvl": 4,
+  "trader": "hacker",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "5.56x45"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "suppressor",
+  "w": 2,
+  "h": 1,
+  "weight": 0.45,
+  "rarity": 4
+ },
+ {
+  "id": "mag_int556_ext",
+  "name": "Магазин увеличенный 5.56",
+  "slot": "mag",
+  "stats": {
+   "capacity": 15,
+   "ergo": -6,
+   "weight": 0.3
+  },
+  "price": 14000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "5.56x45"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "mag",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 2
+ },
+ {
+  "id": "mag_int556_drum",
+  "name": "Барабанный магазин 5.56",
+  "slot": "mag",
+  "stats": {
+   "capacity": 45,
+   "ergo": -18,
+   "weight": 0.9
+  },
+  "price": 55000,
+  "lvl": 4,
+  "trader": "komendant",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "5.56x45"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "mag",
+  "w": 2,
+  "h": 2,
+  "weight": 0.2,
+  "rarity": 4
+ },
+ {
+  "id": "mag_int556_quick",
+  "name": "Магазин облегчённый 5.56",
+  "slot": "mag",
+  "stats": {
+   "capacity": 0,
+   "ergo": 4,
+   "reload": -0.12
+  },
+  "price": 18000,
+  "lvl": 3,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "5.56x45"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "mag",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 3
+ },
+ {
+  "id": "brake_int762_1",
+  "name": "Дульный тормоз 7.62x39/9x39 «Шторм»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.08,
+   "ergo": -2
+  },
+  "price": 9000,
+  "lvl": 1,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "7.62x39",
+    "9x39"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "muzzle",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 1
+ },
+ {
+  "id": "brake_int762_2",
+  "name": "Компенсатор 7.62x39/9x39 «Титан»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.14,
+   "ergo": -4
+  },
+  "price": 24000,
+  "lvl": 3,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "7.62x39",
+    "9x39"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "muzzle",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 3
+ },
+ {
+  "id": "flash_int762",
+  "name": "Пламегаситель 7.62x39/9x39",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.03,
+   "flash": 0.5
+  },
+  "price": 6000,
+  "lvl": 1,
+  "trader": "komendant",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "7.62x39",
+    "9x39"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "muzzle",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 1
+ },
+ {
+  "id": "supp_int762_1",
+  "name": "Глушитель 7.62x39/9x39 «Шёпот»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.06,
+   "ergo": -8,
+   "suppressed": 1,
+   "loud": -0.6,
+   "velocity": 0.02
+  },
+  "price": 40000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "7.62x39",
+    "9x39"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "suppressor",
+  "w": 2,
+  "h": 1,
+  "weight": 0.5,
+  "rarity": 2
+ },
+ {
+  "id": "supp_int762_2",
+  "name": "Глушитель 7.62x39/9x39 «Тишина Pro»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.11,
+   "ergo": -5,
+   "suppressed": 1,
+   "loud": -0.75,
+   "velocity": 0.03,
+   "moa": -0.05
+  },
+  "price": 95000,
+  "lvl": 4,
+  "trader": "hacker",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "7.62x39",
+    "9x39"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "suppressor",
+  "w": 2,
+  "h": 1,
+  "weight": 0.45,
+  "rarity": 4
+ },
+ {
+  "id": "mag_int762_ext",
+  "name": "Магазин увеличенный 7.62x39/9x39",
+  "slot": "mag",
+  "stats": {
+   "capacity": 15,
+   "ergo": -6,
+   "weight": 0.3
+  },
+  "price": 14000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "7.62x39",
+    "9x39"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "mag",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 2
+ },
+ {
+  "id": "mag_int762_drum",
+  "name": "Барабанный магазин 7.62x39/9x39",
+  "slot": "mag",
+  "stats": {
+   "capacity": 45,
+   "ergo": -18,
+   "weight": 0.9
+  },
+  "price": 55000,
+  "lvl": 4,
+  "trader": "komendant",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "7.62x39",
+    "9x39"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "mag",
+  "w": 2,
+  "h": 2,
+  "weight": 0.2,
+  "rarity": 4
+ },
+ {
+  "id": "mag_int762_quick",
+  "name": "Магазин облегчённый 7.62x39/9x39",
+  "slot": "mag",
+  "stats": {
+   "capacity": 0,
+   "ergo": 4,
+   "reload": -0.12
+  },
+  "price": 18000,
+  "lvl": 3,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "7.62x39",
+    "9x39"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "mag",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 3
+ },
+ {
+  "id": "brake_rif762_1",
+  "name": "Дульный тормоз 7.62x51/54R «Шторм»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.08,
+   "ergo": -2
+  },
+  "price": 9000,
+  "lvl": 1,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "7.62x51",
+    "7.62x54R",
+    ".338"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "muzzle",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 1
+ },
+ {
+  "id": "brake_rif762_2",
+  "name": "Компенсатор 7.62x51/54R «Титан»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.14,
+   "ergo": -4
+  },
+  "price": 24000,
+  "lvl": 3,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "7.62x51",
+    "7.62x54R",
+    ".338"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "muzzle",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 3
+ },
+ {
+  "id": "flash_rif762",
+  "name": "Пламегаситель 7.62x51/54R",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.03,
+   "flash": 0.5
+  },
+  "price": 6000,
+  "lvl": 1,
+  "trader": "komendant",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "7.62x51",
+    "7.62x54R",
+    ".338"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "muzzle",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 1
+ },
+ {
+  "id": "supp_rif762_1",
+  "name": "Глушитель 7.62x51/54R «Шёпот»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.06,
+   "ergo": -8,
+   "suppressed": 1,
+   "loud": -0.6,
+   "velocity": 0.02
+  },
+  "price": 40000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "7.62x51",
+    "7.62x54R",
+    ".338"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "suppressor",
+  "w": 2,
+  "h": 1,
+  "weight": 0.5,
+  "rarity": 2
+ },
+ {
+  "id": "supp_rif762_2",
+  "name": "Глушитель 7.62x51/54R «Тишина Pro»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.11,
+   "ergo": -5,
+   "suppressed": 1,
+   "loud": -0.75,
+   "velocity": 0.03,
+   "moa": -0.05
+  },
+  "price": 95000,
+  "lvl": 4,
+  "trader": "hacker",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "7.62x51",
+    "7.62x54R",
+    ".338"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "suppressor",
+  "w": 2,
+  "h": 1,
+  "weight": 0.45,
+  "rarity": 4
+ },
+ {
+  "id": "mag_rif762_ext",
+  "name": "Магазин увеличенный 7.62x51/54R",
+  "slot": "mag",
+  "stats": {
+   "capacity": 15,
+   "ergo": -6,
+   "weight": 0.3
+  },
+  "price": 14000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "7.62x51",
+    "7.62x54R",
+    ".338"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "mag",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 2
+ },
+ {
+  "id": "mag_rif762_drum",
+  "name": "Барабанный магазин 7.62x51/54R",
+  "slot": "mag",
+  "stats": {
+   "capacity": 45,
+   "ergo": -18,
+   "weight": 0.9
+  },
+  "price": 55000,
+  "lvl": 4,
+  "trader": "komendant",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "7.62x51",
+    "7.62x54R",
+    ".338"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "mag",
+  "w": 2,
+  "h": 2,
+  "weight": 0.2,
+  "rarity": 4
+ },
+ {
+  "id": "mag_rif762_quick",
+  "name": "Магазин облегчённый 7.62x51/54R",
+  "slot": "mag",
+  "stats": {
+   "capacity": 0,
+   "ergo": 4,
+   "reload": -0.12
+  },
+  "price": 18000,
+  "lvl": 3,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "7.62x51",
+    "7.62x54R",
+    ".338"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "mag",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 3
+ },
+ {
+  "id": "brake_shot_1",
+  "name": "Дульный тормоз 12к «Шторм»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.08,
+   "ergo": -2
+  },
+  "price": 9000,
+  "lvl": 1,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "12ga",
+    "20ga",
+    "23x75"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "muzzle",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 1
+ },
+ {
+  "id": "brake_shot_2",
+  "name": "Компенсатор 12к «Титан»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.14,
+   "ergo": -4
+  },
+  "price": 24000,
+  "lvl": 3,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "12ga",
+    "20ga",
+    "23x75"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "muzzle",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 3
+ },
+ {
+  "id": "flash_shot",
+  "name": "Пламегаситель 12к",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.03,
+   "flash": 0.5
+  },
+  "price": 6000,
+  "lvl": 1,
+  "trader": "komendant",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "12ga",
+    "20ga",
+    "23x75"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "muzzle",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 1
+ },
+ {
+  "id": "supp_shot_1",
+  "name": "Глушитель 12к «Шёпот»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.06,
+   "ergo": -8,
+   "suppressed": 1,
+   "loud": -0.6,
+   "velocity": 0.02
+  },
+  "price": 40000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "12ga",
+    "20ga",
+    "23x75"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "suppressor",
+  "w": 2,
+  "h": 1,
+  "weight": 0.5,
+  "rarity": 2
+ },
+ {
+  "id": "supp_shot_2",
+  "name": "Глушитель 12к «Тишина Pro»",
+  "slot": "muzzle",
+  "stats": {
+   "recoil": -0.11,
+   "ergo": -5,
+   "suppressed": 1,
+   "loud": -0.75,
+   "velocity": 0.03,
+   "moa": -0.05
+  },
+  "price": 95000,
+  "lvl": 4,
+  "trader": "hacker",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "12ga",
+    "20ga",
+    "23x75"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "suppressor",
+  "w": 2,
+  "h": 1,
+  "weight": 0.45,
+  "rarity": 4
+ },
+ {
+  "id": "mag_shot_ext",
+  "name": "Магазин увеличенный 12к",
+  "slot": "mag",
+  "stats": {
+   "capacity": 4,
+   "ergo": -6,
+   "weight": 0.3
+  },
+  "price": 14000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "12ga",
+    "20ga",
+    "23x75"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "mag",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 2
+ },
+ {
+  "id": "mag_shot_drum",
+  "name": "Барабанный магазин 12к",
+  "slot": "mag",
+  "stats": {
+   "capacity": 12,
+   "ergo": -18,
+   "weight": 0.9
+  },
+  "price": 55000,
+  "lvl": 4,
+  "trader": "komendant",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "12ga",
+    "20ga",
+    "23x75"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "mag",
+  "w": 2,
+  "h": 2,
+  "weight": 0.2,
+  "rarity": 4
+ },
+ {
+  "id": "mag_shot_quick",
+  "name": "Магазин облегчённый 12к",
+  "slot": "mag",
+  "stats": {
+   "capacity": 0,
+   "ergo": 4,
+   "reload": -0.12
+  },
+  "price": 18000,
+  "lvl": 3,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [
+    "12ga",
+    "20ga",
+    "23x75"
+   ],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "mag",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 3
+ },
+ {
+  "id": "rds_pk06",
+  "name": "Коллиматор ПК-06",
+  "slot": "sight",
+  "stats": {
+   "zoom": 1.0,
+   "ergo": -2,
+   "moa": -0.03,
+   "night": 0
+  },
+  "price": 12000,
+  "lvl": 1,
+  "trader": "mech",
+  "fits": {
+   "cls": [
+    "smg",
+    "ar",
+    "dmr",
+    "sniper",
+    "shotgun",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "reddot",
+  "w": 1,
+  "h": 1,
+  "weight": 0.15,
+  "rarity": 1
+ },
+ {
+  "id": "rds_eotech",
+  "name": "Голографический EXPS3",
+  "slot": "sight",
+  "stats": {
+   "zoom": 1.0,
+   "ergo": -3,
+   "moa": -0.03,
+   "night": 0
+  },
+  "price": 38000,
+  "lvl": 3,
+  "trader": "hacker",
+  "fits": {
+   "cls": [
+    "smg",
+    "ar",
+    "dmr",
+    "sniper",
+    "shotgun",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "reddot",
+  "w": 1,
+  "h": 1,
+  "weight": 0.15,
+  "rarity": 3
+ },
+ {
+  "id": "rds_aim",
+  "name": "Коллиматор Aimpoint T1",
+  "slot": "sight",
+  "stats": {
+   "zoom": 1.0,
+   "ergo": -1,
+   "moa": -0.03,
+   "night": 0
+  },
+  "price": 30000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [
+    "smg",
+    "ar",
+    "dmr",
+    "sniper",
+    "shotgun",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "reddot",
+  "w": 1,
+  "h": 1,
+  "weight": 0.15,
+  "rarity": 2
+ },
+ {
+  "id": "rds_okp",
+  "name": "ОКП-7",
+  "slot": "sight",
+  "stats": {
+   "zoom": 1.0,
+   "ergo": -3,
+   "moa": -0.03,
+   "night": 0
+  },
+  "price": 15000,
+  "lvl": 1,
+  "trader": "komendant",
+  "fits": {
+   "cls": [
+    "smg",
+    "ar",
+    "dmr",
+    "sniper",
+    "shotgun",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "reddot",
+  "w": 1,
+  "h": 1,
+  "weight": 0.15,
+  "rarity": 1
+ },
+ {
+  "id": "rds_romeo",
+  "name": "Romeo 4",
+  "slot": "sight",
+  "stats": {
+   "zoom": 1.0,
+   "ergo": -2,
+   "moa": -0.03,
+   "night": 0
+  },
+  "price": 22000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [
+    "smg",
+    "ar",
+    "dmr",
+    "sniper",
+    "shotgun",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "reddot",
+  "w": 1,
+  "h": 1,
+  "weight": 0.15,
+  "rarity": 2
+ },
+ {
+  "id": "rds_kobra",
+  "name": "Кобра ЭКП",
+  "slot": "sight",
+  "stats": {
+   "zoom": 1.0,
+   "ergo": -4,
+   "moa": -0.03,
+   "night": 0
+  },
+  "price": 13000,
+  "lvl": 1,
+  "trader": "komendant",
+  "fits": {
+   "cls": [
+    "smg",
+    "ar",
+    "dmr",
+    "sniper",
+    "shotgun",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "reddot",
+  "w": 1,
+  "h": 1,
+  "weight": 0.15,
+  "rarity": 1
+ },
+ {
+  "id": "scope_1p78",
+  "name": "1П78 «Кашан» 2.8x",
+  "slot": "sight",
+  "stats": {
+   "zoom": 2.8,
+   "ergo": -8,
+   "moa": -0.08,
+   "night": 0
+  },
+  "price": 45000,
+  "lvl": 2,
+  "trader": "komendant",
+  "fits": {
+   "cls": [
+    "smg",
+    "ar",
+    "dmr",
+    "sniper",
+    "shotgun",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "scope",
+  "w": 2,
+  "h": 1,
+  "weight": 0.5,
+  "rarity": 2
+ },
+ {
+  "id": "scope_acog",
+  "name": "ACOG 4x",
+  "slot": "sight",
+  "stats": {
+   "zoom": 4.0,
+   "ergo": -9,
+   "moa": -0.08,
+   "night": 0
+  },
+  "price": 60000,
+  "lvl": 3,
+  "trader": "hacker",
+  "fits": {
+   "cls": [
+    "smg",
+    "ar",
+    "dmr",
+    "sniper",
+    "shotgun",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "scope",
+  "w": 2,
+  "h": 1,
+  "weight": 0.5,
+  "rarity": 3
+ },
+ {
+  "id": "scope_elcan",
+  "name": "Elcan 1-4x",
+  "slot": "sight",
+  "stats": {
+   "zoom": 4.0,
+   "ergo": -10,
+   "moa": -0.08,
+   "night": 0
+  },
+  "price": 80000,
+  "lvl": 4,
+  "trader": "hacker",
+  "fits": {
+   "cls": [
+    "smg",
+    "ar",
+    "dmr",
+    "sniper",
+    "shotgun",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "scope",
+  "w": 2,
+  "h": 1,
+  "weight": 0.5,
+  "rarity": 4
+ },
+ {
+  "id": "scope_pso",
+  "name": "ПСО-1 4x",
+  "slot": "sight",
+  "stats": {
+   "zoom": 4.0,
+   "ergo": -9,
+   "moa": -0.08,
+   "night": 0
+  },
+  "price": 35000,
+  "lvl": 2,
+  "trader": "komendant",
+  "fits": {
+   "cls": [
+    "smg",
+    "ar",
+    "dmr",
+    "sniper",
+    "shotgun",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "scope",
+  "w": 2,
+  "h": 1,
+  "weight": 0.5,
+  "rarity": 2
+ },
+ {
+  "id": "scope_vudu",
+  "name": "Vudu 1-6x",
+  "slot": "sight",
+  "stats": {
+   "zoom": 6.0,
+   "ergo": -11,
+   "moa": -0.08,
+   "night": 0
+  },
+  "price": 95000,
+  "lvl": 4,
+  "trader": "hacker",
+  "fits": {
+   "cls": [
+    "smg",
+    "ar",
+    "dmr",
+    "sniper",
+    "shotgun",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "scope",
+  "w": 2,
+  "h": 1,
+  "weight": 0.5,
+  "rarity": 4
+ },
+ {
+  "id": "scope_6x",
+  "name": "Прицел 6x «Дедал»",
+  "slot": "sight",
+  "stats": {
+   "zoom": 6.0,
+   "ergo": -12,
+   "moa": -0.08,
+   "night": 0
+  },
+  "price": 70000,
+  "lvl": 3,
+  "trader": "mech",
+  "fits": {
+   "cls": [
+    "smg",
+    "ar",
+    "dmr",
+    "sniper",
+    "shotgun",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "scope",
+  "w": 2,
+  "h": 1,
+  "weight": 0.5,
+  "rarity": 3
+ },
+ {
+  "id": "scope_8x",
+  "name": "Прицел 8x «Пилад»",
+  "slot": "sight",
+  "stats": {
+   "zoom": 8.0,
+   "ergo": -14,
+   "moa": -0.08,
+   "night": 0
+  },
+  "price": 90000,
+  "lvl": 3,
+  "trader": "mech",
+  "fits": {
+   "cls": [
+    "smg",
+    "ar",
+    "dmr",
+    "sniper",
+    "shotgun",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "scope",
+  "w": 2,
+  "h": 1,
+  "weight": 0.5,
+  "rarity": 3
+ },
+ {
+  "id": "scope_10x",
+  "name": "Прицел 10x Nightforce",
+  "slot": "sight",
+  "stats": {
+   "zoom": 10.0,
+   "ergo": -16,
+   "moa": -0.08,
+   "night": 0
+  },
+  "price": 140000,
+  "lvl": 4,
+  "trader": "hacker",
+  "fits": {
+   "cls": [
+    "smg",
+    "ar",
+    "dmr",
+    "sniper",
+    "shotgun",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "scope",
+  "w": 2,
+  "h": 1,
+  "weight": 0.5,
+  "rarity": 4
+ },
+ {
+  "id": "scope_12x",
+  "name": "Прицел 3-12x Vortex",
+  "slot": "sight",
+  "stats": {
+   "zoom": 12.0,
+   "ergo": -16,
+   "moa": -0.08,
+   "night": 0
+  },
+  "price": 160000,
+  "lvl": 4,
+  "trader": "hacker",
+  "fits": {
+   "cls": [
+    "smg",
+    "ar",
+    "dmr",
+    "sniper",
+    "shotgun",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "scope",
+  "w": 2,
+  "h": 1,
+  "weight": 0.5,
+  "rarity": 4
+ },
+ {
+  "id": "scope_3_9",
+  "name": "Прицел 3-9x «Таёжник»",
+  "slot": "sight",
+  "stats": {
+   "zoom": 9.0,
+   "ergo": -13,
+   "moa": -0.08,
+   "night": 0
+  },
+  "price": 48000,
+  "lvl": 2,
+  "trader": "babulya",
+  "fits": {
+   "cls": [
+    "smg",
+    "ar",
+    "dmr",
+    "sniper",
+    "shotgun",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "scope",
+  "w": 2,
+  "h": 1,
+  "weight": 0.5,
+  "rarity": 2
+ },
+ {
+  "id": "scope_25x",
+  "name": "Прицел 5-25x Schmidt",
+  "slot": "sight",
+  "stats": {
+   "zoom": 25.0,
+   "ergo": -20,
+   "moa": -0.08,
+   "night": 0
+  },
+  "price": 320000,
+  "lvl": 5,
+  "trader": "hacker",
+  "fits": {
+   "cls": [
+    "smg",
+    "ar",
+    "dmr",
+    "sniper",
+    "shotgun",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "scope",
+  "w": 2,
+  "h": 1,
+  "weight": 0.5,
+  "rarity": 5
+ },
+ {
+  "id": "nvscope",
+  "name": "Ночной прицел ПН-23",
+  "slot": "sight",
+  "stats": {
+   "zoom": 3.5,
+   "ergo": -18,
+   "moa": -0.08,
+   "night": 1
+  },
+  "price": 260000,
+  "lvl": 5,
+  "trader": "komendant",
+  "fits": {
+   "cls": [
+    "smg",
+    "ar",
+    "dmr",
+    "sniper",
+    "shotgun",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "scope",
+  "w": 2,
+  "h": 1,
+  "weight": 0.5,
+  "rarity": 5
+ },
+ {
+  "id": "psight_rmr",
+  "name": "Пистолетный коллиматор RMR",
+  "slot": "sight_p",
+  "stats": {
+   "zoom": 1.0,
+   "ergo": -1,
+   "moa": -0.03
+  },
+  "price": 28000,
+  "lvl": 3,
+  "trader": "hacker",
+  "fits": {
+   "cls": [
+    "pistol"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "reddot",
+  "w": 1,
+  "h": 1,
+  "weight": 0.05,
+  "rarity": 3
+ },
+ {
+  "id": "psight_tritium",
+  "name": "Тритиевый целик",
+  "slot": "sight_p",
+  "stats": {
+   "moa": -0.02,
+   "night": 0.3
+  },
+  "price": 9000,
+  "lvl": 1,
+  "trader": "mech",
+  "fits": {
+   "cls": [
+    "pistol"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "",
+  "w": 1,
+  "h": 1,
+  "weight": 0.02,
+  "rarity": 1
+ },
+ {
+  "id": "psight_docter",
+  "name": "Пистолетный коллиматор Docter",
+  "slot": "sight_p",
+  "stats": {
+   "zoom": 1.0,
+   "ergo": -1,
+   "moa": -0.03
+  },
+  "price": 22000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [
+    "pistol"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "reddot",
+  "w": 1,
+  "h": 1,
+  "weight": 0.05,
+  "rarity": 2
+ },
+ {
+  "id": "grip_rk2",
+  "name": "Рукоятка RK-2",
+  "slot": "grip",
+  "stats": {
+   "recoil": -0.05,
+   "ergo": 5
+  },
+  "price": 12000,
+  "lvl": 1,
+  "trader": "mech",
+  "fits": {
+   "cls": [
+    "smg",
+    "ar",
+    "dmr",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "grip",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 1
+ },
+ {
+  "id": "grip_angled",
+  "name": "Угловая рукоятка AFG",
+  "slot": "grip",
+  "stats": {
+   "recoil": -0.03,
+   "ergo": 8
+  },
+  "price": 14000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [
+    "smg",
+    "ar",
+    "dmr",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "grip",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 2
+ },
+ {
+  "id": "grip_rtm",
+  "name": "Рукоятка RTM",
+  "slot": "grip",
+  "stats": {
+   "recoil": -0.07,
+   "ergo": 3
+  },
+  "price": 18000,
+  "lvl": 2,
+  "trader": "komendant",
+  "fits": {
+   "cls": [
+    "smg",
+    "ar",
+    "dmr",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "grip",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 2
+ },
+ {
+  "id": "grip_stubby",
+  "name": "Короткая рукоятка Stubby",
+  "slot": "grip",
+  "stats": {
+   "recoil": -0.04,
+   "ergo": 7
+  },
+  "price": 16000,
+  "lvl": 2,
+  "trader": "hacker",
+  "fits": {
+   "cls": [
+    "smg",
+    "ar",
+    "dmr",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "grip",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 2
+ },
+ {
+  "id": "grip_vertical",
+  "name": "Вертикальная рукоятка",
+  "slot": "grip",
+  "stats": {
+   "recoil": -0.06,
+   "ergo": 2
+  },
+  "price": 8000,
+  "lvl": 1,
+  "trader": "babulya",
+  "fits": {
+   "cls": [
+    "smg",
+    "ar",
+    "dmr",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "grip",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 1
+ },
+ {
+  "id": "grip_bipodgrip",
+  "name": "Рукоятка-сошки",
+  "slot": "grip",
+  "stats": {
+   "recoil": -0.09,
+   "ergo": -4,
+   "weight": 0.4
+  },
+  "price": 30000,
+  "lvl": 3,
+  "trader": "komendant",
+  "fits": {
+   "cls": [
+    "ar",
+    "dmr",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "grip",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 3
+ },
+ {
+  "id": "grip_tango",
+  "name": "Рукоятка Tango Down",
+  "slot": "grip",
+  "stats": {
+   "recoil": -0.06,
+   "ergo": 6
+  },
+  "price": 24000,
+  "lvl": 3,
+  "trader": "hacker",
+  "fits": {
+   "cls": [
+    "smg",
+    "ar",
+    "dmr",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "grip",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 3
+ },
+ {
+  "id": "grip_carbon",
+  "name": "Карбоновая рукоятка",
+  "slot": "grip",
+  "stats": {
+   "recoil": -0.05,
+   "ergo": 9,
+   "weight": -0.1
+  },
+  "price": 40000,
+  "lvl": 4,
+  "trader": "hacker",
+  "fits": {
+   "cls": [
+    "smg",
+    "ar",
+    "dmr",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "grip",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 4
+ },
+ {
+  "id": "stock_ak_wood",
+  "name": "Приклад АК деревянный",
+  "slot": "stock",
+  "stats": {
+   "recoil": -0.04,
+   "ergo": 0
+  },
+  "price": 5000,
+  "lvl": 1,
+  "trader": "babulya",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "ak"
+   ],
+   "weapons": []
+  },
+  "model": "stock",
+  "w": 2,
+  "h": 1,
+  "weight": 0.4,
+  "rarity": 1
+ },
+ {
+  "id": "stock_ak_poly",
+  "name": "Приклад АК полимерный",
+  "slot": "stock",
+  "stats": {
+   "recoil": -0.06,
+   "ergo": 3,
+   "weight": -0.1
+  },
+  "price": 12000,
+  "lvl": 1,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "ak"
+   ],
+   "weapons": []
+  },
+  "model": "stock",
+  "w": 2,
+  "h": 1,
+  "weight": 0.4,
+  "rarity": 1
+ },
+ {
+  "id": "stock_ak_zenit",
+  "name": "Приклад «Зенит» ПТ-1",
+  "slot": "stock",
+  "stats": {
+   "recoil": -0.1,
+   "ergo": 4
+  },
+  "price": 28000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "ak"
+   ],
+   "weapons": []
+  },
+  "model": "stock",
+  "w": 2,
+  "h": 1,
+  "weight": 0.4,
+  "rarity": 2
+ },
+ {
+  "id": "stock_ak_magpul",
+  "name": "Приклад Magpul Zhukov",
+  "slot": "stock",
+  "stats": {
+   "recoil": -0.09,
+   "ergo": 6
+  },
+  "price": 32000,
+  "lvl": 3,
+  "trader": "hacker",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "ak"
+   ],
+   "weapons": []
+  },
+  "model": "stock",
+  "w": 2,
+  "h": 1,
+  "weight": 0.4,
+  "rarity": 3
+ },
+ {
+  "id": "stock_ak_folding",
+  "name": "Приклад складной «Сокол»",
+  "slot": "stock",
+  "stats": {
+   "recoil": -0.05,
+   "ergo": 8
+  },
+  "price": 18000,
+  "lvl": 2,
+  "trader": "komendant",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "ak"
+   ],
+   "weapons": []
+  },
+  "model": "stock",
+  "w": 2,
+  "h": 1,
+  "weight": 0.4,
+  "rarity": 2
+ },
+ {
+  "id": "stock_ar_ctr",
+  "name": "Приклад Magpul CTR",
+  "slot": "stock",
+  "stats": {
+   "recoil": -0.07,
+   "ergo": 5
+  },
+  "price": 20000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "ar15"
+   ],
+   "weapons": []
+  },
+  "model": "stock",
+  "w": 2,
+  "h": 1,
+  "weight": 0.4,
+  "rarity": 2
+ },
+ {
+  "id": "stock_ar_ubr",
+  "name": "Приклад Magpul UBR",
+  "slot": "stock",
+  "stats": {
+   "recoil": -0.11,
+   "ergo": 1
+  },
+  "price": 35000,
+  "lvl": 3,
+  "trader": "komendant",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "ar15"
+   ],
+   "weapons": []
+  },
+  "model": "stock",
+  "w": 2,
+  "h": 1,
+  "weight": 0.4,
+  "rarity": 3
+ },
+ {
+  "id": "stock_ar_moe",
+  "name": "Приклад Magpul MOE",
+  "slot": "stock",
+  "stats": {
+   "recoil": -0.06,
+   "ergo": 6
+  },
+  "price": 16000,
+  "lvl": 1,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "ar15"
+   ],
+   "weapons": []
+  },
+  "model": "stock",
+  "w": 2,
+  "h": 1,
+  "weight": 0.4,
+  "rarity": 1
+ },
+ {
+  "id": "stock_ar_prs",
+  "name": "Приклад PRS снайперский",
+  "slot": "stock",
+  "stats": {
+   "recoil": -0.13,
+   "ergo": -4
+  },
+  "price": 48000,
+  "lvl": 4,
+  "trader": "hacker",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "ar15"
+   ],
+   "weapons": []
+  },
+  "model": "stock",
+  "w": 2,
+  "h": 1,
+  "weight": 0.4,
+  "rarity": 4
+ },
+ {
+  "id": "stock_hk_a3",
+  "name": "Приклад HK A3 телескопический",
+  "slot": "stock",
+  "stats": {
+   "recoil": -0.07,
+   "ergo": 4
+  },
+  "price": 22000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "hk"
+   ],
+   "weapons": []
+  },
+  "model": "stock",
+  "w": 2,
+  "h": 1,
+  "weight": 0.4,
+  "rarity": 2
+ },
+ {
+  "id": "stock_hk_fixed",
+  "name": "Приклад HK фиксированный",
+  "slot": "stock",
+  "stats": {
+   "recoil": -0.1,
+   "ergo": 0
+  },
+  "price": 18000,
+  "lvl": 2,
+  "trader": "komendant",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "hk"
+   ],
+   "weapons": []
+  },
+  "model": "stock",
+  "w": 2,
+  "h": 1,
+  "weight": 0.4,
+  "rarity": 2
+ },
+ {
+  "id": "stock_scar_std",
+  "name": "Приклад SCAR стандартный",
+  "slot": "stock",
+  "stats": {
+   "recoil": -0.08,
+   "ergo": 3
+  },
+  "price": 25000,
+  "lvl": 3,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "scar"
+   ],
+   "weapons": []
+  },
+  "model": "stock",
+  "w": 2,
+  "h": 1,
+  "weight": 0.4,
+  "rarity": 3
+ },
+ {
+  "id": "stock_gen_pad",
+  "name": "Затыльник амортизирующий",
+  "slot": "stock",
+  "stats": {
+   "recoil": -0.05,
+   "ergo": 1
+  },
+  "price": 9000,
+  "lvl": 1,
+  "trader": "babulya",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "generic",
+    "ak",
+    "ar15",
+    "hk",
+    "scar"
+   ],
+   "weapons": []
+  },
+  "model": "stock",
+  "w": 2,
+  "h": 1,
+  "weight": 0.4,
+  "rarity": 1
+ },
+ {
+  "id": "stock_gen_cheek",
+  "name": "Щека на приклад",
+  "slot": "stock",
+  "stats": {
+   "recoil": -0.02,
+   "ergo": 5
+  },
+  "price": 7000,
+  "lvl": 1,
+  "trader": "babulya",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "generic",
+    "ak",
+    "ar15",
+    "hk",
+    "scar"
+   ],
+   "weapons": []
+  },
+  "model": "stock",
+  "w": 2,
+  "h": 1,
+  "weight": 0.4,
+  "rarity": 1
+ },
+ {
+  "id": "stock_gen_sniper",
+  "name": "Приклад снайперский регулируемый",
+  "slot": "stock",
+  "stats": {
+   "recoil": -0.12,
+   "ergo": -2
+  },
+  "price": 60000,
+  "lvl": 4,
+  "trader": "komendant",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "generic"
+   ],
+   "weapons": []
+  },
+  "model": "stock",
+  "w": 2,
+  "h": 1,
+  "weight": 0.4,
+  "rarity": 4
+ },
+ {
+  "id": "hg_ak_wood",
+  "name": "Цевьё АК деревянное",
+  "slot": "handguard",
+  "stats": {
+   "ergo": 0
+  },
+  "price": 4000,
+  "lvl": 1,
+  "trader": "babulya",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "ak"
+   ],
+   "weapons": []
+  },
+  "model": "handguard",
+  "w": 2,
+  "h": 1,
+  "weight": 0.3,
+  "rarity": 1
+ },
+ {
+  "id": "hg_ak_b10",
+  "name": "Цевьё «Зенит» Б-10М",
+  "slot": "handguard",
+  "stats": {
+   "ergo": 5,
+   "recoil": -0.03
+  },
+  "price": 26000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "ak"
+   ],
+   "weapons": []
+  },
+  "model": "handguard",
+  "w": 2,
+  "h": 1,
+  "weight": 0.3,
+  "rarity": 2
+ },
+ {
+  "id": "hg_ak_magpul",
+  "name": "Цевьё Magpul MOE AK",
+  "slot": "handguard",
+  "stats": {
+   "ergo": 7
+  },
+  "price": 22000,
+  "lvl": 2,
+  "trader": "hacker",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "ak"
+   ],
+   "weapons": []
+  },
+  "model": "handguard",
+  "w": 2,
+  "h": 1,
+  "weight": 0.3,
+  "rarity": 2
+ },
+ {
+  "id": "hg_ak_alfa",
+  "name": "Цевьё «Альфа» с планками",
+  "slot": "handguard",
+  "stats": {
+   "ergo": 3,
+   "recoil": -0.05
+  },
+  "price": 35000,
+  "lvl": 3,
+  "trader": "komendant",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "ak"
+   ],
+   "weapons": []
+  },
+  "model": "handguard",
+  "w": 2,
+  "h": 1,
+  "weight": 0.3,
+  "rarity": 3
+ },
+ {
+  "id": "hg_ar_mlok",
+  "name": "Цевьё M-LOK 13\"",
+  "slot": "handguard",
+  "stats": {
+   "ergo": 8,
+   "recoil": -0.02
+  },
+  "price": 30000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "ar15"
+   ],
+   "weapons": []
+  },
+  "model": "handguard",
+  "w": 2,
+  "h": 1,
+  "weight": 0.3,
+  "rarity": 2
+ },
+ {
+  "id": "hg_ar_ris",
+  "name": "Цевьё RIS II",
+  "slot": "handguard",
+  "stats": {
+   "ergo": 2,
+   "recoil": -0.06
+  },
+  "price": 38000,
+  "lvl": 3,
+  "trader": "komendant",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "ar15"
+   ],
+   "weapons": []
+  },
+  "model": "handguard",
+  "w": 2,
+  "h": 1,
+  "weight": 0.3,
+  "rarity": 3
+ },
+ {
+  "id": "hg_ar_slim",
+  "name": "Цевьё облегчённое карбон",
+  "slot": "handguard",
+  "stats": {
+   "ergo": 12,
+   "weight": -0.2
+  },
+  "price": 55000,
+  "lvl": 4,
+  "trader": "hacker",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "ar15"
+   ],
+   "weapons": []
+  },
+  "model": "handguard",
+  "w": 2,
+  "h": 1,
+  "weight": 0.3,
+  "rarity": 4
+ },
+ {
+  "id": "hg_hk_std",
+  "name": "Цевьё HK с планками",
+  "slot": "handguard",
+  "stats": {
+   "ergo": 4,
+   "recoil": -0.03
+  },
+  "price": 20000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "hk"
+   ],
+   "weapons": []
+  },
+  "model": "handguard",
+  "w": 2,
+  "h": 1,
+  "weight": 0.3,
+  "rarity": 2
+ },
+ {
+  "id": "hg_scar_rail",
+  "name": "Цевьё SCAR удлинённое",
+  "slot": "handguard",
+  "stats": {
+   "ergo": 3,
+   "recoil": -0.05
+  },
+  "price": 32000,
+  "lvl": 3,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "scar"
+   ],
+   "weapons": []
+  },
+  "model": "handguard",
+  "w": 2,
+  "h": 1,
+  "weight": 0.3,
+  "rarity": 3
+ },
+ {
+  "id": "barrel_ak_short",
+  "name": "Ствол АК укороченный",
+  "slot": "barrel",
+  "stats": {
+   "ergo": 8,
+   "recoil": 0.08,
+   "velocity": -0.08,
+   "moa": 0.3
+  },
+  "price": 20000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "ak"
+   ],
+   "weapons": []
+  },
+  "model": "barrel",
+  "w": 2,
+  "h": 1,
+  "weight": 0.6,
+  "rarity": 2
+ },
+ {
+  "id": "barrel_ak_long",
+  "name": "Ствол АК удлинённый",
+  "slot": "barrel",
+  "stats": {
+   "ergo": -6,
+   "recoil": -0.06,
+   "velocity": 0.06,
+   "moa": -0.2
+  },
+  "price": 28000,
+  "lvl": 3,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "ak"
+   ],
+   "weapons": []
+  },
+  "model": "barrel",
+  "w": 2,
+  "h": 1,
+  "weight": 0.6,
+  "rarity": 3
+ },
+ {
+  "id": "barrel_ar_105",
+  "name": "Ствол 10.5\"",
+  "slot": "barrel",
+  "stats": {
+   "ergo": 8,
+   "recoil": 0.07,
+   "velocity": -0.1,
+   "moa": 0.3
+  },
+  "price": 24000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "ar15"
+   ],
+   "weapons": []
+  },
+  "model": "barrel",
+  "w": 2,
+  "h": 1,
+  "weight": 0.6,
+  "rarity": 2
+ },
+ {
+  "id": "barrel_ar_18",
+  "name": "Ствол 18\" тяжёлый",
+  "slot": "barrel",
+  "stats": {
+   "ergo": -8,
+   "recoil": -0.08,
+   "velocity": 0.08,
+   "moa": -0.35
+  },
+  "price": 45000,
+  "lvl": 3,
+  "trader": "hacker",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "ar15"
+   ],
+   "weapons": []
+  },
+  "model": "barrel",
+  "w": 2,
+  "h": 1,
+  "weight": 0.6,
+  "rarity": 3
+ },
+ {
+  "id": "barrel_hk_long",
+  "name": "Ствол HK удлинённый",
+  "slot": "barrel",
+  "stats": {
+   "ergo": -5,
+   "recoil": -0.05,
+   "velocity": 0.05,
+   "moa": -0.2
+  },
+  "price": 30000,
+  "lvl": 3,
+  "trader": "mech",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "hk"
+   ],
+   "weapons": []
+  },
+  "model": "barrel",
+  "w": 2,
+  "h": 1,
+  "weight": 0.6,
+  "rarity": 3
+ },
+ {
+  "id": "barrel_gen_match",
+  "name": "Матчевый ствол",
+  "slot": "barrel",
+  "stats": {
+   "ergo": -4,
+   "recoil": -0.03,
+   "moa": -0.4
+  },
+  "price": 70000,
+  "lvl": 4,
+  "trader": "hacker",
+  "fits": {
+   "cls": [],
+   "cal": [],
+   "fam": [
+    "generic",
+    "scar"
+   ],
+   "weapons": []
+  },
+  "model": "barrel",
+  "w": 2,
+  "h": 1,
+  "weight": 0.6,
+  "rarity": 4
+ },
+ {
+  "id": "light_x300",
+  "name": "Фонарь X300",
+  "slot": "light",
+  "stats": {
+   "light": 1,
+   "ergo": -2
+  },
+  "price": 15000,
+  "lvl": 1,
+  "trader": "mech",
+  "fits": {
+   "cls": [
+    "pistol",
+    "smg",
+    "ar",
+    "dmr",
+    "shotgun",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "laser",
+  "w": 1,
+  "h": 1,
+  "weight": 0.1,
+  "rarity": 1
+ },
+ {
+  "id": "light_ltr",
+  "name": "Фонарь-ЛЦУ ЛТР-1",
+  "slot": "light",
+  "stats": {
+   "light": 1,
+   "laser": 1,
+   "ergo": -3,
+   "moa": -0.02
+  },
+  "price": 28000,
+  "lvl": 2,
+  "trader": "komendant",
+  "fits": {
+   "cls": [
+    "pistol",
+    "smg",
+    "ar",
+    "dmr",
+    "shotgun",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "laser",
+  "w": 1,
+  "h": 1,
+  "weight": 0.1,
+  "rarity": 2
+ },
+ {
+  "id": "laser_red",
+  "name": "ЛЦУ красный",
+  "slot": "light",
+  "stats": {
+   "laser": 1,
+   "ergo": -1,
+   "moa": -0.03
+  },
+  "price": 9000,
+  "lvl": 1,
+  "trader": "babulya",
+  "fits": {
+   "cls": [
+    "pistol",
+    "smg",
+    "ar",
+    "dmr",
+    "shotgun",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "laser",
+  "w": 1,
+  "h": 1,
+  "weight": 0.1,
+  "rarity": 1
+ },
+ {
+  "id": "laser_green",
+  "name": "ЛЦУ зелёный «Зенит»",
+  "slot": "light",
+  "stats": {
+   "laser": 1,
+   "ergo": -1,
+   "moa": -0.05
+  },
+  "price": 20000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [
+    "pistol",
+    "smg",
+    "ar",
+    "dmr",
+    "shotgun",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "laser",
+  "w": 1,
+  "h": 1,
+  "weight": 0.1,
+  "rarity": 2
+ },
+ {
+  "id": "laser_peq",
+  "name": "ЛЦУ PEQ-15 с ИК",
+  "slot": "light",
+  "stats": {
+   "laser": 1,
+   "light": 1,
+   "ergo": -3,
+   "moa": -0.05,
+   "night": 0.5
+  },
+  "price": 60000,
+  "lvl": 4,
+  "trader": "hacker",
+  "fits": {
+   "cls": [
+    "pistol",
+    "smg",
+    "ar",
+    "dmr",
+    "shotgun",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "laser",
+  "w": 1,
+  "h": 1,
+  "weight": 0.1,
+  "rarity": 4
+ },
+ {
+  "id": "bipod_harris",
+  "name": "Сошки Harris",
+  "slot": "bipod",
+  "stats": {
+   "recoil": -0.15,
+   "ergo": -10,
+   "weight": 0.4
+  },
+  "price": 30000,
+  "lvl": 2,
+  "trader": "mech",
+  "fits": {
+   "cls": [
+    "dmr",
+    "sniper",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "bipod",
+  "w": 2,
+  "h": 1,
+  "weight": 0.4,
+  "rarity": 2
+ },
+ {
+  "id": "bipod_atlas",
+  "name": "Сошки Atlas",
+  "slot": "bipod",
+  "stats": {
+   "recoil": -0.2,
+   "ergo": -8,
+   "weight": 0.3
+  },
+  "price": 65000,
+  "lvl": 4,
+  "trader": "hacker",
+  "fits": {
+   "cls": [
+    "dmr",
+    "sniper",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "bipod",
+  "w": 2,
+  "h": 1,
+  "weight": 0.3,
+  "rarity": 4
+ },
+ {
+  "id": "bipod_light",
+  "name": "Сошки лёгкие",
+  "slot": "bipod",
+  "stats": {
+   "recoil": -0.1,
+   "ergo": -5,
+   "weight": 0.2
+  },
+  "price": 14000,
+  "lvl": 1,
+  "trader": "babulya",
+  "fits": {
+   "cls": [
+    "dmr",
+    "sniper",
+    "lmg"
+   ],
+   "cal": [],
+   "fam": [],
+   "weapons": []
+  },
+  "model": "bipod",
+  "w": 2,
+  "h": 1,
+  "weight": 0.2,
+  "rarity": 1
+ }
+]

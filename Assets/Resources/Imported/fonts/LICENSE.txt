@@ -1,0 +1,9 @@
+Pack: fonts
+License: SIL Open Font License 1.1
+Source: https://github.com/google/fonts/tree/main/ofl/rubik (Rubik, Cyrillic+Latin)
+Download: https://raw.githubusercontent.com/google/fonts/main/ofl/rubik/Rubik%5Bwght%5D.ttf
+Download: https://raw.githubusercontent.com/google/fonts/main/ofl/rubik/OFL.txt
+  Rubik-Variable.ttf  <- https://github.com/google/fonts/tree/main/ofl/rubik
+  OFL_Rubik.txt  <- https://github.com/google/fonts/tree/main/ofl/rubik
+Fetched: 2026-10-21 by Tools/fetch_assets.py
+Only FBX/OBJ/PNG/WAV/OGG/MP3/TTF/HDR files were kept; previews, GLTF/GLB, .blend and sample scenes were removed.

@@ -1,0 +1,800 @@
+{
+ "modules": [
+  {
+   "id": "bedroom",
+   "name": "Спальня",
+   "desc": "Отдых между рейдами.",
+   "levels": [
+    {
+     "money": 20000,
+     "items": {
+      "cloth": 3,
+      "nails": 2
+     },
+     "bonus": {
+      "regen": 0.1
+     },
+     "recipes": [],
+     "desc": "Регенерация в убежище"
+    },
+    {
+     "money": 80000,
+     "items": {
+      "cloth": 6,
+      "lamp": 2,
+      "screws": 4
+     },
+     "bonus": {
+      "regen": 0.2,
+      "maxStamina": 0.05
+     },
+     "recipes": [],
+     "desc": ""
+    },
+    {
+     "money": 250000,
+     "items": {
+      "cordura": 4,
+      "electronics": 3
+     },
+     "bonus": {
+      "regen": 0.3,
+      "maxStamina": 0.1,
+      "xpGain": 0.05
+     },
+     "recipes": [],
+     "desc": ""
+    }
+   ]
+  },
+  {
+   "id": "workbench",
+   "name": "Верстак",
+   "desc": "Ремонт и модификация оружия.",
+   "levels": [
+    {
+     "money": 30000,
+     "items": {
+      "toolset": 1,
+      "bolts": 5
+     },
+     "bonus": {
+      "repairCost": -0.1
+     },
+     "recipes": [
+      "craft_ammo_9x19",
+      "craft_ammo_545"
+     ],
+     "desc": ""
+    },
+    {
+     "money": 120000,
+     "items": {
+      "toolset": 2,
+      "wd40": 3,
+      "electronics": 2
+     },
+     "bonus": {
+      "repairCost": -0.25,
+      "modPrice": -0.05
+     },
+     "recipes": [
+      "craft_ammo_556",
+      "craft_ammo_762",
+      "craft_supp"
+     ],
+     "desc": ""
+    },
+    {
+     "money": 400000,
+     "items": {
+      "toolset": 3,
+      "kevlar": 2,
+      "circuit": 2
+     },
+     "bonus": {
+      "repairCost": -0.5,
+      "modPrice": -0.1
+     },
+     "recipes": [
+      "craft_ammo_ap",
+      "craft_gun_rare"
+     ],
+     "desc": ""
+    }
+   ]
+  },
+  {
+   "id": "medstation",
+   "name": "Медпункт",
+   "desc": "Лечение после рейда и крафт медицины.",
+   "levels": [
+    {
+     "money": 25000,
+     "items": {
+      "bandage": 5,
+      "soap": 2
+     },
+     "bonus": {
+      "healAfterRaid": 1
+     },
+     "recipes": [
+      "craft_bandage"
+     ],
+     "desc": ""
+    },
+    {
+     "money": 100000,
+     "items": {
+      "salewa": 2,
+      "electronics": 2
+     },
+     "bonus": {
+      "healAfterRaid": 1,
+      "medPrice": -0.1
+     },
+     "recipes": [
+      "craft_ifak",
+      "craft_splint"
+     ],
+     "desc": ""
+    },
+    {
+     "money": 350000,
+     "items": {
+      "surgkit": 1,
+      "circuit": 2,
+      "cloth": 5
+     },
+     "bonus": {
+      "healAfterRaid": 1,
+      "medPrice": -0.2,
+      "healSpeed": 0.1
+     },
+     "recipes": [
+      "craft_grizzly",
+      "craft_morphine"
+     ],
+     "desc": ""
+    }
+   ]
+  },
+  {
+   "id": "generator",
+   "name": "Генератор",
+   "desc": "Питает остальные модули.",
+   "levels": [
+    {
+     "money": 40000,
+     "items": {
+      "fuel": 2,
+      "wires": 3,
+      "car_battery": 1
+     },
+     "bonus": {
+      "power": 1
+     },
+     "recipes": [],
+     "desc": ""
+    },
+    {
+     "money": 150000,
+     "items": {
+      "fuel": 4,
+      "electronics": 4,
+      "pipe": 2
+     },
+     "bonus": {
+      "power": 2,
+      "craftSpeed": 0.1
+     },
+     "recipes": [],
+     "desc": ""
+    },
+    {
+     "money": 450000,
+     "items": {
+      "propane": 2,
+      "circuit": 3,
+      "capacitors": 4
+     },
+     "bonus": {
+      "power": 3,
+      "craftSpeed": 0.25
+     },
+     "recipes": [],
+     "desc": ""
+    }
+   ]
+  },
+  {
+   "id": "water",
+   "name": "Сборщик воды",
+   "desc": "Крафт воды и снижение жажды.",
+   "levels": [
+    {
+     "money": 20000,
+     "items": {
+      "hose": 2,
+      "pipe": 1
+     },
+     "bonus": {},
+     "recipes": [
+      "craft_water"
+     ],
+     "desc": ""
+    },
+    {
+     "money": 90000,
+     "items": {
+      "hose": 4,
+      "pliers": 1,
+      "capacitors": 2
+     },
+     "bonus": {
+      "hydrationRate": -0.1
+     },
+     "recipes": [
+      "craft_water_big"
+     ],
+     "desc": ""
+    },
+    {
+     "money": 200000,
+     "items": {
+      "electronics": 2,
+      "pipe": 4
+     },
+     "bonus": {
+      "hydrationRate": -0.2
+     },
+     "recipes": [
+      "craft_energy_drink"
+     ],
+     "desc": ""
+    }
+   ]
+  },
+  {
+   "id": "kitchen",
+   "name": "Кухня",
+   "desc": "Крафт еды.",
+   "levels": [
+    {
+     "money": 15000,
+     "items": {
+      "propane": 1,
+      "matches": 2
+     },
+     "bonus": {},
+     "recipes": [
+      "craft_bread"
+     ],
+     "desc": ""
+    },
+    {
+     "money": 60000,
+     "items": {
+      "lamp": 2,
+      "wires": 2
+     },
+     "bonus": {
+      "hungerRate": -0.1
+     },
+     "recipes": [
+      "craft_tushenka"
+     ],
+     "desc": ""
+    },
+    {
+     "money": 180000,
+     "items": {
+      "electronics": 2,
+      "cloth": 2
+     },
+     "bonus": {
+      "hungerRate": -0.2,
+      "foodBonus": 0.2
+     },
+     "recipes": [
+      "craft_mre"
+     ],
+     "desc": ""
+    }
+   ]
+  },
+  {
+   "id": "range",
+   "name": "Тир",
+   "desc": "Тренировка стрелковых навыков.",
+   "levels": [
+    {
+     "money": 50000,
+     "items": {
+      "nails": 5,
+      "pipe": 3
+     },
+     "bonus": {
+      "weaponSkillXp": 0.1
+     },
+     "recipes": [],
+     "desc": ""
+    },
+    {
+     "money": 180000,
+     "items": {
+      "kevlar": 1,
+      "electronics": 3
+     },
+     "bonus": {
+      "weaponSkillXp": 0.25
+     },
+     "recipes": [],
+     "desc": ""
+    },
+    {
+     "money": 500000,
+     "items": {
+      "circuit": 3,
+      "capacitors": 3,
+      "kevlar": 2
+     },
+     "bonus": {
+      "weaponSkillXp": 0.5,
+      "recoil": -0.03
+     },
+     "recipes": [],
+     "desc": ""
+    }
+   ]
+  },
+  {
+   "id": "gym",
+   "name": "Спортзал",
+   "desc": "Тренировка физических навыков.",
+   "levels": [
+    {
+     "money": 40000,
+     "items": {
+      "pipe": 4,
+      "nuts": 4
+     },
+     "bonus": {
+      "physSkillXp": 0.1
+     },
+     "recipes": [],
+     "desc": ""
+    },
+    {
+     "money": 150000,
+     "items": {
+      "car_battery": 1,
+      "wires": 3
+     },
+     "bonus": {
+      "physSkillXp": 0.25,
+      "maxStamina": 0.05
+     },
+     "recipes": [],
+     "desc": ""
+    },
+    {
+     "money": 400000,
+     "items": {
+      "electronics": 3,
+      "kevlar": 1
+     },
+     "bonus": {
+      "physSkillXp": 0.5,
+      "carryWeightFlat": 5
+     },
+     "recipes": [],
+     "desc": ""
+    }
+   ]
+  },
+  {
+   "id": "intel",
+   "name": "Разведцентр",
+   "desc": "Информация о картах, расписание боссов, квесты хакера.",
+   "levels": [
+    {
+     "money": 80000,
+     "items": {
+      "laptop": 1,
+      "intel": 2
+     },
+     "bonus": {
+      "showExtracts": 1,
+      "questXp": 0.05
+     },
+     "recipes": [],
+     "desc": ""
+    },
+    {
+     "money": 250000,
+     "items": {
+      "laptop": 2,
+      "circuit": 2,
+      "flash_drive": 1
+     },
+     "bonus": {
+      "showExtracts": 1,
+      "questXp": 0.15,
+      "bossInfo": 1
+     },
+     "recipes": [],
+     "desc": ""
+    },
+    {
+     "money": 600000,
+     "items": {
+      "gpu": 1,
+      "circuit": 4,
+      "intel": 5
+     },
+     "bonus": {
+      "showExtracts": 1,
+      "questXp": 0.3,
+      "bossInfo": 1,
+      "lootHighlight": 0.5
+     },
+     "recipes": [],
+     "desc": ""
+    }
+   ]
+  },
+  {
+   "id": "security",
+   "name": "Охрана",
+   "desc": "Склад не теряет предметы, страховка дешевле.",
+   "levels": [
+    {
+     "money": 30000,
+     "items": {
+      "nails": 5,
+      "lamp": 2
+     },
+     "bonus": {
+      "insurancePrice": -0.1
+     },
+     "recipes": [],
+     "desc": ""
+    },
+    {
+     "money": 120000,
+     "items": {
+      "camera": 1,
+      "wires": 4
+     },
+     "bonus": {
+      "insurancePrice": -0.25
+     },
+     "recipes": [],
+     "desc": ""
+    },
+    {
+     "money": 300000,
+     "items": {
+      "electronics": 3,
+      "kevlar": 2
+     },
+     "bonus": {
+      "insurancePrice": -0.5,
+      "stashBonus": 20
+     },
+     "recipes": [],
+     "desc": ""
+    }
+   ]
+  },
+  {
+   "id": "library",
+   "name": "Библиотека",
+   "desc": "Опыт и интеллект.",
+   "levels": [
+    {
+     "money": 30000,
+     "items": {
+      "textbook": 3,
+      "book_rare": 1
+     },
+     "bonus": {
+      "xpGain": 0.03,
+      "skillXp": 0.05
+     },
+     "recipes": [],
+     "desc": ""
+    },
+    {
+     "money": 100000,
+     "items": {
+      "textbook": 6,
+      "book_rare": 3
+     },
+     "bonus": {
+      "xpGain": 0.06,
+      "skillXp": 0.1
+     },
+     "recipes": [],
+     "desc": ""
+    },
+    {
+     "money": 250000,
+     "items": {
+      "book_rare": 6,
+      "diploma": 1
+     },
+     "bonus": {
+      "xpGain": 0.1,
+      "skillXp": 0.2
+     },
+     "recipes": [],
+     "desc": ""
+    }
+   ]
+  },
+  {
+   "id": "bitcoin",
+   "name": "Ферма",
+   "desc": "Пассивный доход.",
+   "levels": [
+    {
+     "money": 200000,
+     "items": {
+      "gpu": 2,
+      "circuit": 2,
+      "wires": 5
+     },
+     "bonus": {
+      "income": 1500
+     },
+     "recipes": [],
+     "desc": ""
+    },
+    {
+     "money": 600000,
+     "items": {
+      "gpu": 6,
+      "circuit": 4,
+      "capacitors": 4
+     },
+     "bonus": {
+      "income": 5000
+     },
+     "recipes": [],
+     "desc": ""
+    },
+    {
+     "money": 1500000,
+     "items": {
+      "gpu": 15,
+      "circuit": 8,
+      "cpu": 4
+     },
+     "bonus": {
+      "income": 14000
+     },
+     "recipes": [],
+     "desc": ""
+    }
+   ]
+  }
+ ],
+ "recipes": [
+  {
+   "id": "craft_ammo_9x19",
+   "name": "Патроны 9x19 x60",
+   "time": 600,
+   "inputs": {
+    "gunpowder": 1,
+    "bolts": 1
+   },
+   "output": {
+    "ammo_9x19_std": 60
+   }
+  },
+  {
+   "id": "craft_ammo_545",
+   "name": "Патроны 5.45 x60",
+   "time": 900,
+   "inputs": {
+    "gunpowder": 1,
+    "nuts": 1
+   },
+   "output": {
+    "ammo_5.45x39_std": 60
+   }
+  },
+  {
+   "id": "craft_ammo_556",
+   "name": "Патроны 5.56 x60",
+   "time": 900,
+   "inputs": {
+    "gunpowder": 1,
+    "nuts": 1
+   },
+   "output": {
+    "ammo_5.56x45_std": 60
+   }
+  },
+  {
+   "id": "craft_ammo_762",
+   "name": "Патроны 7.62x39 x60",
+   "time": 900,
+   "inputs": {
+    "gunpowder": 1,
+    "bolts": 1
+   },
+   "output": {
+    "ammo_7.62x39_std": 60
+   }
+  },
+  {
+   "id": "craft_ammo_ap",
+   "name": "Бронебойные 5.45 x30",
+   "time": 1800,
+   "inputs": {
+    "gunpowder": 2,
+    "kevlar": 1
+   },
+   "output": {
+    "ammo_5.45x39_ap": 30
+   }
+  },
+  {
+   "id": "craft_supp",
+   "name": "Самодельный глушитель 9 мм",
+   "time": 1200,
+   "inputs": {
+    "pipe": 1,
+    "cloth": 2,
+    "duct_tape": 1
+   },
+   "output": {
+    "supp_pist9_1": 1
+   }
+  },
+  {
+   "id": "craft_gun_rare",
+   "name": "Сборка АК-12",
+   "time": 3600,
+   "inputs": {
+    "ak74m": 1,
+    "toolset": 1,
+    "kevlar": 1,
+    "electronics": 2
+   },
+   "output": {
+    "ak12": 1
+   }
+  },
+  {
+   "id": "craft_bandage",
+   "name": "Бинты x3",
+   "time": 300,
+   "inputs": {
+    "cloth": 1
+   },
+   "output": {
+    "bandage": 3
+   }
+  },
+  {
+   "id": "craft_ifak",
+   "name": "IFAK",
+   "time": 900,
+   "inputs": {
+    "bandage_army": 2,
+    "duct_tape": 1,
+    "soap": 1
+   },
+   "output": {
+    "ifak": 1
+   }
+  },
+  {
+   "id": "craft_splint",
+   "name": "Шина",
+   "time": 200,
+   "inputs": {
+    "pipe": 1,
+    "cloth": 1
+   },
+   "output": {
+    "splint": 2
+   }
+  },
+  {
+   "id": "craft_grizzly",
+   "name": "Grizzly",
+   "time": 2400,
+   "inputs": {
+    "salewa": 2,
+    "ifak": 1,
+    "cloth": 3
+   },
+   "output": {
+    "grizzly": 1
+   }
+  },
+  {
+   "id": "craft_morphine",
+   "name": "Морфин",
+   "time": 1800,
+   "inputs": {
+    "painkillers": 3,
+    "chalk": 1
+   },
+   "output": {
+    "morphine": 2
+   }
+  },
+  {
+   "id": "craft_water",
+   "name": "Вода 0.5 л x2",
+   "time": 600,
+   "inputs": {},
+   "output": {
+    "water": 2
+   }
+  },
+  {
+   "id": "craft_water_big",
+   "name": "Вода 1.5 л",
+   "time": 900,
+   "inputs": {},
+   "output": {
+    "water_big": 1
+   }
+  },
+  {
+   "id": "craft_energy_drink",
+   "name": "Энергетик x2",
+   "time": 1200,
+   "inputs": {
+    "juice": 1,
+    "batteries": 1
+   },
+   "output": {
+    "energy_drink": 2
+   }
+  },
+  {
+   "id": "craft_bread",
+   "name": "Хлеб x2",
+   "time": 600,
+   "inputs": {
+    "water": 1
+   },
+   "output": {
+    "bread": 2
+   }
+  },
+  {
+   "id": "craft_tushenka",
+   "name": "Тушёнка x3",
+   "time": 1200,
+   "inputs": {
+    "salami": 1,
+    "water": 1
+   },
+   "output": {
+    "tushenka": 3
+   }
+  },
+  {
+   "id": "craft_mre",
+   "name": "ИРП",
+   "time": 1800,
+   "inputs": {
+    "tushenka": 1,
+    "crackers": 1,
+    "chocolate": 1
+   },
+   "output": {
+    "mre": 1
+   }
+  }
+ ]
+}

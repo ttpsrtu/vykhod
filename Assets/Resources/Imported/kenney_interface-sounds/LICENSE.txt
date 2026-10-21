@@ -1,0 +1,6 @@
+Pack: kenney_interface-sounds
+License: CC0 1.0
+Source: https://kenney.nl/assets/interface-sounds
+Download: https://kenney.nl/media/pages/assets/interface-sounds/fa43c1dd4d-1677589452/kenney_interface-sounds.zip
+Fetched: 2026-10-21 by Tools/fetch_assets.py
+Only FBX/OBJ/PNG/WAV/OGG/MP3/TTF/HDR files were kept; previews, GLTF/GLB, .blend and sample scenes were removed.

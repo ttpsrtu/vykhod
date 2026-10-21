@@ -1,0 +1,2145 @@
+[
+ {
+  "id": "mech_1",
+  "trader": "mech",
+  "name": "Проверка связи",
+  "desc": "Семёныч хочет убедиться, что ты не бесполезен. Убей троих мародёров на любой карте.",
+  "objectives": [
+   {
+    "type": "kill",
+    "count": 3,
+    "target": "scav"
+   }
+  ],
+  "rewards": {
+   "xp": 800,
+   "money": 8000,
+   "rep": {
+    "mech": 0.03
+   },
+   "items": {
+    "ammo_9x19_std": 60
+   },
+   "unlock": []
+  },
+  "requires": [],
+  "minLevel": 1,
+  "map": null
+ },
+ {
+  "id": "mech_2",
+  "trader": "mech",
+  "name": "Бронзовый ствол",
+  "desc": "Принеси два пистолета — любых. Семёныч их переберёт.",
+  "objectives": [
+   {
+    "type": "handover",
+    "item": "*pistol",
+    "count": 2
+   }
+  ],
+  "rewards": {
+   "xp": 1200,
+   "money": 10000,
+   "rep": {
+    "mech": 0.04
+   },
+   "items": {
+    "g17": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "mech_1"
+  ],
+  "minLevel": 1,
+  "map": null
+ },
+ {
+  "id": "mech_3",
+  "trader": "mech",
+  "name": "Тихо-тихо",
+  "desc": "Убей 8 врагов с глушителем на оружии.",
+  "objectives": [
+   {
+    "type": "kill",
+    "count": 8,
+    "suppressed": true
+   }
+  ],
+  "rewards": {
+   "xp": 2500,
+   "money": 20000,
+   "rep": {
+    "mech": 0.05
+   },
+   "items": {
+    "supp_pist9_1": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "mech_2"
+  ],
+  "minLevel": 3,
+  "map": null
+ },
+ {
+  "id": "mech_4",
+  "trader": "mech",
+  "name": "Запчасти",
+  "desc": "Нужны болты, гайки и WD-40. Найди на заводе.",
+  "objectives": [
+   {
+    "type": "handover",
+    "item": "bolts",
+    "count": 5
+   },
+   {
+    "type": "handover",
+    "item": "nuts",
+    "count": 5
+   },
+   {
+    "type": "handover",
+    "item": "wd40",
+    "count": 2
+   }
+  ],
+  "rewards": {
+   "xp": 2200,
+   "money": 18000,
+   "rep": {
+    "mech": 0.05
+   },
+   "items": {
+    "toolset": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "mech_2"
+  ],
+  "minLevel": 3,
+  "map": null
+ },
+ {
+  "id": "mech_5",
+  "trader": "mech",
+  "name": "Калашников",
+  "desc": "Убей 15 врагов из оружия семейства АК.",
+  "objectives": [
+   {
+    "type": "kill",
+    "count": 15,
+    "family": "ak"
+   }
+  ],
+  "rewards": {
+   "xp": 4000,
+   "money": 35000,
+   "rep": {
+    "mech": 0.06
+   },
+   "items": {
+    "ak74m": 1,
+    "ammo_5.45x39_std": 120
+   },
+   "unlock": []
+  },
+  "requires": [
+   "mech_3"
+  ],
+  "minLevel": 5,
+  "map": null
+ },
+ {
+  "id": "mech_6",
+  "trader": "mech",
+  "name": "Инструменталка",
+  "desc": "На заводе есть инструменталка. Ключ где-то у бригадира. Вынеси набор инструментов оттуда.",
+  "objectives": [
+   {
+    "type": "visit",
+    "map": "factory",
+    "poi": "Сборочный цех"
+   },
+   {
+    "type": "find",
+    "item": "toolset",
+    "count": 1
+   }
+  ],
+  "rewards": {
+   "xp": 5000,
+   "money": 40000,
+   "rep": {
+    "mech": 0.08
+   },
+   "items": {
+    "barrel_ak_long": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "mech_4"
+  ],
+  "minLevel": 6,
+  "map": "factory"
+ },
+ {
+  "id": "mech_7",
+  "trader": "mech",
+  "name": "Снайперская пара",
+  "desc": "Убей 10 врагов с дистанции 80+ метров.",
+  "objectives": [
+   {
+    "type": "kill",
+    "count": 10,
+    "minDist": 80
+   }
+  ],
+  "rewards": {
+   "xp": 6000,
+   "money": 50000,
+   "rep": {
+    "mech": 0.08
+   },
+   "items": {
+    "scope_pso": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "mech_5"
+  ],
+  "minLevel": 8,
+  "map": null
+ },
+ {
+  "id": "mech_8",
+  "trader": "mech",
+  "name": "Чистота ствола",
+  "desc": "Отремонтируй 5 единиц оружия на верстаке и прокачай «Уход за оружием» до 10.",
+  "objectives": [
+   {
+    "type": "skill",
+    "skill": "maintenance",
+    "level": 10
+   }
+  ],
+  "rewards": {
+   "xp": 7000,
+   "money": 45000,
+   "rep": {
+    "mech": 0.1
+   },
+   "items": {
+    "repair_kit": 2
+   },
+   "unlock": []
+  },
+  "requires": [
+   "mech_6"
+  ],
+  "minLevel": 10,
+  "map": null
+ },
+ {
+  "id": "mech_9",
+  "trader": "mech",
+  "name": "Коллекционер",
+  "desc": "Принеси по одной винтовке: M4A1, HK416, SCAR-L.",
+  "objectives": [
+   {
+    "type": "handover",
+    "item": "m4a1",
+    "count": 1
+   },
+   {
+    "type": "handover",
+    "item": "hk416",
+    "count": 1
+   },
+   {
+    "type": "handover",
+    "item": "scarl",
+    "count": 1
+   }
+  ],
+  "rewards": {
+   "xp": 12000,
+   "money": 150000,
+   "rep": {
+    "mech": 0.15
+   },
+   "items": {
+    "mdr": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "mech_7",
+   "mech_8"
+  ],
+  "minLevel": 15,
+  "map": null
+ },
+ {
+  "id": "mech_10",
+  "trader": "mech",
+  "name": "Мастер-оружейник",
+  "desc": "Убей 30 врагов из оружия, у которого занято 5+ слотов модификаций.",
+  "objectives": [
+   {
+    "type": "kill",
+    "count": 30,
+    "minMods": 5
+   }
+  ],
+  "rewards": {
+   "xp": 20000,
+   "money": 250000,
+   "rep": {
+    "mech": 0.2
+   },
+   "items": {
+    "an94": 1,
+    "scope_elcan": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "mech_9"
+  ],
+  "minLevel": 20,
+  "map": null
+ },
+ {
+  "id": "doc_1",
+  "trader": "doc",
+  "name": "Первая помощь",
+  "desc": "Принеси 5 бинтов. Их всегда не хватает.",
+  "objectives": [
+   {
+    "type": "handover",
+    "item": "bandage",
+    "count": 5
+   }
+  ],
+  "rewards": {
+   "xp": 600,
+   "money": 6000,
+   "rep": {
+    "doc": 0.03
+   },
+   "items": {
+    "ai2": 2
+   },
+   "unlock": []
+  },
+  "requires": [],
+  "minLevel": 1,
+  "map": null
+ },
+ {
+  "id": "doc_2",
+  "trader": "doc",
+  "name": "Жгуты и шины",
+  "desc": "Собери 3 жгута и 3 шины.",
+  "objectives": [
+   {
+    "type": "handover",
+    "item": "tourniquet",
+    "count": 3
+   },
+   {
+    "type": "handover",
+    "item": "splint",
+    "count": 3
+   }
+  ],
+  "rewards": {
+   "xp": 1500,
+   "money": 12000,
+   "rep": {
+    "doc": 0.05
+   },
+   "items": {
+    "salewa": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "doc_1"
+  ],
+  "minLevel": 2,
+  "map": null
+ },
+ {
+  "id": "doc_3",
+  "trader": "doc",
+  "name": "Аптека на проспекте",
+  "desc": "В Донецке есть аптека. Вынеси оттуда IFAK.",
+  "objectives": [
+   {
+    "type": "visit",
+    "map": "donetsk",
+    "poi": "Площадь Ленина"
+   },
+   {
+    "type": "find",
+    "item": "ifak",
+    "count": 1
+   }
+  ],
+  "rewards": {
+   "xp": 3000,
+   "money": 25000,
+   "rep": {
+    "doc": 0.06
+   },
+   "items": {
+    "key_donetsk_pharmacy": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "doc_2"
+  ],
+  "minLevel": 4,
+  "map": "donetsk"
+ },
+ {
+  "id": "doc_4",
+  "trader": "doc",
+  "name": "Выживи",
+  "desc": "Выйди живым из 5 рейдов подряд без смерти.",
+  "objectives": [
+   {
+    "type": "extract",
+    "map": "*",
+    "count": 5,
+    "streak": true
+   }
+  ],
+  "rewards": {
+   "xp": 4000,
+   "money": 30000,
+   "rep": {
+    "doc": 0.06
+   },
+   "items": {
+    "grizzly": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "doc_2"
+  ],
+  "minLevel": 5,
+  "map": null
+ },
+ {
+  "id": "doc_5",
+  "trader": "doc",
+  "name": "Хирург",
+  "desc": "Прокачай навык «Здоровье» до 10 и принеси хирургический набор.",
+  "objectives": [
+   {
+    "type": "skill",
+    "skill": "health",
+    "level": 10
+   },
+   {
+    "type": "handover",
+    "item": "surgkit",
+    "count": 1
+   }
+  ],
+  "rewards": {
+   "xp": 6000,
+   "money": 45000,
+   "rep": {
+    "doc": 0.1
+   },
+   "items": {
+    "cms": 2,
+    "morphine": 3
+   },
+   "unlock": []
+  },
+  "requires": [
+   "doc_3",
+   "doc_4"
+  ],
+  "minLevel": 8,
+  "map": null
+ },
+ {
+  "id": "doc_6",
+  "trader": "doc",
+  "name": "Ночные",
+  "desc": "Ночные не люди. Убей 6 Ночных в подземке.",
+  "objectives": [
+   {
+    "type": "kill",
+    "count": 6,
+    "target": "cultist",
+    "map": "metro"
+   }
+  ],
+  "rewards": {
+   "xp": 9000,
+   "money": 70000,
+   "rep": {
+    "doc": 0.12
+   },
+   "items": {
+    "adrenaline": 5
+   },
+   "unlock": []
+  },
+  "requires": [
+   "doc_5"
+  ],
+  "minLevel": 12,
+  "map": "metro"
+ },
+ {
+  "id": "doc_7",
+  "trader": "doc",
+  "name": "Пациент",
+  "desc": "Вылечи сопартийца 20 раз (аптечкой по чужому телу).",
+  "objectives": [
+   {
+    "type": "heal_ally",
+    "count": 20
+   }
+  ],
+  "rewards": {
+   "xp": 8000,
+   "money": 60000,
+   "rep": {
+    "doc": 0.12
+   },
+   "items": {
+    "ifak": 3
+   },
+   "unlock": []
+  },
+  "requires": [
+   "doc_5"
+  ],
+  "minLevel": 10,
+  "map": null
+ },
+ {
+  "id": "doc_8",
+  "trader": "doc",
+  "name": "Главврач",
+  "desc": "Выйди из рейда с 30 предметами медицины за всё время.",
+  "objectives": [
+   {
+    "type": "find",
+    "item": "*med",
+    "count": 30
+   }
+  ],
+  "rewards": {
+   "xp": 15000,
+   "money": 120000,
+   "rep": {
+    "doc": 0.2
+   },
+   "items": {
+    "secure_case": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "doc_6"
+  ],
+  "minLevel": 15,
+  "map": null
+ },
+ {
+  "id": "fence_1",
+  "trader": "fence",
+  "name": "Мелочёвка",
+  "desc": "Принеси 3 ценных предмета. Любых.",
+  "objectives": [
+   {
+    "type": "handover",
+    "item": "*valuable",
+    "count": 3
+   }
+  ],
+  "rewards": {
+   "xp": 800,
+   "money": 10000,
+   "rep": {
+    "fence": 0.04
+   },
+   "items": {},
+   "unlock": []
+  },
+  "requires": [],
+  "minLevel": 1,
+  "map": null
+ },
+ {
+  "id": "fence_2",
+  "trader": "fence",
+  "name": "Электроника",
+  "desc": "Гоша любит процессоры и память. 2 процессора и 3 модуля памяти.",
+  "objectives": [
+   {
+    "type": "handover",
+    "item": "cpu",
+    "count": 2
+   },
+   {
+    "type": "handover",
+    "item": "ram",
+    "count": 3
+   }
+  ],
+  "rewards": {
+   "xp": 2500,
+   "money": 30000,
+   "rep": {
+    "fence": 0.06
+   },
+   "items": {
+    "key_mirea_lab": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "fence_1"
+  ],
+  "minLevel": 3,
+  "map": null
+ },
+ {
+  "id": "fence_3",
+  "trader": "fence",
+  "name": "Серверная МИРЭА",
+  "desc": "В серверной МИРЭА стоят видеокарты. Вынеси одну.",
+  "objectives": [
+   {
+    "type": "visit",
+    "map": "mirea",
+    "poi": "Серверная"
+   },
+   {
+    "type": "find",
+    "item": "gpu",
+    "count": 1
+   }
+  ],
+  "rewards": {
+   "xp": 6000,
+   "money": 80000,
+   "rep": {
+    "fence": 0.1
+   },
+   "items": {
+    "key_mirea_server": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "fence_2"
+  ],
+  "minLevel": 6,
+  "map": "mirea"
+ },
+ {
+  "id": "fence_4",
+  "trader": "fence",
+  "name": "Ювелирка",
+  "desc": "В ТЦ «Орбита» есть ювелирный. Принеси 3 кольца и цепь.",
+  "objectives": [
+   {
+    "type": "visit",
+    "map": "mall",
+    "poi": "Ювелирный"
+   },
+   {
+    "type": "find",
+    "item": "ring",
+    "count": 3
+   },
+   {
+    "type": "find",
+    "item": "gold_chain",
+    "count": 1
+   }
+  ],
+  "rewards": {
+   "xp": 7000,
+   "money": 90000,
+   "rep": {
+    "fence": 0.1
+   },
+   "items": {
+    "key_mall_jewelry": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "fence_3"
+  ],
+  "minLevel": 8,
+  "map": "mall"
+ },
+ {
+  "id": "fence_5",
+  "trader": "fence",
+  "name": "Банк",
+  "desc": "Хранилище банка в Донецке. Ключ Гоша даст. Принеси оттуда биткоин.",
+  "objectives": [
+   {
+    "type": "find",
+    "item": "bitcoin",
+    "count": 1
+   }
+  ],
+  "rewards": {
+   "xp": 15000,
+   "money": 200000,
+   "rep": {
+    "fence": 0.15
+   },
+   "items": {
+    "armor_gzhel": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "fence_4"
+  ],
+  "minLevel": 12,
+  "map": "donetsk"
+ },
+ {
+  "id": "fence_6",
+  "trader": "fence",
+  "name": "Чёрный рынок",
+  "desc": "Продай Гоше предметов на 500 000.",
+  "objectives": [
+   {
+    "type": "sell",
+    "trader": "fence",
+    "amount": 500000
+   }
+  ],
+  "rewards": {
+   "xp": 12000,
+   "money": 100000,
+   "rep": {
+    "fence": 0.2
+   },
+   "items": {
+    "secure_case_big": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "fence_5"
+  ],
+  "minLevel": 15,
+  "map": null
+ },
+ {
+  "id": "fence_7",
+  "trader": "fence",
+  "name": "Зачётка",
+  "desc": "Говорят, в деканате лежит зачётка с одними пятёрками. Гоше она нужна — не спрашивай зачем.",
+  "objectives": [
+   {
+    "type": "find",
+    "item": "zachetka",
+    "count": 1
+   }
+  ],
+  "rewards": {
+   "xp": 5000,
+   "money": 60000,
+   "rep": {
+    "fence": 0.08
+   },
+   "items": {
+    "key_mirea_dean": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "fence_3"
+  ],
+  "minLevel": 7,
+  "map": "mirea"
+ },
+ {
+  "id": "kom_1",
+  "trader": "komendant",
+  "name": "Присяга",
+  "desc": "Убей 5 рейдеров.",
+  "objectives": [
+   {
+    "type": "kill",
+    "count": 5,
+    "target": "raider"
+   }
+  ],
+  "rewards": {
+   "xp": 1500,
+   "money": 12000,
+   "rep": {
+    "komendant": 0.04
+   },
+   "items": {
+    "armor_6b2": 1
+   },
+   "unlock": []
+  },
+  "requires": [],
+  "minLevel": 1,
+  "map": null
+ },
+ {
+  "id": "kom_2",
+  "trader": "komendant",
+  "name": "Разведка боем",
+  "desc": "Побывай у всех точек интереса на заводе.",
+  "objectives": [
+   {
+    "type": "visit",
+    "map": "factory",
+    "poi": "Сборочный цех"
+   },
+   {
+    "type": "visit",
+    "map": "factory",
+    "poi": "Склад готовой продукции"
+   },
+   {
+    "type": "visit",
+    "map": "factory",
+    "poi": "Котельная"
+   },
+   {
+    "type": "visit",
+    "map": "factory",
+    "poi": "Гаражи"
+   }
+  ],
+  "rewards": {
+   "xp": 2500,
+   "money": 20000,
+   "rep": {
+    "komendant": 0.05
+   },
+   "items": {
+    "gren_rgd5": 3
+   },
+   "unlock": []
+  },
+  "requires": [
+   "kom_1"
+  ],
+  "minLevel": 3,
+  "map": "factory"
+ },
+ {
+  "id": "kom_3",
+  "trader": "komendant",
+  "name": "Головы",
+  "desc": "20 убийств в голову.",
+  "objectives": [
+   {
+    "type": "kill",
+    "count": 20,
+    "headshot": true
+   }
+  ],
+  "rewards": {
+   "xp": 4500,
+   "money": 35000,
+   "rep": {
+    "komendant": 0.06
+   },
+   "items": {
+    "helmet_6b47": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "kom_1"
+  ],
+  "minLevel": 5,
+  "map": null
+ },
+ {
+  "id": "kom_4",
+  "trader": "komendant",
+  "name": "Бригадир",
+  "desc": "Убей Бригадира на заводе.",
+  "objectives": [
+   {
+    "type": "kill",
+    "count": 1,
+    "target": "boss_brigadir"
+   }
+  ],
+  "rewards": {
+   "xp": 8000,
+   "money": 80000,
+   "rep": {
+    "komendant": 0.1
+   },
+   "items": {
+    "rpk16": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "kom_2",
+   "kom_3"
+  ],
+  "minLevel": 8,
+  "map": "factory"
+ },
+ {
+  "id": "kom_5",
+  "trader": "komendant",
+  "name": "Завхоз",
+  "desc": "Завхоз в МИРЭА держит кафедру в страхе. Убей его и принеси ключ от склада.",
+  "objectives": [
+   {
+    "type": "kill",
+    "count": 1,
+    "target": "boss_zavhoz"
+   },
+   {
+    "type": "handover",
+    "item": "key_mirea_storage",
+    "count": 1
+   }
+  ],
+  "rewards": {
+   "xp": 9000,
+   "money": 90000,
+   "rep": {
+    "komendant": 0.1
+   },
+   "items": {
+    "ak12": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "kom_4"
+  ],
+  "minLevel": 10,
+  "map": "mirea"
+ },
+ {
+  "id": "kom_6",
+  "trader": "komendant",
+  "name": "Гранатомётчик",
+  "desc": "Убей 10 врагов гранатами.",
+  "objectives": [
+   {
+    "type": "kill",
+    "count": 10,
+    "grenade": true
+   }
+  ],
+  "rewards": {
+   "xp": 6000,
+   "money": 50000,
+   "rep": {
+    "komendant": 0.08
+   },
+   "items": {
+    "gren_f1": 5
+   },
+   "unlock": []
+  },
+  "requires": [
+   "kom_3"
+  ],
+  "minLevel": 8,
+  "map": null
+ },
+ {
+  "id": "kom_7",
+  "trader": "komendant",
+  "name": "Шахтёр",
+  "desc": "Шахтёр в Донецке — ходячий танк. Собери отряд и убей его.",
+  "objectives": [
+   {
+    "type": "kill",
+    "count": 1,
+    "target": "boss_shakhtyor"
+   }
+  ],
+  "rewards": {
+   "xp": 15000,
+   "money": 150000,
+   "rep": {
+    "komendant": 0.15
+   },
+   "items": {
+    "armor_6b43": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "kom_5"
+  ],
+  "minLevel": 14,
+  "map": "donetsk"
+ },
+ {
+  "id": "kom_8",
+  "trader": "komendant",
+  "name": "Машинист",
+  "desc": "Машинист в Подземке. Тяжелее не бывает.",
+  "objectives": [
+   {
+    "type": "kill",
+    "count": 1,
+    "target": "boss_mashinist"
+   }
+  ],
+  "rewards": {
+   "xp": 20000,
+   "money": 250000,
+   "rep": {
+    "komendant": 0.2
+   },
+   "items": {
+    "pkp": 1,
+    "helmet_altyn": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "kom_7"
+  ],
+  "minLevel": 18,
+  "map": "metro"
+ },
+ {
+  "id": "kom_9",
+  "trader": "komendant",
+  "name": "Пулемётчик",
+  "desc": "Убей 40 врагов из пулемёта.",
+  "objectives": [
+   {
+    "type": "kill",
+    "count": 40,
+    "cls": "lmg"
+   }
+  ],
+  "rewards": {
+   "xp": 12000,
+   "money": 120000,
+   "rep": {
+    "komendant": 0.12
+   },
+   "items": {
+    "mag_int545_drum": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "kom_4"
+  ],
+  "minLevel": 12,
+  "map": null
+ },
+ {
+  "id": "kom_10",
+  "trader": "komendant",
+  "name": "Снайпер",
+  "desc": "Убей 25 врагов из снайперской винтовки с дистанции 120+.",
+  "objectives": [
+   {
+    "type": "kill",
+    "count": 25,
+    "cls": "sniper",
+    "minDist": 120
+   }
+  ],
+  "rewards": {
+   "xp": 14000,
+   "money": 140000,
+   "rep": {
+    "komendant": 0.15
+   },
+   "items": {
+    "sv98": 1,
+    "scope_10x": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "kom_3"
+  ],
+  "minLevel": 12,
+  "map": null
+ },
+ {
+  "id": "bab_1",
+  "trader": "babulya",
+  "name": "Продукты",
+  "desc": "Принеси тушёнку и хлеб. Три и три.",
+  "objectives": [
+   {
+    "type": "handover",
+    "item": "tushenka",
+    "count": 3
+   },
+   {
+    "type": "handover",
+    "item": "bread",
+    "count": 3
+   }
+  ],
+  "rewards": {
+   "xp": 500,
+   "money": 5000,
+   "rep": {
+    "babulya": 0.04
+   },
+   "items": {
+    "bag_school": 1
+   },
+   "unlock": []
+  },
+  "requires": [],
+  "minLevel": 1,
+  "map": null
+ },
+ {
+  "id": "bab_2",
+  "trader": "babulya",
+  "name": "Чебуреки",
+  "desc": "В столовой МИРЭА чебуреки. Вынеси 4.",
+  "objectives": [
+   {
+    "type": "visit",
+    "map": "mirea",
+    "poi": "Столовая"
+   },
+   {
+    "type": "find",
+    "item": "cheburek",
+    "count": 4
+   }
+  ],
+  "rewards": {
+   "xp": 1500,
+   "money": 10000,
+   "rep": {
+    "babulya": 0.05
+   },
+   "items": {
+    "rig_scav": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "bab_1"
+  ],
+  "minLevel": 2,
+  "map": "mirea"
+ },
+ {
+  "id": "bab_3",
+  "trader": "babulya",
+  "name": "Дача",
+  "desc": "Посёлок Сосновка. Найди коттедж богача и принеси оттуда виски.",
+  "objectives": [
+   {
+    "type": "visit",
+    "map": "suburb",
+    "poi": "Коттедж богача"
+   },
+   {
+    "type": "find",
+    "item": "whiskey",
+    "count": 1
+   }
+  ],
+  "rewards": {
+   "xp": 2500,
+   "money": 18000,
+   "rep": {
+    "babulya": 0.06
+   },
+   "items": {
+    "key_suburb_cottage": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "bab_2"
+  ],
+  "minLevel": 4,
+  "map": "suburb"
+ },
+ {
+  "id": "bab_4",
+  "trader": "babulya",
+  "name": "Сигареты",
+  "desc": "5 блоков сигарет.",
+  "objectives": [
+   {
+    "type": "handover",
+    "item": "cigs",
+    "count": 5
+   }
+  ],
+  "rewards": {
+   "xp": 2000,
+   "money": 15000,
+   "rep": {
+    "babulya": 0.05
+   },
+   "items": {
+    "bag_pilgrim": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "bab_1"
+  ],
+  "minLevel": 4,
+  "map": null
+ },
+ {
+  "id": "bab_5",
+  "trader": "babulya",
+  "name": "Лесник",
+  "desc": "Лесник обстреливает дачников. Разберись.",
+  "objectives": [
+   {
+    "type": "kill",
+    "count": 1,
+    "target": "boss_lesnik"
+   }
+  ],
+  "rewards": {
+   "xp": 7000,
+   "money": 60000,
+   "rep": {
+    "babulya": 0.1
+   },
+   "items": {
+    "mosin": 1,
+    "scope_3_9": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "bab_3"
+  ],
+  "minLevel": 9,
+  "map": "suburb"
+ },
+ {
+  "id": "bab_6",
+  "trader": "babulya",
+  "name": "Рынок",
+  "desc": "Побывай на рынке в Донецке и принеси 3 пачки чая... ладно, 3 сока.",
+  "objectives": [
+   {
+    "type": "visit",
+    "map": "donetsk",
+    "poi": "Рынок"
+   },
+   {
+    "type": "find",
+    "item": "juice",
+    "count": 3
+   }
+  ],
+  "rewards": {
+   "xp": 3000,
+   "money": 20000,
+   "rep": {
+    "babulya": 0.06
+   },
+   "items": {
+    "mre": 3
+   },
+   "unlock": []
+  },
+  "requires": [
+   "bab_3"
+  ],
+  "minLevel": 6,
+  "map": "donetsk"
+ },
+ {
+  "id": "bab_7",
+  "trader": "babulya",
+  "name": "Учебники",
+  "desc": "Принеси 6 учебников по матану. Внуку.",
+  "objectives": [
+   {
+    "type": "handover",
+    "item": "textbook",
+    "count": 6
+   }
+  ],
+  "rewards": {
+   "xp": 4000,
+   "money": 25000,
+   "rep": {
+    "babulya": 0.08
+   },
+   "items": {
+    "bag_attack": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "bab_4"
+  ],
+  "minLevel": 7,
+  "map": null
+ },
+ {
+  "id": "bab_8",
+  "trader": "babulya",
+  "name": "Хозяйка",
+  "desc": "Прокачай «Метаболизм» до 15 и «Выносливость» до 15.",
+  "objectives": [
+   {
+    "type": "skill",
+    "skill": "metabolism",
+    "level": 15
+   },
+   {
+    "type": "skill",
+    "skill": "endurance",
+    "level": 15
+   }
+  ],
+  "rewards": {
+   "xp": 8000,
+   "money": 50000,
+   "rep": {
+    "babulya": 0.15
+   },
+   "items": {
+    "bag_expedition": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "bab_6",
+   "bab_7"
+  ],
+  "minLevel": 12,
+  "map": null
+ },
+ {
+  "id": "hack_1",
+  "trader": "hacker",
+  "name": "Флешка",
+  "desc": "Найди флешку с данными. Она в деканате или серверной МИРЭА.",
+  "objectives": [
+   {
+    "type": "find",
+    "item": "flash_drive",
+    "count": 1
+   }
+  ],
+  "rewards": {
+   "xp": 2000,
+   "money": 20000,
+   "rep": {
+    "hacker": 0.05
+   },
+   "items": {
+    "laser_red": 1
+   },
+   "unlock": []
+  },
+  "requires": [],
+  "minLevel": 3,
+  "map": "mirea"
+ },
+ {
+  "id": "hack_2",
+  "trader": "hacker",
+  "name": "Железо",
+  "desc": "3 SSD и ноутбук.",
+  "objectives": [
+   {
+    "type": "handover",
+    "item": "ssd",
+    "count": 3
+   },
+   {
+    "type": "handover",
+    "item": "laptop",
+    "count": 1
+   }
+  ],
+  "rewards": {
+   "xp": 3500,
+   "money": 35000,
+   "rep": {
+    "hacker": 0.07
+   },
+   "items": {
+    "rds_eotech": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "hack_1"
+  ],
+  "minLevel": 5,
+  "map": null
+ },
+ {
+  "id": "hack_3",
+  "trader": "hacker",
+  "name": "Маяк",
+  "desc": "Установи пауэрбанк на крыше ТЦ «Орбита» (поднимись и используй).",
+  "objectives": [
+   {
+    "type": "plant",
+    "map": "mall",
+    "poi": "Фудкорт",
+    "item": "powerbank"
+   }
+  ],
+  "rewards": {
+   "xp": 5000,
+   "money": 40000,
+   "rep": {
+    "hacker": 0.08
+   },
+   "items": {
+    "scope_acog": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "hack_2"
+  ],
+  "minLevel": 7,
+  "map": "mall"
+ },
+ {
+  "id": "hack_4",
+  "trader": "hacker",
+  "name": "Разведданные",
+  "desc": "Собери 5 папок разведданных.",
+  "objectives": [
+   {
+    "type": "find",
+    "item": "intel",
+    "count": 5
+   }
+  ],
+  "rewards": {
+   "xp": 7000,
+   "money": 70000,
+   "rep": {
+    "hacker": 0.1
+   },
+   "items": {
+    "nvg": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "hack_2"
+  ],
+  "minLevel": 9,
+  "map": null
+ },
+ {
+  "id": "hack_5",
+  "trader": "hacker",
+  "name": "Диспетчерская",
+  "desc": "В подземке есть диспетчерская. Поставь там ноутбук.",
+  "objectives": [
+   {
+    "type": "plant",
+    "map": "metro",
+    "poi": "Центральный зал",
+    "item": "laptop"
+   }
+  ],
+  "rewards": {
+   "xp": 9000,
+   "money": 90000,
+   "rep": {
+    "hacker": 0.12
+   },
+   "items": {
+    "key_metro_control": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "hack_3",
+   "hack_4"
+  ],
+  "minLevel": 12,
+  "map": "metro"
+ },
+ {
+  "id": "hack_6",
+  "trader": "hacker",
+  "name": "Степаныч",
+  "desc": "Охранник ТЦ мешает бизнесу. Убери его.",
+  "objectives": [
+   {
+    "type": "kill",
+    "count": 1,
+    "target": "boss_stepanych"
+   }
+  ],
+  "rewards": {
+   "xp": 12000,
+   "money": 120000,
+   "rep": {
+    "hacker": 0.15
+   },
+   "items": {
+    "p90": 1,
+    "scope_vudu": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "hack_3"
+  ],
+  "minLevel": 12,
+  "map": "mall"
+ },
+ {
+  "id": "hack_7",
+  "trader": "hacker",
+  "name": "Сеть",
+  "desc": "Побывай у диспетчерской, в серверной МИРЭА и в офисе в Донецке за один рейд каждый.",
+  "objectives": [
+   {
+    "type": "visit",
+    "map": "metro",
+    "poi": "Центральный зал"
+   },
+   {
+    "type": "visit",
+    "map": "mirea",
+    "poi": "Серверная"
+   },
+   {
+    "type": "visit",
+    "map": "donetsk",
+    "poi": "Банк"
+   }
+  ],
+  "rewards": {
+   "xp": 15000,
+   "money": 150000,
+   "rep": {
+    "hacker": 0.2
+   },
+   "items": {
+    "t5000": 1,
+    "scope_12x": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "hack_5",
+   "hack_6"
+  ],
+  "minLevel": 16,
+  "map": null
+ },
+ {
+  "id": "hack_8",
+  "trader": "hacker",
+  "name": "Интеллект",
+  "desc": "Прокачай «Интеллект» до 20.",
+  "objectives": [
+   {
+    "type": "skill",
+    "skill": "intellect",
+    "level": 20
+   }
+  ],
+  "rewards": {
+   "xp": 10000,
+   "money": 80000,
+   "rep": {
+    "hacker": 0.12
+   },
+   "items": {
+    "laser_peq": 1
+   },
+   "unlock": []
+  },
+  "requires": [
+   "hack_4"
+  ],
+  "minLevel": 14,
+  "map": null
+ },
+ {
+  "id": "scout_mirea_1",
+  "trader": "komendant",
+  "name": "Разведка: РТУ МИРЭА",
+  "desc": "Обойди ключевые точки на карте «РТУ МИРЭА».",
+  "objectives": [
+   {
+    "type": "visit",
+    "map": "mirea",
+    "poi": "Главный корпус"
+   },
+   {
+    "type": "visit",
+    "map": "mirea",
+    "poi": "Столовая"
+   },
+   {
+    "type": "visit",
+    "map": "mirea",
+    "poi": "Общежитие"
+   }
+  ],
+  "rewards": {
+   "xp": 1500,
+   "money": 10000,
+   "rep": {
+    "komendant": 0.03
+   },
+   "items": {},
+   "unlock": []
+  },
+  "requires": [],
+  "minLevel": 2,
+  "map": "mirea"
+ },
+ {
+  "id": "scout_mirea_2",
+  "trader": "komendant",
+  "name": "Зачистка: РТУ МИРЭА",
+  "desc": "Убей 12 врагов на карте «РТУ МИРЭА».",
+  "objectives": [
+   {
+    "type": "kill",
+    "count": 12,
+    "map": "mirea"
+   }
+  ],
+  "rewards": {
+   "xp": 3000,
+   "money": 25000,
+   "rep": {
+    "komendant": 0.04
+   },
+   "items": {},
+   "unlock": []
+  },
+  "requires": [
+   "scout_mirea_1"
+  ],
+  "minLevel": 4,
+  "map": "mirea"
+ },
+ {
+  "id": "scout_mirea_3",
+  "trader": "fence",
+  "name": "Вынос: РТУ МИРЭА",
+  "desc": "Выйди с карты «РТУ МИРЭА» 3 раза с лутом дороже 50 000.",
+  "objectives": [
+   {
+    "type": "extract",
+    "map": "mirea",
+    "count": 3,
+    "minLoot": 50000
+   }
+  ],
+  "rewards": {
+   "xp": 4000,
+   "money": 40000,
+   "rep": {
+    "fence": 0.05
+   },
+   "items": {},
+   "unlock": []
+  },
+  "requires": [
+   "scout_mirea_1"
+  ],
+  "minLevel": 5,
+  "map": "mirea"
+ },
+ {
+  "id": "scout_donetsk_1",
+  "trader": "komendant",
+  "name": "Разведка: Донецк. Центр",
+  "desc": "Обойди ключевые точки на карте «Донецк. Центр».",
+  "objectives": [
+   {
+    "type": "visit",
+    "map": "donetsk",
+    "poi": "Площадь Ленина"
+   },
+   {
+    "type": "visit",
+    "map": "donetsk",
+    "poi": "Театр"
+   },
+   {
+    "type": "visit",
+    "map": "donetsk",
+    "poi": "Банк"
+   }
+  ],
+  "rewards": {
+   "xp": 1500,
+   "money": 10000,
+   "rep": {
+    "komendant": 0.03
+   },
+   "items": {},
+   "unlock": []
+  },
+  "requires": [],
+  "minLevel": 2,
+  "map": "donetsk"
+ },
+ {
+  "id": "scout_donetsk_2",
+  "trader": "komendant",
+  "name": "Зачистка: Донецк. Центр",
+  "desc": "Убей 12 врагов на карте «Донецк. Центр».",
+  "objectives": [
+   {
+    "type": "kill",
+    "count": 12,
+    "map": "donetsk"
+   }
+  ],
+  "rewards": {
+   "xp": 3000,
+   "money": 25000,
+   "rep": {
+    "komendant": 0.04
+   },
+   "items": {},
+   "unlock": []
+  },
+  "requires": [
+   "scout_donetsk_1"
+  ],
+  "minLevel": 4,
+  "map": "donetsk"
+ },
+ {
+  "id": "scout_donetsk_3",
+  "trader": "fence",
+  "name": "Вынос: Донецк. Центр",
+  "desc": "Выйди с карты «Донецк. Центр» 3 раза с лутом дороже 50 000.",
+  "objectives": [
+   {
+    "type": "extract",
+    "map": "donetsk",
+    "count": 3,
+    "minLoot": 50000
+   }
+  ],
+  "rewards": {
+   "xp": 4000,
+   "money": 40000,
+   "rep": {
+    "fence": 0.05
+   },
+   "items": {},
+   "unlock": []
+  },
+  "requires": [
+   "scout_donetsk_1"
+  ],
+  "minLevel": 5,
+  "map": "donetsk"
+ },
+ {
+  "id": "scout_factory_1",
+  "trader": "komendant",
+  "name": "Разведка: Завод «Прогресс»",
+  "desc": "Обойди ключевые точки на карте «Завод «Прогресс»».",
+  "objectives": [
+   {
+    "type": "visit",
+    "map": "factory",
+    "poi": "Сборочный цех"
+   },
+   {
+    "type": "visit",
+    "map": "factory",
+    "poi": "Склад готовой продукции"
+   },
+   {
+    "type": "visit",
+    "map": "factory",
+    "poi": "Котельная"
+   }
+  ],
+  "rewards": {
+   "xp": 1500,
+   "money": 10000,
+   "rep": {
+    "komendant": 0.03
+   },
+   "items": {},
+   "unlock": []
+  },
+  "requires": [],
+  "minLevel": 2,
+  "map": "factory"
+ },
+ {
+  "id": "scout_factory_2",
+  "trader": "komendant",
+  "name": "Зачистка: Завод «Прогресс»",
+  "desc": "Убей 12 врагов на карте «Завод «Прогресс»».",
+  "objectives": [
+   {
+    "type": "kill",
+    "count": 12,
+    "map": "factory"
+   }
+  ],
+  "rewards": {
+   "xp": 3000,
+   "money": 25000,
+   "rep": {
+    "komendant": 0.04
+   },
+   "items": {},
+   "unlock": []
+  },
+  "requires": [
+   "scout_factory_1"
+  ],
+  "minLevel": 4,
+  "map": "factory"
+ },
+ {
+  "id": "scout_factory_3",
+  "trader": "fence",
+  "name": "Вынос: Завод «Прогресс»",
+  "desc": "Выйди с карты «Завод «Прогресс»» 3 раза с лутом дороже 50 000.",
+  "objectives": [
+   {
+    "type": "extract",
+    "map": "factory",
+    "count": 3,
+    "minLoot": 50000
+   }
+  ],
+  "rewards": {
+   "xp": 4000,
+   "money": 40000,
+   "rep": {
+    "fence": 0.05
+   },
+   "items": {},
+   "unlock": []
+  },
+  "requires": [
+   "scout_factory_1"
+  ],
+  "minLevel": 5,
+  "map": "factory"
+ },
+ {
+  "id": "scout_suburb_1",
+  "trader": "komendant",
+  "name": "Разведка: Посёлок Сосновка",
+  "desc": "Обойди ключевые точки на карте «Посёлок Сосновка».",
+  "objectives": [
+   {
+    "type": "visit",
+    "map": "suburb",
+    "poi": "Магазин"
+   },
+   {
+    "type": "visit",
+    "map": "suburb",
+    "poi": "Коттедж богача"
+   },
+   {
+    "type": "visit",
+    "map": "suburb",
+    "poi": "Озеро"
+   }
+  ],
+  "rewards": {
+   "xp": 1500,
+   "money": 10000,
+   "rep": {
+    "komendant": 0.03
+   },
+   "items": {},
+   "unlock": []
+  },
+  "requires": [],
+  "minLevel": 2,
+  "map": "suburb"
+ },
+ {
+  "id": "scout_suburb_2",
+  "trader": "komendant",
+  "name": "Зачистка: Посёлок Сосновка",
+  "desc": "Убей 12 врагов на карте «Посёлок Сосновка».",
+  "objectives": [
+   {
+    "type": "kill",
+    "count": 12,
+    "map": "suburb"
+   }
+  ],
+  "rewards": {
+   "xp": 3000,
+   "money": 25000,
+   "rep": {
+    "komendant": 0.04
+   },
+   "items": {},
+   "unlock": []
+  },
+  "requires": [
+   "scout_suburb_1"
+  ],
+  "minLevel": 4,
+  "map": "suburb"
+ },
+ {
+  "id": "scout_suburb_3",
+  "trader": "fence",
+  "name": "Вынос: Посёлок Сосновка",
+  "desc": "Выйди с карты «Посёлок Сосновка» 3 раза с лутом дороже 50 000.",
+  "objectives": [
+   {
+    "type": "extract",
+    "map": "suburb",
+    "count": 3,
+    "minLoot": 50000
+   }
+  ],
+  "rewards": {
+   "xp": 4000,
+   "money": 40000,
+   "rep": {
+    "fence": 0.05
+   },
+   "items": {},
+   "unlock": []
+  },
+  "requires": [
+   "scout_suburb_1"
+  ],
+  "minLevel": 5,
+  "map": "suburb"
+ },
+ {
+  "id": "scout_mall_1",
+  "trader": "komendant",
+  "name": "Разведка: ТЦ «Орбита»",
+  "desc": "Обойди ключевые точки на карте «ТЦ «Орбита»».",
+  "objectives": [
+   {
+    "type": "visit",
+    "map": "mall",
+    "poi": "Фудкорт"
+   },
+   {
+    "type": "visit",
+    "map": "mall",
+    "poi": "Ювелирный"
+   },
+   {
+    "type": "visit",
+    "map": "mall",
+    "poi": "Электроника"
+   }
+  ],
+  "rewards": {
+   "xp": 1500,
+   "money": 10000,
+   "rep": {
+    "komendant": 0.03
+   },
+   "items": {},
+   "unlock": []
+  },
+  "requires": [],
+  "minLevel": 2,
+  "map": "mall"
+ },
+ {
+  "id": "scout_mall_2",
+  "trader": "komendant",
+  "name": "Зачистка: ТЦ «Орбита»",
+  "desc": "Убей 12 врагов на карте «ТЦ «Орбита»».",
+  "objectives": [
+   {
+    "type": "kill",
+    "count": 12,
+    "map": "mall"
+   }
+  ],
+  "rewards": {
+   "xp": 3000,
+   "money": 25000,
+   "rep": {
+    "komendant": 0.04
+   },
+   "items": {},
+   "unlock": []
+  },
+  "requires": [
+   "scout_mall_1"
+  ],
+  "minLevel": 4,
+  "map": "mall"
+ },
+ {
+  "id": "scout_mall_3",
+  "trader": "fence",
+  "name": "Вынос: ТЦ «Орбита»",
+  "desc": "Выйди с карты «ТЦ «Орбита»» 3 раза с лутом дороже 50 000.",
+  "objectives": [
+   {
+    "type": "extract",
+    "map": "mall",
+    "count": 3,
+    "minLoot": 50000
+   }
+  ],
+  "rewards": {
+   "xp": 4000,
+   "money": 40000,
+   "rep": {
+    "fence": 0.05
+   },
+   "items": {},
+   "unlock": []
+  },
+  "requires": [
+   "scout_mall_1"
+  ],
+  "minLevel": 5,
+  "map": "mall"
+ },
+ {
+  "id": "scout_metro_1",
+  "trader": "komendant",
+  "name": "Разведка: Подземка",
+  "desc": "Обойди ключевые точки на карте «Подземка».",
+  "objectives": [
+   {
+    "type": "visit",
+    "map": "metro",
+    "poi": "Центральный зал"
+   },
+   {
+    "type": "visit",
+    "map": "metro",
+    "poi": "Бункер"
+   },
+   {
+    "type": "visit",
+    "map": "metro",
+    "poi": "Депо"
+   }
+  ],
+  "rewards": {
+   "xp": 1500,
+   "money": 10000,
+   "rep": {
+    "komendant": 0.03
+   },
+   "items": {},
+   "unlock": []
+  },
+  "requires": [],
+  "minLevel": 2,
+  "map": "metro"
+ },
+ {
+  "id": "scout_metro_2",
+  "trader": "komendant",
+  "name": "Зачистка: Подземка",
+  "desc": "Убей 12 врагов на карте «Подземка».",
+  "objectives": [
+   {
+    "type": "kill",
+    "count": 12,
+    "map": "metro"
+   }
+  ],
+  "rewards": {
+   "xp": 3000,
+   "money": 25000,
+   "rep": {
+    "komendant": 0.04
+   },
+   "items": {},
+   "unlock": []
+  },
+  "requires": [
+   "scout_metro_1"
+  ],
+  "minLevel": 4,
+  "map": "metro"
+ },
+ {
+  "id": "scout_metro_3",
+  "trader": "fence",
+  "name": "Вынос: Подземка",
+  "desc": "Выйди с карты «Подземка» 3 раза с лутом дороже 50 000.",
+  "objectives": [
+   {
+    "type": "extract",
+    "map": "metro",
+    "count": 3,
+    "minLoot": 50000
+   }
+  ],
+  "rewards": {
+   "xp": 4000,
+   "money": 40000,
+   "rep": {
+    "fence": 0.05
+   },
+   "items": {},
+   "unlock": []
+  },
+  "requires": [
+   "scout_metro_1"
+  ],
+  "minLevel": 5,
+  "map": "metro"
+ }
+]

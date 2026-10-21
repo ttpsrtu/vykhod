@@ -1,0 +1,6 @@
+Pack: kenney_city-kit-industrial
+License: CC0 1.0
+Source: https://kenney.nl/assets/city-kit-industrial
+Download: https://kenney.nl/media/pages/assets/city-kit-industrial/0ec35b139d-1788171848/kenney_city-kit-industrial_2.0.zip
+Fetched: 2026-10-21 by Tools/fetch_assets.py
+Only FBX/OBJ/PNG/WAV/OGG/MP3/TTF/HDR files were kept; previews, GLTF/GLB, .blend and sample scenes were removed.

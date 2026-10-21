@@ -1,0 +1,6 @@
+Pack: kenney_nature-kit
+License: CC0 1.0
+Source: https://kenney.nl/assets/nature-kit
+Download: https://kenney.nl/media/pages/assets/nature-kit/37ac38a37b-1677698939/kenney_nature-kit.zip
+Fetched: 2026-10-21 by Tools/fetch_assets.py
+Only FBX/OBJ/PNG/WAV/OGG/MP3/TTF/HDR files were kept; previews, GLTF/GLB, .blend and sample scenes were removed.

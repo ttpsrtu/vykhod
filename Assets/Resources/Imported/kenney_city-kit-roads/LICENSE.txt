@@ -1,0 +1,6 @@
+Pack: kenney_city-kit-roads
+License: CC0 1.0
+Source: https://kenney.nl/assets/city-kit-roads
+Download: https://kenney.nl/media/pages/assets/city-kit-roads/74288c9459-1791628607/kenney_city-kit-roads.zip
+Fetched: 2026-10-21 by Tools/fetch_assets.py
+Only FBX/OBJ/PNG/WAV/OGG/MP3/TTF/HDR files were kept; previews, GLTF/GLB, .blend and sample scenes were removed.

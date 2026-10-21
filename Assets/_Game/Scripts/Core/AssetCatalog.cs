@@ -1,0 +1,233 @@
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+namespace Vykhod
+{
+    /// <summary>
+    /// Поиск скачанных ассетов (Resources/Imported/asset_index.json) по подсказкам + плейсхолдеры из примитивов,
+    /// если ассет не найден. Игра всегда работает, даже без единого скачанного файла.
+    /// </summary>
+    public static class AssetCatalog
+    {
+        class Pack { public string name, license; public List<string> models = new List<string>(), audio = new List<string>(), textures = new List<string>(); }
+        static readonly List<Pack> packs = new List<Pack>();
+        static readonly List<string> allModels = new List<string>(), allAudio = new List<string>();
+        static readonly Dictionary<string, GameObject> prefabCache = new Dictionary<string, GameObject>();
+        static readonly Dictionary<string, AudioClip> clipCache = new Dictionary<string, AudioClip>();
+        static readonly Dictionary<Color, Material> matCache = new Dictionary<Color, Material>();
+        static bool loaded;
+        static Font font;
+
+        static readonly Dictionary<string, string[]> synonyms = new Dictionary<string, string[]>
+        {
+            ["pistol"] = new[] { "pistol", "handgun", "revolver", "glock" }, ["revolver"] = new[] { "revolver", "pistol" },
+            ["smg"] = new[] { "smg", "submachine", "uzi", "mp5", "machine-pistol" }, ["rifle"] = new[] { "rifle", "ak", "assault", "ar-", "m4", "carbine" },
+            ["rifle_short"] = new[] { "carbine", "rifle", "ak", "assault" }, ["shotgun"] = new[] { "shotgun" }, ["sniper"] = new[] { "sniper", "rifle" },
+            ["knife"] = new[] { "knife", "dagger", "blade" }, ["axe"] = new[] { "axe", "hatchet" }, ["crowbar"] = new[] { "crowbar", "bar" }, ["hammer"] = new[] { "hammer", "mallet" },
+            ["suppressor"] = new[] { "suppressor", "silencer" }, ["scope"] = new[] { "scope", "sight" }, ["reddot"] = new[] { "red-dot", "reddot", "sight", "dot" },
+            ["grip"] = new[] { "grip" }, ["mag"] = new[] { "magazine", "clip" }, ["muzzle"] = new[] { "muzzle", "brake", "compensator" },
+            ["tree"] = new[] { "tree", "pine", "oak", "birch" }, ["bush"] = new[] { "bush", "shrub" }, ["rock"] = new[] { "rock", "stone" },
+            ["car"] = new[] { "car", "sedan", "van", "truck", "vehicle" }, ["crate"] = new[] { "crate", "box", "chest" }, ["barrel"] = new[] { "barrel", "drum" },
+            ["locker"] = new[] { "locker", "cabinet", "wardrobe" }, ["safe"] = new[] { "safe", "vault" }, ["table"] = new[] { "table", "desk" },
+            ["chair"] = new[] { "chair", "stool" }, ["shelf"] = new[] { "shelf", "bookcase", "rack" }, ["bed"] = new[] { "bed", "bunk" },
+            ["lamp"] = new[] { "lamp", "light" }, ["fence"] = new[] { "fence", "wall" }, ["pallet"] = new[] { "pallet" }, ["container"] = new[] { "container" },
+            ["character"] = new[] { "character", "man", "soldier", "zombie", "human", "survivor" },
+            ["bag"] = new[] { "bag", "backpack" }, ["medkit"] = new[] { "medkit", "medical", "first-aid", "aid" }, ["bottle"] = new[] { "bottle", "can", "drink" },
+            ["food"] = new[] { "food", "can", "bread", "burger" }, ["valuable"] = new[] { "gem", "gold", "coin", "jewel", "trophy" },
+            ["key"] = new[] { "key" }, ["ammo"] = new[] { "ammo", "bullet", "magazine", "clip" }, ["armor"] = new[] { "armor", "vest" },
+            ["helmet"] = new[] { "helmet", "hat", "cap" }, ["throwable"] = new[] { "grenade" }, ["tool"] = new[] { "tool", "wrench", "hammer" },
+            ["barter"] = new[] { "bolt", "screw", "tool", "wire", "box" }, ["med"] = new[] { "medkit", "medical", "bandage", "aid" },
+        };
+
+        public static void Load()
+        {
+            if (loaded) return;
+            loaded = true;
+            var ta = Resources.Load<TextAsset>("Imported/asset_index");
+            if (ta == null) { Debug.LogWarning("[Assets] asset_index.json не найден — используем плейсхолдеры. Запустите Tools/fetch_assets.py"); return; }
+            var root = Json.Parse(ta.text);
+            var list = root is List<object> ? J.DL(root) : J.DL(J.D(root), "packs");
+            foreach (var d in list)
+            {
+                var p = new Pack { name = J.S(d, "pack"), license = J.S(d, "license"), models = J.SL(d, "models"), audio = J.SL(d, "audio"), textures = J.SL(d, "textures") };
+                packs.Add(p); allModels.AddRange(p.models); allAudio.AddRange(p.audio);
+            }
+            Debug.Log($"[Assets] пакетов {packs.Count}, моделей {allModels.Count}, звуков {allAudio.Count}");
+        }
+
+        public static int ModelCount => allModels.Count;
+
+        /// <summary>Ищет путь модели по подсказке. packHint — часть имени пакета (например "weapon").</summary>
+        public static string FindModel(string hint, string packHint = null)
+        {
+            Load();
+            if (string.IsNullOrEmpty(hint) || allModels.Count == 0) return null;
+            IEnumerable<string> pool = allModels;
+            if (!string.IsNullOrEmpty(packHint))
+            {
+                var alts = packHint.ToLowerInvariant().Split('|');
+                var pp = allModels.Where(m => { var ml = m.ToLowerInvariant(); foreach (var a in alts) if (ml.Contains(a)) return true; return false; }).ToList();
+                if (pp.Count > 0) pool = pp;
+            }
+            string h = hint.ToLowerInvariant();
+            var keys = synonyms.TryGetValue(h, out var s) ? s : new[] { h };
+            foreach (var k in keys)
+            {
+                var exact = pool.FirstOrDefault(m => System.IO.Path.GetFileName(m).ToLowerInvariant() == k);
+                if (exact != null) return exact;
+                var starts = pool.FirstOrDefault(m => System.IO.Path.GetFileName(m).ToLowerInvariant().StartsWith(k));
+                if (starts != null) return starts;
+                var any = pool.FirstOrDefault(m => System.IO.Path.GetFileName(m).ToLowerInvariant().Contains(k));
+                if (any != null) return any;
+            }
+            return null;
+        }
+
+        public static List<string> FindModels(string nameContains, string packContains = null)
+        {
+            Load();
+            string n = nameContains?.ToLowerInvariant() ?? "", p = packContains?.ToLowerInvariant() ?? "";
+            return allModels.Where(m => (p == "" || m.ToLowerInvariant().Contains(p)) && (n == "" || System.IO.Path.GetFileName(m).ToLowerInvariant().Contains(n))).ToList();
+        }
+
+        public static GameObject LoadPrefab(string path)
+        {
+            if (string.IsNullOrEmpty(path)) return null;
+            if (prefabCache.TryGetValue(path, out var g)) return g;
+            g = Resources.Load<GameObject>(path);
+            prefabCache[path] = g;
+            return g;
+        }
+
+        /// <summary>Создаёт экземпляр модели, нормализуя размер (targetSize = макс. габарит в метрах; 0 = как есть).</summary>
+        public static GameObject Spawn(string path, Transform parent, float targetSize = 0, bool colliders = false)
+        {
+            var prefab = LoadPrefab(path);
+            if (prefab == null) return null;
+            var go = Object.Instantiate(prefab, parent);
+            go.transform.localPosition = Vector3.zero; go.transform.localRotation = Quaternion.identity;
+            Normalize(go, targetSize, colliders);
+            return go;
+        }
+
+        public static void Normalize(GameObject go, float targetSize, bool colliders)
+        {
+            var rends = go.GetComponentsInChildren<Renderer>();
+            if (rends.Length == 0) return;
+            var b = rends[0].bounds; foreach (var r in rends) b.Encapsulate(r.bounds);
+            float max = Mathf.Max(b.size.x, b.size.y, b.size.z);
+            if (targetSize > 0 && max > 0.0001f) go.transform.localScale = Vector3.one * (targetSize / max);
+            foreach (var r in rends) { r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On; foreach (var m in r.sharedMaterials) if (m != null) m.enableInstancing = true; }
+            if (colliders && go.GetComponentInChildren<Collider>() == null)
+            {
+                foreach (var mf in go.GetComponentsInChildren<MeshFilter>()) { var bc = mf.gameObject.AddComponent<BoxCollider>(); }
+            }
+            else if (!colliders) foreach (var c in go.GetComponentsInChildren<Collider>()) Object.Destroy(c);
+        }
+
+        /// <summary>Модель по подсказке или плейсхолдер.</summary>
+        public static GameObject SpawnOrPlaceholder(string hint, Transform parent, float size, Color fallbackColor, PrimitiveType prim = PrimitiveType.Cube, string packHint = null, bool colliders = false)
+        {
+            var path = FindModel(hint, packHint);
+            var go = path != null ? Spawn(path, parent, size, colliders) : null;
+            if (go == null)
+            {
+                go = Prim(prim, parent, Vector3.zero, Vector3.one * size, fallbackColor, colliders);
+                go.name = "ph_" + hint;
+            }
+            return go;
+        }
+
+        // ------------------------------------------------------------ звук
+        public static AudioClip FindClip(params string[] hints)
+        {
+            Load();
+            foreach (var h in hints)
+            {
+                string k = h.ToLowerInvariant();
+                if (clipCache.TryGetValue(k, out var c)) { if (c != null) return c; else continue; }
+                var path = allAudio.FirstOrDefault(a => System.IO.Path.GetFileName(a).ToLowerInvariant().Contains(k));
+                c = path != null ? Resources.Load<AudioClip>(path) : null;
+                clipCache[k] = c;
+                if (c != null) return c;
+            }
+            return null;
+        }
+
+        public static List<AudioClip> FindClips(string hint, int max = 6)
+        {
+            Load();
+            string k = hint.ToLowerInvariant();
+            var r = new List<AudioClip>();
+            foreach (var a in allAudio.Where(a => System.IO.Path.GetFileName(a).ToLowerInvariant().Contains(k)).Take(max))
+            { var c = Resources.Load<AudioClip>(a); if (c != null) r.Add(c); }
+            return r;
+        }
+
+        // ------------------------------------------------------------ шрифт
+        public static Font Font
+        {
+            get
+            {
+                if (font != null) return font;
+                foreach (var n in new[] { "Imported/fonts/Rubik", "Imported/fonts/Rubik-Regular", "Imported/fonts/Inter", "Imported/fonts/Inter-Regular", "Imported/fonts/Roboto-Regular", "Imported/fonts/Roboto" })
+                { font = Resources.Load<Font>(n); if (font != null) return font; }
+                var fonts = Resources.LoadAll<Font>("Imported/fonts");
+                if (fonts != null && fonts.Length > 0) { font = fonts[0]; return font; }
+                font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+                return font;
+            }
+        }
+
+        // ------------------------------------------------------------ материалы и примитивы
+        static Shader standard;
+        public static Material Mat(Color c, float smooth = 0.05f)
+        {
+            if (matCache.TryGetValue(c, out var m)) return m;
+            if (standard == null) standard = Shader.Find("Standard");
+            m = new Material(standard) { color = c, enableInstancing = true };
+            m.SetFloat("_Glossiness", smooth); m.SetFloat("_Metallic", 0f);
+            matCache[c] = m;
+            return m;
+        }
+
+        public static Material Emissive(Color c, float power = 1.5f)
+        {
+            if (standard == null) standard = Shader.Find("Standard");
+            var m = new Material(standard) { color = c, enableInstancing = true };
+            m.EnableKeyword("_EMISSION"); m.SetColor("_EmissionColor", c * power);
+            return m;
+        }
+
+        public static GameObject Prim(PrimitiveType t, Transform parent, Vector3 localPos, Vector3 scale, Color color, bool collider = true)
+        {
+            var go = GameObject.CreatePrimitive(t);
+            go.transform.SetParent(parent, false);
+            go.transform.localPosition = localPos; go.transform.localScale = scale;
+            go.GetComponent<Renderer>().sharedMaterial = Mat(color);
+            if (!collider) { var c = go.GetComponent<Collider>(); if (c != null) Object.Destroy(c); }
+            return go;
+        }
+
+        /// <summary>Плейсхолдер оружия из примитивов (используется и как база для показа модов).</summary>
+        public static GameObject GunPlaceholder(WeaponDef def, Transform parent)
+        {
+            var root = new GameObject("gun_" + def.id); root.transform.SetParent(parent, false);
+            Color body = new Color(0.12f, 0.12f, 0.13f), wood = new Color(0.45f, 0.28f, 0.14f);
+            float len = def.cls == "pistol" ? 0.2f : def.cls == "smg" ? 0.45f : def.cls == "sniper" || def.cls == "lmg" ? 1.05f : def.cls == "melee" ? 0.3f : 0.75f;
+            if (def.cls == "melee")
+            {
+                Prim(PrimitiveType.Cube, root.transform, new Vector3(0, 0, len * 0.5f), new Vector3(0.02f, 0.005f, len), new Color(0.75f, 0.75f, 0.78f), false);
+                Prim(PrimitiveType.Cube, root.transform, new Vector3(0, 0, -0.05f), new Vector3(0.03f, 0.03f, 0.1f), body, false);
+                return root;
+            }
+            Prim(PrimitiveType.Cube, root.transform, new Vector3(0, 0, len * 0.35f), new Vector3(0.04f, 0.06f, len * 0.7f), body, false); // ресивер
+            Prim(PrimitiveType.Cylinder, root.transform, new Vector3(0, 0.015f, len * 0.85f), new Vector3(0.025f, len * 0.3f, 0.025f), body, false).transform.localRotation = Quaternion.Euler(90, 0, 0); // ствол
+            Prim(PrimitiveType.Cube, root.transform, new Vector3(0, -0.07f, 0.05f), new Vector3(0.03f, 0.1f, 0.04f), def.family == "ak" ? wood : body, false); // рукоять
+            if (def.cls != "pistol") Prim(PrimitiveType.Cube, root.transform, new Vector3(0, -0.02f, -0.18f), new Vector3(0.035f, 0.07f, 0.3f), def.family == "ak" ? wood : body, false); // приклад
+            if (def.cls != "pistol" && def.cls != "shotgun") Prim(PrimitiveType.Cube, root.transform, new Vector3(0, -0.08f, len * 0.3f), new Vector3(0.03f, 0.12f, 0.06f), body, false); // магазин
+            return root;
+        }
+    }
+}

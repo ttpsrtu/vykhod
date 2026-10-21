@@ -1,0 +1,7 @@
+Pack: quaternius_characters
+License: CC0 1.0
+Source: https://opengameart.org/content/animated-characters-pack (Quaternius 'Ultimate Animated Character Pack', CC0; also https://quaternius.com/packs/ultimatedanimatedcharacter.html)
+Download: https://opengameart.org/sites/default/files/ultimate_animated_character_pack_by_quaternius.zip
+Note: 50+ animated low-poly humanoid characters with animations, FBX.
+Fetched: 2026-10-21 by Tools/fetch_assets.py
+Only FBX/OBJ/PNG/WAV/OGG/MP3/TTF/HDR files were kept; previews, GLTF/GLB, .blend and sample scenes were removed.

@@ -1,0 +1,2572 @@
+[
+ {
+  "id": "bandage",
+  "name": "Бинт",
+  "type": "med",
+  "w": 1,
+  "h": 1,
+  "weight": 0.05,
+  "price": 1500,
+  "trader": "doc",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "Останавливает лёгкое кровотечение.",
+  "props": {
+   "uses": 2,
+   "time": 2,
+   "stopBleed": 1
+  }
+ },
+ {
+  "id": "bandage_army",
+  "name": "Бинт армейский",
+  "type": "med",
+  "w": 1,
+  "h": 1,
+  "weight": 0.08,
+  "price": 3500,
+  "trader": "doc",
+  "lvl": 2,
+  "rarity": 2,
+  "desc": "Останавливает любое кровотечение.",
+  "props": {
+   "uses": 3,
+   "time": 2,
+   "stopBleed": 2
+  }
+ },
+ {
+  "id": "tourniquet",
+  "name": "Жгут",
+  "type": "med",
+  "w": 1,
+  "h": 1,
+  "weight": 0.1,
+  "price": 4500,
+  "trader": "doc",
+  "lvl": 2,
+  "rarity": 2,
+  "desc": "Останавливает тяжёлое кровотечение.",
+  "props": {
+   "uses": 1,
+   "time": 3,
+   "stopBleed": 2
+  }
+ },
+ {
+  "id": "splint",
+  "name": "Шина",
+  "type": "med",
+  "w": 1,
+  "h": 1,
+  "weight": 0.15,
+  "price": 2500,
+  "trader": "doc",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "Фиксирует перелом.",
+  "props": {
+   "uses": 1,
+   "time": 4,
+   "fixFracture": 1
+  }
+ },
+ {
+  "id": "ai2",
+  "name": "Аптечка АИ-2",
+  "type": "med",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "price": 6000,
+  "trader": "doc",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "Простая аптечка. Лечит понемногу.",
+  "props": {
+   "heal": 100,
+   "uses": 4,
+   "time": 3
+  }
+ },
+ {
+  "id": "salewa",
+  "name": "Аптечка Salewa",
+  "type": "med",
+  "w": 1,
+  "h": 2,
+  "weight": 0.6,
+  "price": 22000,
+  "trader": "doc",
+  "lvl": 2,
+  "rarity": 2,
+  "desc": "Хорошая аптечка. Останавливает кровь.",
+  "props": {
+   "heal": 400,
+   "uses": 10,
+   "time": 3,
+   "stopBleed": 1
+  }
+ },
+ {
+  "id": "ifak",
+  "name": "IFAK",
+  "type": "med",
+  "w": 1,
+  "h": 1,
+  "weight": 0.4,
+  "price": 20000,
+  "trader": "doc",
+  "lvl": 2,
+  "rarity": 3,
+  "desc": "Компактная тактическая аптечка.",
+  "props": {
+   "heal": 300,
+   "uses": 8,
+   "time": 3,
+   "stopBleed": 2
+  }
+ },
+ {
+  "id": "grizzly",
+  "name": "Аптечка Grizzly",
+  "type": "med",
+  "w": 2,
+  "h": 2,
+  "weight": 1.2,
+  "price": 45000,
+  "trader": "doc",
+  "lvl": 3,
+  "rarity": 4,
+  "desc": "Полная аптечка: лечит всё.",
+  "props": {
+   "heal": 1800,
+   "uses": 20,
+   "time": 5,
+   "stopBleed": 2,
+   "fixFracture": 1
+  }
+ },
+ {
+  "id": "painkillers",
+  "name": "Обезболивающее",
+  "type": "med",
+  "w": 1,
+  "h": 1,
+  "weight": 0.05,
+  "price": 3000,
+  "trader": "doc",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "Убирает эффекты боли на 4 минуты.",
+  "props": {
+   "uses": 4,
+   "time": 1,
+   "pain": 240
+  }
+ },
+ {
+  "id": "morphine",
+  "name": "Морфин",
+  "type": "med",
+  "w": 1,
+  "h": 1,
+  "weight": 0.05,
+  "price": 9000,
+  "trader": "doc",
+  "lvl": 2,
+  "rarity": 3,
+  "desc": "Сильное обезболивающее на 5 минут.",
+  "props": {
+   "uses": 1,
+   "time": 1,
+   "pain": 300
+  }
+ },
+ {
+  "id": "adrenaline",
+  "name": "Адреналин",
+  "type": "med",
+  "w": 1,
+  "h": 1,
+  "weight": 0.05,
+  "price": 12000,
+  "trader": "doc",
+  "lvl": 3,
+  "rarity": 3,
+  "desc": "Выносливость и боль на 3 минуты.",
+  "props": {
+   "uses": 1,
+   "time": 1,
+   "pain": 180,
+   "stamina": 1
+  }
+ },
+ {
+  "id": "surgkit",
+  "name": "Хирургический набор",
+  "type": "med",
+  "w": 2,
+  "h": 3,
+  "weight": 1.5,
+  "price": 38000,
+  "trader": "doc",
+  "lvl": 3,
+  "rarity": 4,
+  "desc": "Восстанавливает уничтоженную часть тела.",
+  "props": {
+   "uses": 5,
+   "time": 12,
+   "surgery": 1
+  }
+ },
+ {
+  "id": "cms",
+  "name": "Набор CMS",
+  "type": "med",
+  "w": 2,
+  "h": 2,
+  "weight": 1.0,
+  "price": 25000,
+  "trader": "doc",
+  "lvl": 2,
+  "rarity": 3,
+  "desc": "Хирургия в поле, похуже.",
+  "props": {
+   "uses": 5,
+   "time": 16,
+   "surgery": 0.6
+  }
+ },
+ {
+  "id": "water",
+  "name": "Вода 0.5 л",
+  "type": "food",
+  "w": 1,
+  "h": 1,
+  "weight": 0.5,
+  "price": 1500,
+  "trader": "babulya",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {
+   "energy": 0,
+   "hydration": 60,
+   "time": 3
+  }
+ },
+ {
+  "id": "water_big",
+  "name": "Вода 1.5 л",
+  "type": "food",
+  "w": 1,
+  "h": 2,
+  "weight": 1.5,
+  "price": 3500,
+  "trader": "babulya",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {
+   "energy": 0,
+   "hydration": 100,
+   "time": 3
+  }
+ },
+ {
+  "id": "cola",
+  "name": "Газировка",
+  "type": "food",
+  "w": 1,
+  "h": 1,
+  "weight": 0.4,
+  "price": 2200,
+  "trader": "babulya",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {
+   "energy": 10,
+   "hydration": 40,
+   "time": 3
+  }
+ },
+ {
+  "id": "juice",
+  "name": "Сок",
+  "type": "food",
+  "w": 1,
+  "h": 1,
+  "weight": 0.4,
+  "price": 2500,
+  "trader": "babulya",
+  "lvl": 1,
+  "rarity": 2,
+  "desc": "",
+  "props": {
+   "energy": 15,
+   "hydration": 50,
+   "time": 3
+  }
+ },
+ {
+  "id": "energy_drink",
+  "name": "Энергетик",
+  "type": "food",
+  "w": 1,
+  "h": 1,
+  "weight": 0.3,
+  "price": 5000,
+  "trader": "babulya",
+  "lvl": 2,
+  "rarity": 2,
+  "desc": "",
+  "props": {
+   "energy": 20,
+   "hydration": 30,
+   "time": 3
+  }
+ },
+ {
+  "id": "kvass",
+  "name": "Квас",
+  "type": "food",
+  "w": 1,
+  "h": 2,
+  "weight": 1.2,
+  "price": 3000,
+  "trader": "babulya",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {
+   "energy": 10,
+   "hydration": 80,
+   "time": 3
+  }
+ },
+ {
+  "id": "bread",
+  "name": "Хлеб",
+  "type": "food",
+  "w": 1,
+  "h": 1,
+  "weight": 0.3,
+  "price": 900,
+  "trader": "babulya",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {
+   "energy": 30,
+   "hydration": 0,
+   "time": 3
+  }
+ },
+ {
+  "id": "tushenka",
+  "name": "Тушёнка",
+  "type": "food",
+  "w": 1,
+  "h": 1,
+  "weight": 0.4,
+  "price": 3500,
+  "trader": "babulya",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {
+   "energy": 60,
+   "hydration": 0,
+   "time": 3
+  }
+ },
+ {
+  "id": "condensed",
+  "name": "Сгущёнка",
+  "type": "food",
+  "w": 1,
+  "h": 1,
+  "weight": 0.4,
+  "price": 2800,
+  "trader": "babulya",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {
+   "energy": 45,
+   "hydration": 5,
+   "time": 3
+  }
+ },
+ {
+  "id": "crackers",
+  "name": "Сухари",
+  "type": "food",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "price": 1200,
+  "trader": "babulya",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {
+   "energy": 25,
+   "hydration": -5,
+   "time": 3
+  }
+ },
+ {
+  "id": "mre",
+  "name": "Сухпаёк ИРП",
+  "type": "food",
+  "w": 1,
+  "h": 2,
+  "weight": 1.2,
+  "price": 9000,
+  "trader": "komendant",
+  "lvl": 2,
+  "rarity": 2,
+  "desc": "",
+  "props": {
+   "energy": 120,
+   "hydration": 10,
+   "time": 3
+  }
+ },
+ {
+  "id": "chocolate",
+  "name": "Шоколад",
+  "type": "food",
+  "w": 1,
+  "h": 1,
+  "weight": 0.1,
+  "price": 1800,
+  "trader": "babulya",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {
+   "energy": 25,
+   "hydration": 0,
+   "time": 3
+  }
+ },
+ {
+  "id": "salami",
+  "name": "Колбаса",
+  "type": "food",
+  "w": 1,
+  "h": 1,
+  "weight": 0.4,
+  "price": 3200,
+  "trader": "babulya",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {
+   "energy": 50,
+   "hydration": 0,
+   "time": 3
+  }
+ },
+ {
+  "id": "cheburek",
+  "name": "Чебурек из столовой",
+  "type": "food",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "price": 800,
+  "trader": "babulya",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {
+   "energy": 35,
+   "hydration": 0,
+   "time": 3
+  }
+ },
+ {
+  "id": "gold_chain",
+  "name": "Золотая цепь",
+  "type": "valuable",
+  "w": 1,
+  "h": 1,
+  "weight": 0.05,
+  "price": 25000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 3,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "rolex",
+  "name": "Часы Rolex",
+  "type": "valuable",
+  "w": 1,
+  "h": 1,
+  "weight": 0.1,
+  "price": 60000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 4,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "bitcoin",
+  "name": "Биткоин (физ.)",
+  "type": "valuable",
+  "w": 1,
+  "h": 1,
+  "weight": 0.01,
+  "price": 180000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 5,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "gpu",
+  "name": "Видеокарта",
+  "type": "valuable",
+  "w": 2,
+  "h": 1,
+  "weight": 1.0,
+  "price": 120000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 4,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "cpu",
+  "name": "Процессор",
+  "type": "valuable",
+  "w": 1,
+  "h": 1,
+  "weight": 0.05,
+  "price": 40000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 3,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "ram",
+  "name": "Модуль памяти",
+  "type": "valuable",
+  "w": 1,
+  "h": 1,
+  "weight": 0.02,
+  "price": 12000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 2,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "ssd",
+  "name": "SSD-накопитель",
+  "type": "valuable",
+  "w": 1,
+  "h": 1,
+  "weight": 0.05,
+  "price": 18000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 3,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "phone",
+  "name": "Смартфон",
+  "type": "valuable",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "price": 15000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 2,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "tablet",
+  "name": "Планшет",
+  "type": "valuable",
+  "w": 2,
+  "h": 1,
+  "weight": 0.5,
+  "price": 30000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 3,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "laptop",
+  "name": "Ноутбук",
+  "type": "valuable",
+  "w": 2,
+  "h": 2,
+  "weight": 2.0,
+  "price": 55000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 3,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "cigs",
+  "name": "Сигареты блок",
+  "type": "valuable",
+  "w": 1,
+  "h": 2,
+  "weight": 0.3,
+  "price": 9000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "vodka",
+  "name": "Водка",
+  "type": "valuable",
+  "w": 1,
+  "h": 2,
+  "weight": 0.9,
+  "price": 7000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "whiskey",
+  "name": "Виски",
+  "type": "valuable",
+  "w": 1,
+  "h": 2,
+  "weight": 1.0,
+  "price": 14000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 2,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "lion",
+  "name": "Статуэтка льва",
+  "type": "valuable",
+  "w": 2,
+  "h": 3,
+  "weight": 3.0,
+  "price": 95000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 4,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "skull",
+  "name": "Череп хрустальный",
+  "type": "valuable",
+  "w": 1,
+  "h": 2,
+  "weight": 1.0,
+  "price": 45000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 4,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "ring",
+  "name": "Кольцо с бриллиантом",
+  "type": "valuable",
+  "w": 1,
+  "h": 1,
+  "weight": 0.01,
+  "price": 35000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 4,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "lighter",
+  "name": "Зажигалка Zippo",
+  "type": "valuable",
+  "w": 1,
+  "h": 1,
+  "weight": 0.05,
+  "price": 6000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 2,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "wallet",
+  "name": "Кошелёк",
+  "type": "valuable",
+  "w": 1,
+  "h": 1,
+  "weight": 0.1,
+  "price": 4000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "cat_fig",
+  "name": "Статуэтка кота",
+  "type": "valuable",
+  "w": 1,
+  "h": 2,
+  "weight": 0.6,
+  "price": 18000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 2,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "medal",
+  "name": "Орден",
+  "type": "valuable",
+  "w": 1,
+  "h": 1,
+  "weight": 0.05,
+  "price": 22000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 3,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "icon",
+  "name": "Икона старинная",
+  "type": "valuable",
+  "w": 2,
+  "h": 2,
+  "weight": 0.8,
+  "price": 70000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 4,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "camera",
+  "name": "Фотоаппарат",
+  "type": "valuable",
+  "w": 1,
+  "h": 1,
+  "weight": 0.5,
+  "price": 25000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 3,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "chess",
+  "name": "Шахматы",
+  "type": "valuable",
+  "w": 2,
+  "h": 2,
+  "weight": 1.0,
+  "price": 8000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 2,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "book_rare",
+  "name": "Редкая книга",
+  "type": "valuable",
+  "w": 1,
+  "h": 2,
+  "weight": 0.5,
+  "price": 12000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 2,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "diploma",
+  "name": "Диплом с печатью",
+  "type": "valuable",
+  "w": 1,
+  "h": 1,
+  "weight": 0.05,
+  "price": 9000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 2,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "zachetka",
+  "name": "Зачётка с пятёрками",
+  "type": "valuable",
+  "w": 1,
+  "h": 1,
+  "weight": 0.02,
+  "price": 15000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 3,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "amulet",
+  "name": "Амулет шахтёра",
+  "type": "valuable",
+  "w": 1,
+  "h": 1,
+  "weight": 0.05,
+  "price": 30000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 3,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "record",
+  "name": "Виниловая пластинка",
+  "type": "valuable",
+  "w": 2,
+  "h": 2,
+  "weight": 0.3,
+  "price": 7000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 2,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "bolts",
+  "name": "Болты",
+  "type": "barter",
+  "w": 1,
+  "h": 1,
+  "weight": 0.3,
+  "price": 2500,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "screws",
+  "name": "Шурупы",
+  "type": "barter",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "price": 2000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "nuts",
+  "name": "Гайки",
+  "type": "barter",
+  "w": 1,
+  "h": 1,
+  "weight": 0.3,
+  "price": 2200,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "wires",
+  "name": "Провода",
+  "type": "barter",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "price": 3000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "duct_tape",
+  "name": "Изолента",
+  "type": "barter",
+  "w": 1,
+  "h": 1,
+  "weight": 0.1,
+  "price": 1500,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "electronics",
+  "name": "Электронные компоненты",
+  "type": "barter",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "price": 9000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 2,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "circuit",
+  "name": "Печатная плата",
+  "type": "barter",
+  "w": 1,
+  "h": 1,
+  "weight": 0.1,
+  "price": 14000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 3,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "capacitors",
+  "name": "Конденсаторы",
+  "type": "barter",
+  "w": 1,
+  "h": 1,
+  "weight": 0.1,
+  "price": 6000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 2,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "wd40",
+  "name": "WD-40",
+  "type": "barter",
+  "w": 1,
+  "h": 2,
+  "weight": 0.4,
+  "price": 4000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "fuel",
+  "name": "Канистра бензина",
+  "type": "barter",
+  "w": 2,
+  "h": 3,
+  "weight": 8.0,
+  "price": 20000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 2,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "propane",
+  "name": "Баллон пропана",
+  "type": "barter",
+  "w": 2,
+  "h": 3,
+  "weight": 12.0,
+  "price": 22000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 2,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "toolset",
+  "name": "Набор инструментов",
+  "type": "barter",
+  "w": 2,
+  "h": 2,
+  "weight": 3.0,
+  "price": 25000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 3,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "pliers",
+  "name": "Плоскогубцы",
+  "type": "barter",
+  "w": 1,
+  "h": 1,
+  "weight": 0.3,
+  "price": 2500,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "wrench",
+  "name": "Разводной ключ",
+  "type": "barter",
+  "w": 1,
+  "h": 2,
+  "weight": 0.6,
+  "price": 3500,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "powerbank",
+  "name": "Пауэрбанк",
+  "type": "barter",
+  "w": 1,
+  "h": 1,
+  "weight": 0.3,
+  "price": 8000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 2,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "batteries",
+  "name": "Батарейки АА",
+  "type": "barter",
+  "w": 1,
+  "h": 1,
+  "weight": 0.1,
+  "price": 2000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "car_battery",
+  "name": "Автомобильный аккумулятор",
+  "type": "barter",
+  "w": 3,
+  "h": 2,
+  "weight": 15.0,
+  "price": 18000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 2,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "lamp",
+  "name": "Лампочки",
+  "type": "barter",
+  "w": 1,
+  "h": 1,
+  "weight": 0.1,
+  "price": 1200,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "cloth",
+  "name": "Ткань",
+  "type": "barter",
+  "w": 1,
+  "h": 1,
+  "weight": 0.3,
+  "price": 1500,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "hose",
+  "name": "Шланг",
+  "type": "barter",
+  "w": 2,
+  "h": 1,
+  "weight": 0.8,
+  "price": 3000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "pipe",
+  "name": "Труба",
+  "type": "barter",
+  "w": 1,
+  "h": 3,
+  "weight": 2.0,
+  "price": 2500,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "nails",
+  "name": "Гвозди",
+  "type": "barter",
+  "w": 1,
+  "h": 1,
+  "weight": 0.5,
+  "price": 1500,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "gunpowder",
+  "name": "Порох",
+  "type": "barter",
+  "w": 1,
+  "h": 1,
+  "weight": 0.5,
+  "price": 12000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 3,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "cordura",
+  "name": "Кордура",
+  "type": "barter",
+  "w": 2,
+  "h": 1,
+  "weight": 0.5,
+  "price": 6000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 2,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "kevlar",
+  "name": "Кевларовая пластина",
+  "type": "barter",
+  "w": 2,
+  "h": 2,
+  "weight": 2.0,
+  "price": 30000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 4,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "matches",
+  "name": "Спички",
+  "type": "barter",
+  "w": 1,
+  "h": 1,
+  "weight": 0.02,
+  "price": 500,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "soap",
+  "name": "Мыло",
+  "type": "barter",
+  "w": 1,
+  "h": 1,
+  "weight": 0.1,
+  "price": 1200,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "textbook",
+  "name": "Учебник по матану",
+  "type": "barter",
+  "w": 1,
+  "h": 2,
+  "weight": 0.8,
+  "price": 2000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "chalk",
+  "name": "Мел",
+  "type": "barter",
+  "w": 1,
+  "h": 1,
+  "weight": 0.1,
+  "price": 300,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "helmet_miner",
+  "name": "Каска шахтёра",
+  "type": "barter",
+  "w": 2,
+  "h": 2,
+  "weight": 0.8,
+  "price": 5000,
+  "trader": "fence",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {}
+ },
+ {
+  "id": "key_mirea_server",
+  "name": "Ключ от серверной МИРЭА",
+  "type": "key",
+  "w": 1,
+  "h": 1,
+  "weight": 0.01,
+  "price": 60000,
+  "trader": "fence",
+  "lvl": 3,
+  "rarity": 4,
+  "desc": "Открывает запертую дверь.",
+  "props": {
+   "map": "mirea",
+   "uses": 10
+  }
+ },
+ {
+  "id": "key_mirea_dean",
+  "name": "Ключ от деканата",
+  "type": "key",
+  "w": 1,
+  "h": 1,
+  "weight": 0.01,
+  "price": 35000,
+  "trader": "fence",
+  "lvl": 3,
+  "rarity": 3,
+  "desc": "Открывает запертую дверь.",
+  "props": {
+   "map": "mirea",
+   "uses": 10
+  }
+ },
+ {
+  "id": "key_mirea_lab",
+  "name": "Ключ от лаборатории",
+  "type": "key",
+  "w": 1,
+  "h": 1,
+  "weight": 0.01,
+  "price": 25000,
+  "trader": "fence",
+  "lvl": 3,
+  "rarity": 2,
+  "desc": "Открывает запертую дверь.",
+  "props": {
+   "map": "mirea",
+   "uses": 10
+  }
+ },
+ {
+  "id": "key_mirea_storage",
+  "name": "Ключ от склада кафедры",
+  "type": "key",
+  "w": 1,
+  "h": 1,
+  "weight": 0.01,
+  "price": 15000,
+  "trader": "fence",
+  "lvl": 3,
+  "rarity": 2,
+  "desc": "Открывает запертую дверь.",
+  "props": {
+   "map": "mirea",
+   "uses": 10
+  }
+ },
+ {
+  "id": "key_donetsk_bank",
+  "name": "Ключ от хранилища банка",
+  "type": "key",
+  "w": 1,
+  "h": 1,
+  "weight": 0.01,
+  "price": 120000,
+  "trader": "fence",
+  "lvl": 3,
+  "rarity": 5,
+  "desc": "Открывает запертую дверь.",
+  "props": {
+   "map": "donetsk",
+   "uses": 10
+  }
+ },
+ {
+  "id": "key_donetsk_office",
+  "name": "Ключ от офиса",
+  "type": "key",
+  "w": 1,
+  "h": 1,
+  "weight": 0.01,
+  "price": 30000,
+  "trader": "fence",
+  "lvl": 3,
+  "rarity": 3,
+  "desc": "Открывает запертую дверь.",
+  "props": {
+   "map": "donetsk",
+   "uses": 10
+  }
+ },
+ {
+  "id": "key_donetsk_pharmacy",
+  "name": "Ключ от аптеки",
+  "type": "key",
+  "w": 1,
+  "h": 1,
+  "weight": 0.01,
+  "price": 20000,
+  "trader": "fence",
+  "lvl": 3,
+  "rarity": 2,
+  "desc": "Открывает запертую дверь.",
+  "props": {
+   "map": "donetsk",
+   "uses": 10
+  }
+ },
+ {
+  "id": "key_donetsk_theatre",
+  "name": "Ключ от гримёрки театра",
+  "type": "key",
+  "w": 1,
+  "h": 1,
+  "weight": 0.01,
+  "price": 40000,
+  "trader": "fence",
+  "lvl": 3,
+  "rarity": 3,
+  "desc": "Открывает запертую дверь.",
+  "props": {
+   "map": "donetsk",
+   "uses": 10
+  }
+ },
+ {
+  "id": "key_factory_director",
+  "name": "Ключ от кабинета директора",
+  "type": "key",
+  "w": 1,
+  "h": 1,
+  "weight": 0.01,
+  "price": 50000,
+  "trader": "fence",
+  "lvl": 3,
+  "rarity": 4,
+  "desc": "Открывает запертую дверь.",
+  "props": {
+   "map": "factory",
+   "uses": 10
+  }
+ },
+ {
+  "id": "key_factory_tools",
+  "name": "Ключ от инструменталки",
+  "type": "key",
+  "w": 1,
+  "h": 1,
+  "weight": 0.01,
+  "price": 18000,
+  "trader": "fence",
+  "lvl": 3,
+  "rarity": 2,
+  "desc": "Открывает запертую дверь.",
+  "props": {
+   "map": "factory",
+   "uses": 10
+  }
+ },
+ {
+  "id": "key_suburb_cottage",
+  "name": "Ключ от коттеджа",
+  "type": "key",
+  "w": 1,
+  "h": 1,
+  "weight": 0.01,
+  "price": 35000,
+  "trader": "fence",
+  "lvl": 3,
+  "rarity": 3,
+  "desc": "Открывает запертую дверь.",
+  "props": {
+   "map": "suburb",
+   "uses": 10
+  }
+ },
+ {
+  "id": "key_suburb_garage",
+  "name": "Ключ от гаража",
+  "type": "key",
+  "w": 1,
+  "h": 1,
+  "weight": 0.01,
+  "price": 15000,
+  "trader": "fence",
+  "lvl": 3,
+  "rarity": 2,
+  "desc": "Открывает запертую дверь.",
+  "props": {
+   "map": "suburb",
+   "uses": 10
+  }
+ },
+ {
+  "id": "key_mall_jewelry",
+  "name": "Ключ от ювелирного",
+  "type": "key",
+  "w": 1,
+  "h": 1,
+  "weight": 0.01,
+  "price": 90000,
+  "trader": "fence",
+  "lvl": 3,
+  "rarity": 5,
+  "desc": "Открывает запертую дверь.",
+  "props": {
+   "map": "mall",
+   "uses": 10
+  }
+ },
+ {
+  "id": "key_mall_security",
+  "name": "Ключ от охраны ТЦ",
+  "type": "key",
+  "w": 1,
+  "h": 1,
+  "weight": 0.01,
+  "price": 30000,
+  "trader": "fence",
+  "lvl": 3,
+  "rarity": 3,
+  "desc": "Открывает запертую дверь.",
+  "props": {
+   "map": "mall",
+   "uses": 10
+  }
+ },
+ {
+  "id": "key_metro_control",
+  "name": "Ключ от диспетчерской",
+  "type": "key",
+  "w": 1,
+  "h": 1,
+  "weight": 0.01,
+  "price": 45000,
+  "trader": "fence",
+  "lvl": 3,
+  "rarity": 4,
+  "desc": "Открывает запертую дверь.",
+  "props": {
+   "map": "metro",
+   "uses": 10
+  }
+ },
+ {
+  "id": "key_metro_armory",
+  "name": "Ключ от оружейной",
+  "type": "key",
+  "w": 1,
+  "h": 1,
+  "weight": 0.01,
+  "price": 110000,
+  "trader": "fence",
+  "lvl": 3,
+  "rarity": 5,
+  "desc": "Открывает запертую дверь.",
+  "props": {
+   "map": "metro",
+   "uses": 10
+  }
+ },
+ {
+  "id": "armor_paca",
+  "name": "Бронежилет PACA",
+  "type": "armor",
+  "w": 3,
+  "h": 3,
+  "weight": 3.5,
+  "price": 25000,
+  "trader": "komendant",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "Класс 2.",
+  "props": {
+   "armorClass": 2,
+   "durability": 50,
+   "speed": -0.02,
+   "zones": [
+    "thorax",
+    "stomach"
+   ]
+  }
+ },
+ {
+  "id": "armor_6b2",
+  "name": "6Б2",
+  "type": "armor",
+  "w": 3,
+  "h": 3,
+  "weight": 4.0,
+  "price": 28000,
+  "trader": "komendant",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "Класс 2.",
+  "props": {
+   "armorClass": 2,
+   "durability": 60,
+   "speed": -0.02,
+   "zones": [
+    "thorax",
+    "stomach"
+   ]
+  }
+ },
+ {
+  "id": "armor_kirasa",
+  "name": "Кираса-Н",
+  "type": "armor",
+  "w": 3,
+  "h": 3,
+  "weight": 6.0,
+  "price": 45000,
+  "trader": "komendant",
+  "lvl": 2,
+  "rarity": 2,
+  "desc": "Класс 3.",
+  "props": {
+   "armorClass": 3,
+   "durability": 70,
+   "speed": -0.04,
+   "zones": [
+    "thorax",
+    "stomach"
+   ]
+  }
+ },
+ {
+  "id": "armor_module",
+  "name": "Модуль-3М",
+  "type": "armor",
+  "w": 3,
+  "h": 3,
+  "weight": 5.0,
+  "price": 40000,
+  "trader": "babulya",
+  "lvl": 1,
+  "rarity": 2,
+  "desc": "Класс 3.",
+  "props": {
+   "armorClass": 3,
+   "durability": 60,
+   "speed": -0.03,
+   "zones": [
+    "thorax",
+    "stomach"
+   ]
+  }
+ },
+ {
+  "id": "armor_6b23",
+  "name": "6Б23-1",
+  "type": "armor",
+  "w": 3,
+  "h": 3,
+  "weight": 8.5,
+  "price": 75000,
+  "trader": "komendant",
+  "lvl": 2,
+  "rarity": 3,
+  "desc": "Класс 4.",
+  "props": {
+   "armorClass": 4,
+   "durability": 85,
+   "speed": -0.06,
+   "zones": [
+    "thorax",
+    "stomach"
+   ]
+  }
+ },
+ {
+  "id": "armor_korund",
+  "name": "Корунд-ВМ",
+  "type": "armor",
+  "w": 3,
+  "h": 3,
+  "weight": 10.0,
+  "price": 120000,
+  "trader": "komendant",
+  "lvl": 3,
+  "rarity": 4,
+  "desc": "Класс 5.",
+  "props": {
+   "armorClass": 5,
+   "durability": 95,
+   "speed": -0.08,
+   "zones": [
+    "thorax",
+    "stomach"
+   ]
+  }
+ },
+ {
+  "id": "armor_gzhel",
+  "name": "Гжель-К",
+  "type": "armor",
+  "w": 3,
+  "h": 3,
+  "weight": 9.0,
+  "price": 110000,
+  "trader": "fence",
+  "lvl": 3,
+  "rarity": 4,
+  "desc": "Класс 5.",
+  "props": {
+   "armorClass": 5,
+   "durability": 80,
+   "speed": -0.07,
+   "zones": [
+    "thorax",
+    "stomach"
+   ]
+  }
+ },
+ {
+  "id": "armor_6b43",
+  "name": "6Б43",
+  "type": "armor",
+  "w": 3,
+  "h": 4,
+  "weight": 14.0,
+  "price": 210000,
+  "trader": "komendant",
+  "lvl": 4,
+  "rarity": 5,
+  "desc": "Класс 6.",
+  "props": {
+   "armorClass": 6,
+   "durability": 110,
+   "speed": -0.11,
+   "zones": [
+    "thorax",
+    "stomach"
+   ]
+  }
+ },
+ {
+  "id": "armor_slick",
+  "name": "Slick Plate Carrier",
+  "type": "armor",
+  "w": 3,
+  "h": 3,
+  "weight": 6.0,
+  "price": 260000,
+  "trader": "hacker",
+  "lvl": 4,
+  "rarity": 5,
+  "desc": "Класс 6.",
+  "props": {
+   "armorClass": 6,
+   "durability": 80,
+   "speed": -0.05,
+   "zones": [
+    "thorax",
+    "stomach"
+   ]
+  }
+ },
+ {
+  "id": "armor_thor",
+  "name": "THOR Integrated",
+  "type": "armor",
+  "w": 3,
+  "h": 4,
+  "weight": 13.0,
+  "price": 320000,
+  "trader": "hacker",
+  "lvl": 4,
+  "rarity": 5,
+  "desc": "Класс 6.",
+  "props": {
+   "armorClass": 6,
+   "durability": 120,
+   "speed": -0.1,
+   "zones": [
+    "thorax",
+    "stomach"
+   ]
+  }
+ },
+ {
+  "id": "helmet_cap",
+  "name": "Кепка",
+  "type": "helmet",
+  "w": 2,
+  "h": 2,
+  "weight": 0.1,
+  "price": 1000,
+  "trader": "babulya",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "Класс 0.",
+  "props": {
+   "armorClass": 0,
+   "durability": 0,
+   "zones": [
+    "head"
+   ]
+  }
+ },
+ {
+  "id": "helmet_ssh68",
+  "name": "СШ-68",
+  "type": "helmet",
+  "w": 2,
+  "h": 2,
+  "weight": 1.5,
+  "price": 12000,
+  "trader": "komendant",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "Класс 2.",
+  "props": {
+   "armorClass": 2,
+   "durability": 30,
+   "zones": [
+    "head"
+   ]
+  }
+ },
+ {
+  "id": "helmet_kolpak",
+  "name": "Колпак-1С",
+  "type": "helmet",
+  "w": 2,
+  "h": 2,
+  "weight": 2.0,
+  "price": 25000,
+  "trader": "komendant",
+  "lvl": 2,
+  "rarity": 2,
+  "desc": "Класс 3.",
+  "props": {
+   "armorClass": 3,
+   "durability": 40,
+   "zones": [
+    "head"
+   ]
+  }
+ },
+ {
+  "id": "helmet_kiver",
+  "name": "Кивер-М",
+  "type": "helmet",
+  "w": 2,
+  "h": 2,
+  "weight": 1.8,
+  "price": 30000,
+  "trader": "komendant",
+  "lvl": 2,
+  "rarity": 2,
+  "desc": "Класс 3.",
+  "props": {
+   "armorClass": 3,
+   "durability": 45,
+   "zones": [
+    "head"
+   ]
+  }
+ },
+ {
+  "id": "helmet_6b47",
+  "name": "6Б47 «Ратник»",
+  "type": "helmet",
+  "w": 2,
+  "h": 2,
+  "weight": 1.2,
+  "price": 45000,
+  "trader": "komendant",
+  "lvl": 2,
+  "rarity": 3,
+  "desc": "Класс 3.",
+  "props": {
+   "armorClass": 3,
+   "durability": 50,
+   "zones": [
+    "head"
+   ]
+  }
+ },
+ {
+  "id": "helmet_fast",
+  "name": "FAST MT",
+  "type": "helmet",
+  "w": 2,
+  "h": 2,
+  "weight": 1.5,
+  "price": 90000,
+  "trader": "hacker",
+  "lvl": 3,
+  "rarity": 4,
+  "desc": "Класс 4.",
+  "props": {
+   "armorClass": 4,
+   "durability": 55,
+   "zones": [
+    "head"
+   ]
+  }
+ },
+ {
+  "id": "helmet_altyn",
+  "name": "Алтын",
+  "type": "helmet",
+  "w": 2,
+  "h": 2,
+  "weight": 4.0,
+  "price": 160000,
+  "trader": "komendant",
+  "lvl": 4,
+  "rarity": 5,
+  "desc": "Класс 5.",
+  "props": {
+   "armorClass": 5,
+   "durability": 80,
+   "zones": [
+    "head"
+   ]
+  }
+ },
+ {
+  "id": "helmet_maska",
+  "name": "Маска-1Щ",
+  "type": "helmet",
+  "w": 2,
+  "h": 2,
+  "weight": 5.0,
+  "price": 180000,
+  "trader": "fence",
+  "lvl": 4,
+  "rarity": 5,
+  "desc": "Класс 5.",
+  "props": {
+   "armorClass": 5,
+   "durability": 90,
+   "zones": [
+    "head"
+   ]
+  }
+ },
+ {
+  "id": "helmet_vulkan",
+  "name": "Вулкан-5",
+  "type": "helmet",
+  "w": 2,
+  "h": 2,
+  "weight": 5.5,
+  "price": 220000,
+  "trader": "komendant",
+  "lvl": 4,
+  "rarity": 5,
+  "desc": "Класс 6.",
+  "props": {
+   "armorClass": 6,
+   "durability": 100,
+   "zones": [
+    "head"
+   ]
+  }
+ },
+ {
+  "id": "bag_school",
+  "name": "Школьный рюкзак",
+  "type": "backpack",
+  "w": 3,
+  "h": 3,
+  "weight": 0.5,
+  "price": 5000,
+  "trader": "babulya",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "4x4 ячеек.",
+  "props": {
+   "cellsW": 4,
+   "cellsH": 4
+  }
+ },
+ {
+  "id": "bag_tactical",
+  "name": "Тактический рюкзак",
+  "type": "backpack",
+  "w": 3,
+  "h": 4,
+  "weight": 1.0,
+  "price": 15000,
+  "trader": "babulya",
+  "lvl": 1,
+  "rarity": 2,
+  "desc": "5x5 ячеек.",
+  "props": {
+   "cellsW": 5,
+   "cellsH": 5
+  }
+ },
+ {
+  "id": "bag_mbss",
+  "name": "MBSS",
+  "type": "backpack",
+  "w": 3,
+  "h": 4,
+  "weight": 1.2,
+  "price": 25000,
+  "trader": "komendant",
+  "lvl": 2,
+  "rarity": 2,
+  "desc": "5x6 ячеек.",
+  "props": {
+   "cellsW": 5,
+   "cellsH": 6
+  }
+ },
+ {
+  "id": "bag_pilgrim",
+  "name": "Pilgrim",
+  "type": "backpack",
+  "w": 4,
+  "h": 5,
+  "weight": 2.5,
+  "price": 45000,
+  "trader": "babulya",
+  "lvl": 3,
+  "rarity": 3,
+  "desc": "7x7 ячеек.",
+  "props": {
+   "cellsW": 7,
+   "cellsH": 7
+  }
+ },
+ {
+  "id": "bag_tri_zip",
+  "name": "Tri-Zip",
+  "type": "backpack",
+  "w": 4,
+  "h": 4,
+  "weight": 1.8,
+  "price": 38000,
+  "trader": "hacker",
+  "lvl": 2,
+  "rarity": 3,
+  "desc": "6x7 ячеек.",
+  "props": {
+   "cellsW": 6,
+   "cellsH": 7
+  }
+ },
+ {
+  "id": "bag_attack",
+  "name": "Attack 2",
+  "type": "backpack",
+  "w": 4,
+  "h": 5,
+  "weight": 2.8,
+  "price": 60000,
+  "trader": "komendant",
+  "lvl": 3,
+  "rarity": 4,
+  "desc": "7x8 ячеек.",
+  "props": {
+   "cellsW": 7,
+   "cellsH": 8
+  }
+ },
+ {
+  "id": "bag_expedition",
+  "name": "Экспедиционный",
+  "type": "backpack",
+  "w": 5,
+  "h": 6,
+  "weight": 3.5,
+  "price": 85000,
+  "trader": "fence",
+  "lvl": 4,
+  "rarity": 4,
+  "desc": "8x9 ячеек.",
+  "props": {
+   "cellsW": 8,
+   "cellsH": 9
+  }
+ },
+ {
+  "id": "bag_gym",
+  "name": "Спортивная сумка",
+  "type": "backpack",
+  "w": 4,
+  "h": 2,
+  "weight": 0.4,
+  "price": 4000,
+  "trader": "babulya",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "5x4 ячеек.",
+  "props": {
+   "cellsW": 5,
+   "cellsH": 4
+  }
+ },
+ {
+  "id": "rig_belt",
+  "name": "Разгрузочный пояс",
+  "type": "rig",
+  "w": 3,
+  "h": 3,
+  "weight": 0.5,
+  "price": 6000,
+  "trader": "babulya",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "4x2 ячеек.",
+  "props": {
+   "cellsW": 4,
+   "cellsH": 2,
+   "armorClass": 0,
+   "durability": 0,
+   "zones": []
+  }
+ },
+ {
+  "id": "rig_scav",
+  "name": "Разгрузка мародёра",
+  "type": "rig",
+  "w": 3,
+  "h": 3,
+  "weight": 0.8,
+  "price": 9000,
+  "trader": "babulya",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "5x2 ячеек.",
+  "props": {
+   "cellsW": 5,
+   "cellsH": 2,
+   "armorClass": 0,
+   "durability": 0,
+   "zones": []
+  }
+ },
+ {
+  "id": "rig_smersh",
+  "name": "Разгрузка «Смерш»",
+  "type": "rig",
+  "w": 3,
+  "h": 3,
+  "weight": 1.2,
+  "price": 22000,
+  "trader": "komendant",
+  "lvl": 2,
+  "rarity": 2,
+  "desc": "6x3 ячеек.",
+  "props": {
+   "cellsW": 6,
+   "cellsH": 3,
+   "armorClass": 0,
+   "durability": 0,
+   "zones": []
+  }
+ },
+ {
+  "id": "rig_ana",
+  "name": "Ana Tactical M2",
+  "type": "rig",
+  "w": 3,
+  "h": 3,
+  "weight": 1.3,
+  "price": 25000,
+  "trader": "babulya",
+  "lvl": 2,
+  "rarity": 2,
+  "desc": "6x3 ячеек.",
+  "props": {
+   "cellsW": 6,
+   "cellsH": 3,
+   "armorClass": 0,
+   "durability": 0,
+   "zones": []
+  }
+ },
+ {
+  "id": "rig_6b5",
+  "name": "6Б5-15 бронеразгрузка",
+  "type": "rig",
+  "w": 3,
+  "h": 3,
+  "weight": 7.0,
+  "price": 60000,
+  "trader": "komendant",
+  "lvl": 3,
+  "rarity": 3,
+  "desc": "5x3 ячеек.",
+  "props": {
+   "cellsW": 5,
+   "cellsH": 3,
+   "armorClass": 3,
+   "durability": 60,
+   "zones": [
+    "thorax",
+    "stomach"
+   ]
+  }
+ },
+ {
+  "id": "rig_tv110",
+  "name": "TV-110 Plate Carrier",
+  "type": "rig",
+  "w": 3,
+  "h": 3,
+  "weight": 8.0,
+  "price": 150000,
+  "trader": "hacker",
+  "lvl": 4,
+  "rarity": 4,
+  "desc": "6x3 ячеек.",
+  "props": {
+   "cellsW": 6,
+   "cellsH": 3,
+   "armorClass": 5,
+   "durability": 60,
+   "zones": [
+    "thorax",
+    "stomach"
+   ]
+  }
+ },
+ {
+  "id": "rig_avs",
+  "name": "AVS Rig",
+  "type": "rig",
+  "w": 3,
+  "h": 3,
+  "weight": 9.0,
+  "price": 190000,
+  "trader": "komendant",
+  "lvl": 4,
+  "rarity": 5,
+  "desc": "7x3 ячеек.",
+  "props": {
+   "cellsW": 7,
+   "cellsH": 3,
+   "armorClass": 5,
+   "durability": 60,
+   "zones": [
+    "thorax",
+    "stomach"
+   ]
+  }
+ },
+ {
+  "id": "rig_blackrock",
+  "name": "Blackrock",
+  "type": "rig",
+  "w": 3,
+  "h": 3,
+  "weight": 1.6,
+  "price": 40000,
+  "trader": "fence",
+  "lvl": 3,
+  "rarity": 3,
+  "desc": "7x3 ячеек.",
+  "props": {
+   "cellsW": 7,
+   "cellsH": 3,
+   "armorClass": 0,
+   "durability": 0,
+   "zones": []
+  }
+ },
+ {
+  "id": "gren_f1",
+  "name": "Граната Ф-1",
+  "type": "throwable",
+  "w": 1,
+  "h": 1,
+  "weight": 0.5,
+  "price": 12000,
+  "trader": "komendant",
+  "lvl": 2,
+  "rarity": 2,
+  "desc": "",
+  "props": {
+   "dmg": 150,
+   "radius": 7,
+   "kind": "frag",
+   "fuse": 3.5
+  }
+ },
+ {
+  "id": "gren_rgd5",
+  "name": "Граната РГД-5",
+  "type": "throwable",
+  "w": 1,
+  "h": 1,
+  "weight": 0.5,
+  "price": 9000,
+  "trader": "komendant",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {
+   "dmg": 120,
+   "radius": 5,
+   "kind": "frag",
+   "fuse": 3.5
+  }
+ },
+ {
+  "id": "gren_m67",
+  "name": "Граната M67",
+  "type": "throwable",
+  "w": 1,
+  "h": 1,
+  "weight": 0.5,
+  "price": 11000,
+  "trader": "hacker",
+  "lvl": 2,
+  "rarity": 2,
+  "desc": "",
+  "props": {
+   "dmg": 140,
+   "radius": 6,
+   "kind": "frag",
+   "fuse": 3.5
+  }
+ },
+ {
+  "id": "gren_flash",
+  "name": "Светошумовая «Заря»",
+  "type": "throwable",
+  "w": 1,
+  "h": 1,
+  "weight": 0.5,
+  "price": 8000,
+  "trader": "komendant",
+  "lvl": 2,
+  "rarity": 2,
+  "desc": "",
+  "props": {
+   "dmg": 0,
+   "radius": 8,
+   "kind": "flash",
+   "fuse": 3.5
+  }
+ },
+ {
+  "id": "gren_smoke",
+  "name": "Дымовая РДГ-2",
+  "type": "throwable",
+  "w": 1,
+  "h": 1,
+  "weight": 0.5,
+  "price": 5000,
+  "trader": "komendant",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "",
+  "props": {
+   "dmg": 0,
+   "radius": 6,
+   "kind": "smoke",
+   "fuse": 3.5
+  }
+ },
+ {
+  "id": "gren_vog",
+  "name": "ВОГ-17 (ручной)",
+  "type": "throwable",
+  "w": 1,
+  "h": 1,
+  "weight": 0.5,
+  "price": 15000,
+  "trader": "fence",
+  "lvl": 3,
+  "rarity": 3,
+  "desc": "",
+  "props": {
+   "dmg": 90,
+   "radius": 4,
+   "kind": "frag",
+   "fuse": 3.5
+  }
+ },
+ {
+  "id": "repair_kit",
+  "name": "Ремкомплект оружейный",
+  "type": "tool",
+  "w": 2,
+  "h": 2,
+  "weight": 1.0,
+  "price": 35000,
+  "trader": "mech",
+  "lvl": 2,
+  "rarity": 3,
+  "desc": "Восстанавливает прочность оружия.",
+  "props": {
+   "repair": 60
+  }
+ },
+ {
+  "id": "armor_repair",
+  "name": "Ремкомплект брони",
+  "type": "tool",
+  "w": 2,
+  "h": 2,
+  "weight": 1.5,
+  "price": 40000,
+  "trader": "komendant",
+  "lvl": 2,
+  "rarity": 3,
+  "desc": "Восстанавливает прочность брони.",
+  "props": {
+   "repair": 50
+  }
+ },
+ {
+  "id": "flashlight",
+  "name": "Фонарик",
+  "type": "tool",
+  "w": 1,
+  "h": 1,
+  "weight": 0.2,
+  "price": 3000,
+  "trader": "babulya",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "Ручной фонарь.",
+  "props": {}
+ },
+ {
+  "id": "nvg",
+  "name": "ПНВ ПНВ-10Т",
+  "type": "tool",
+  "w": 2,
+  "h": 2,
+  "weight": 0.8,
+  "price": 180000,
+  "trader": "hacker",
+  "lvl": 4,
+  "rarity": 5,
+  "desc": "Прибор ночного видения (надевается на шлем).",
+  "props": {
+   "night": 1
+  }
+ },
+ {
+  "id": "compass",
+  "name": "Компас",
+  "type": "tool",
+  "w": 1,
+  "h": 1,
+  "weight": 0.1,
+  "price": 2000,
+  "trader": "babulya",
+  "lvl": 1,
+  "rarity": 1,
+  "desc": "Показывает направление.",
+  "props": {}
+ },
+ {
+  "id": "intel",
+  "name": "Разведданные",
+  "type": "intel",
+  "w": 1,
+  "h": 1,
+  "weight": 0.1,
+  "price": 25000,
+  "trader": "hacker",
+  "lvl": 2,
+  "rarity": 3,
+  "desc": "Папка с документами.",
+  "props": {}
+ },
+ {
+  "id": "flash_drive",
+  "name": "Флешка с данными",
+  "type": "intel",
+  "w": 1,
+  "h": 1,
+  "weight": 0.02,
+  "price": 30000,
+  "trader": "hacker",
+  "lvl": 2,
+  "rarity": 3,
+  "desc": "Нужна хакеру.",
+  "props": {}
+ },
+ {
+  "id": "secure_case",
+  "name": "Защищённый контейнер",
+  "type": "container",
+  "w": 2,
+  "h": 2,
+  "weight": 0.5,
+  "price": 150000,
+  "trader": "fence",
+  "lvl": 3,
+  "rarity": 4,
+  "desc": "Сохраняет содержимое при смерти.",
+  "props": {
+   "cellsW": 2,
+   "cellsH": 2,
+   "secure": 1
+  }
+ },
+ {
+  "id": "secure_case_big",
+  "name": "Защищённый контейнер «Гамма»",
+  "type": "container",
+  "w": 3,
+  "h": 3,
+  "weight": 0.8,
+  "price": 500000,
+  "trader": "fence",
+  "lvl": 5,
+  "rarity": 5,
+  "desc": "Сохраняет содержимое при смерти.",
+  "props": {
+   "cellsW": 3,
+   "cellsH": 3,
+   "secure": 1
+  }
+ },
+ {
+  "id": "ammo_box",
+  "name": "Ящик для патронов",
+  "type": "container",
+  "w": 2,
+  "h": 2,
+  "weight": 0.8,
+  "price": 20000,
+  "trader": "mech",
+  "lvl": 2,
+  "rarity": 2,
+  "desc": "Только патроны.",
+  "props": {
+   "cellsW": 3,
+   "cellsH": 3,
+   "only": "ammo"
+  }
+ },
+ {
+  "id": "med_case",
+  "name": "Медицинский кейс",
+  "type": "container",
+  "w": 2,
+  "h": 2,
+  "weight": 0.8,
+  "price": 25000,
+  "trader": "doc",
+  "lvl": 2,
+  "rarity": 2,
+  "desc": "Только медицина.",
+  "props": {
+   "cellsW": 3,
+   "cellsH": 3,
+   "only": "med"
+  }
+ }
+]

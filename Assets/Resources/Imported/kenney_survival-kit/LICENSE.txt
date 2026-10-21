@@ -1,0 +1,6 @@
+Pack: kenney_survival-kit
+License: CC0 1.0
+Source: https://kenney.nl/assets/survival-kit
+Download: https://kenney.nl/media/pages/assets/survival-kit/4065a8185b-1712149243/kenney_survival-kit.zip
+Fetched: 2026-10-21 by Tools/fetch_assets.py
+Only FBX/OBJ/PNG/WAV/OGG/MP3/TTF/HDR files were kept; previews, GLTF/GLB, .blend and sample scenes were removed.

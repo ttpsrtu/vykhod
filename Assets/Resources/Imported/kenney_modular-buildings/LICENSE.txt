@@ -1,0 +1,6 @@
+Pack: kenney_modular-buildings
+License: CC0 1.0
+Source: https://kenney.nl/assets/modular-buildings
+Download: https://kenney.nl/media/pages/assets/modular-buildings/3253b4219a-1707397411/kenney_modular-buildings.zip
+Fetched: 2026-10-21 by Tools/fetch_assets.py
+Only FBX/OBJ/PNG/WAV/OGG/MP3/TTF/HDR files were kept; previews, GLTF/GLB, .blend and sample scenes were removed.

@@ -1,0 +1,21 @@
+Pack: sfx_guns
+License: CC0 1.0
+Source: OpenGameArt CC0 gun sounds (see LICENSE.txt for per-file sources)
+Download: https://opengameart.org/sites/default/files/sounds.zip
+Download: https://opengameart.org/sites/default/files/gunreload1.wav
+Download: https://opengameart.org/sites/default/files/assaultriflereload1_0.wav
+Download: https://opengameart.org/sites/default/files/shotguncock_0.wav
+Download: https://opengameart.org/sites/default/files/clipload1.wav
+Download: https://opengameart.org/sites/default/files/clipload2.wav
+Download: https://opengameart.org/sites/default/files/singlebullet1.wav
+Download: https://opengameart.org/sites/default/files/reload.wav
+  gunshots/  <- https://opengameart.org/content/gunshot-sounds (Tabasco, CC0) - CZ-52 pistol, Mosin Nagant, SKS, shotgun
+  reload_pistol.wav  <- https://opengameart.org/content/gun-reload-sounds (SpringySpringo, CC0)
+  reload_rifle.wav  <- https://opengameart.org/content/gun-reload-sounds (SpringySpringo, CC0)
+  shotgun_cock.wav  <- https://opengameart.org/content/gun-reload-sounds (SpringySpringo, CC0)
+  clip_load1.wav  <- https://opengameart.org/content/gun-reload-sound-effects (BMacZero, CC0)
+  clip_load2.wav  <- https://opengameart.org/content/gun-reload-sound-effects (BMacZero, CC0)
+  single_bullet_load.wav  <- https://opengameart.org/content/gun-reload-sound-effects (BMacZero, CC0)
+  reload_handgun_full.wav  <- https://opengameart.org/content/handgun-reload-sound-effect (zer0_sol, CC0)
+Fetched: 2026-10-21 by Tools/fetch_assets.py
+Only FBX/OBJ/PNG/WAV/OGG/MP3/TTF/HDR files were kept; previews, GLTF/GLB, .blend and sample scenes were removed.

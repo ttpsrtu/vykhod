@@ -1,0 +1,7 @@
+Pack: quaternius_guns
+License: CC0 1.0
+Source: https://opengameart.org/content/low-poly-guns-pack (Quaternius 'Ultimate Gun Pack', CC0)
+Download: https://opengameart.org/sites/default/files/ultimate_gun_pack_by_quaternius.zip
+Note: 40 low-poly gun models, FBX/OBJ.
+Fetched: 2026-10-21 by Tools/fetch_assets.py
+Only FBX/OBJ/PNG/WAV/OGG/MP3/TTF/HDR files were kept; previews, GLTF/GLB, .blend and sample scenes were removed.

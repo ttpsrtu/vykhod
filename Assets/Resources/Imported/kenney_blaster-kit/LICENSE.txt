@@ -1,0 +1,6 @@
+Pack: kenney_blaster-kit
+License: CC0 1.0
+Source: https://kenney.nl/assets/blaster-kit
+Download: https://kenney.nl/media/pages/assets/blaster-kit/261d80a716-1753959510/kenney_blaster-kit_2.1.zip
+Fetched: 2026-10-21 by Tools/fetch_assets.py
+Only FBX/OBJ/PNG/WAV/OGG/MP3/TTF/HDR files were kept; previews, GLTF/GLB, .blend and sample scenes were removed.

@@ -1,0 +1,6 @@
+Pack: kenney_prototype-kit
+License: CC0 1.0
+Source: https://kenney.nl/assets/prototype-kit
+Download: https://kenney.nl/media/pages/assets/prototype-kit/4d3b7073ed-1724832076/kenney_prototype-kit.zip
+Fetched: 2026-10-21 by Tools/fetch_assets.py
+Only FBX/OBJ/PNG/WAV/OGG/MP3/TTF/HDR files were kept; previews, GLTF/GLB, .blend and sample scenes were removed.

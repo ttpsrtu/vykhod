@@ -1,0 +1,7 @@
+Pack: kenney_weapon-pack
+License: CC0 1.0
+Source: https://opengameart.org/content/weapon-pack (Kenney 'Weapon Pack', retired from kenney.nl; OGA mirror, CC0)
+Download: https://opengameart.org/sites/default/files/weaponPack_assets.zip
+Note: 30 real-ish low-poly weapons (pistols, rifles, shotgun, smg, knife, grenades...) as OBJ+MTL. Kenney removed this pack from kenney.nl; OGA listing page is access-restricted but the file is served.
+Fetched: 2026-10-21 by Tools/fetch_assets.py
+Only FBX/OBJ/PNG/WAV/OGG/MP3/TTF/HDR files were kept; previews, GLTF/GLB, .blend and sample scenes were removed.

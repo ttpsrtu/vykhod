@@ -1,0 +1,6 @@
+Pack: kenney_building-kit
+License: CC0 1.0
+Source: https://kenney.nl/assets/building-kit
+Download: https://kenney.nl/media/pages/assets/building-kit/0de7aaa492-1743244741/kenney_building-kit.zip
+Fetched: 2026-10-21 by Tools/fetch_assets.py
+Only FBX/OBJ/PNG/WAV/OGG/MP3/TTF/HDR files were kept; previews, GLTF/GLB, .blend and sample scenes were removed.

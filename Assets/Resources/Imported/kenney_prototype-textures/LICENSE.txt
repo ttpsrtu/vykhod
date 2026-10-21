@@ -1,0 +1,6 @@
+Pack: kenney_prototype-textures
+License: CC0 1.0
+Source: https://kenney.nl/assets/prototype-textures
+Download: https://kenney.nl/media/pages/assets/prototype-textures/a88c69fa18-1677578307/kenney_prototype-textures.zip
+Fetched: 2026-10-21 by Tools/fetch_assets.py
+Only FBX/OBJ/PNG/WAV/OGG/MP3/TTF/HDR files were kept; previews, GLTF/GLB, .blend and sample scenes were removed.

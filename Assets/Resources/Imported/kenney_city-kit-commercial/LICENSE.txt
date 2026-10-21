@@ -1,0 +1,6 @@
+Pack: kenney_city-kit-commercial
+License: CC0 1.0
+Source: https://kenney.nl/assets/city-kit-commercial
+Download: https://kenney.nl/media/pages/assets/city-kit-commercial/a742d900eb-1753115042/kenney_city-kit-commercial_2.1.zip
+Fetched: 2026-10-21 by Tools/fetch_assets.py
+Only FBX/OBJ/PNG/WAV/OGG/MP3/TTF/HDR files were kept; previews, GLTF/GLB, .blend and sample scenes were removed.

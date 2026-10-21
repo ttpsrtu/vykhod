@@ -1,0 +1,7 @@
+Pack: sky
+License: CC0 1.0
+Source: https://polyhaven.com/a/kloofendal_48d_partly_cloudy_puresky (Poly Haven, CC0)
+Download: https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/kloofendal_48d_partly_cloudy_puresky_2k.hdr
+  kloofendal_48d_partly_cloudy_puresky_2k.hdr  <- https://polyhaven.com/a/kloofendal_48d_partly_cloudy_puresky
+Fetched: 2026-10-21 by Tools/fetch_assets.py
+Only FBX/OBJ/PNG/WAV/OGG/MP3/TTF/HDR files were kept; previews, GLTF/GLB, .blend and sample scenes were removed.

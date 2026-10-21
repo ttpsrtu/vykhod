@@ -1,0 +1,6 @@
+Pack: kenney_mini-characters
+License: CC0 1.0
+Source: https://kenney.nl/assets/mini-characters
+Download: https://kenney.nl/media/pages/assets/mini-characters/bfc7e272b4-1774770718/kenney_mini-characters.zip
+Fetched: 2026-10-21 by Tools/fetch_assets.py
+Only FBX/OBJ/PNG/WAV/OGG/MP3/TTF/HDR files were kept; previews, GLTF/GLB, .blend and sample scenes were removed.

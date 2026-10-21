@@ -1,0 +1,6 @@
+Pack: kenney_impact-sounds
+License: CC0 1.0
+Source: https://kenney.nl/assets/impact-sounds
+Download: https://kenney.nl/media/pages/assets/impact-sounds/87b4ddecda-1677589768/kenney_impact-sounds.zip
+Fetched: 2026-10-21 by Tools/fetch_assets.py
+Only FBX/OBJ/PNG/WAV/OGG/MP3/TTF/HDR files were kept; previews, GLTF/GLB, .blend and sample scenes were removed.

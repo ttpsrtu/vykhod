@@ -1,0 +1,6 @@
+Pack: kenney_ui-audio
+License: CC0 1.0
+Source: https://kenney.nl/assets/ui-audio
+Download: https://kenney.nl/media/pages/assets/ui-audio/490d233f68-1677590494/kenney_ui-audio.zip
+Fetched: 2026-10-21 by Tools/fetch_assets.py
+Only FBX/OBJ/PNG/WAV/OGG/MP3/TTF/HDR files were kept; previews, GLTF/GLB, .blend and sample scenes were removed.

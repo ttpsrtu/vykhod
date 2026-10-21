@@ -1,0 +1,6 @@
+Pack: kenney_blocky-characters
+License: CC0 1.0
+Source: https://kenney.nl/assets/blocky-characters
+Download: https://kenney.nl/media/pages/assets/blocky-characters/8369c0cf30-1749547469/kenney_blocky-characters_20.zip
+Fetched: 2026-10-21 by Tools/fetch_assets.py
+Only FBX/OBJ/PNG/WAV/OGG/MP3/TTF/HDR files were kept; previews, GLTF/GLB, .blend and sample scenes were removed.
