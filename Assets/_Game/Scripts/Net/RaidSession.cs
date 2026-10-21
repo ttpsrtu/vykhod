@@ -24,7 +24,7 @@ namespace Vykhod
         public void Init(string map, string mode, int seed, int minutes)
         {
             MapId.Value = map; Mode.Value = mode == "pvp" ? 1 : 0; Seed.Value = seed;
-            Night.Value = new System.Random(seed).NextDouble() < 0.3;
+            Night.Value = !World.ForceDay && new System.Random(seed).NextDouble() < 0.15;
             initialized = true;
             raidMinutes = minutes;
         }

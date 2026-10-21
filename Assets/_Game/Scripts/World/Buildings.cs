@@ -4,16 +4,38 @@ using UnityEngine;
 
 namespace Vykhod
 {
-    /// <summary>Здания: полый первый этаж с дверями и лутом, верхние этажи сплошные, запертые комнаты по ключам.</summary>
+    /// <summary>Здания: полый первый этаж с дверями и лутом, верхние этажи сплошные, настоящие фасады/крыши из CC0-текстур, запертые комнаты.</summary>
     public static class Buildings
     {
         public const float FloorH = 3.2f;
         static readonly Color[] palette = {
-            new Color(0.85f, 0.8f, 0.7f), new Color(0.75f, 0.72f, 0.68f), new Color(0.62f, 0.55f, 0.5f), new Color(0.8f, 0.65f, 0.5f),
-            new Color(0.7f, 0.75f, 0.8f), new Color(0.55f, 0.6f, 0.62f), new Color(0.88f, 0.86f, 0.8f), new Color(0.65f, 0.4f, 0.35f), new Color(0.5f, 0.55f, 0.45f)
+            new Color(0.98f, 0.86f, 0.55f), new Color(0.55f, 0.85f, 0.95f), new Color(0.98f, 0.6f, 0.45f), new Color(0.7f, 0.9f, 0.6f),
+            new Color(0.9f, 0.7f, 0.95f), new Color(0.98f, 0.95f, 0.85f), new Color(0.6f, 0.75f, 1f), new Color(1f, 0.55f, 0.6f), new Color(0.5f, 0.9f, 0.8f), new Color(0.96f, 0.8f, 0.4f)
         };
 
         public static Color ColorFor(int hash) => palette[Mathf.Abs(hash) % palette.Length];
+
+        /// <summary>Материал стен по типу здания. Фасады с окнами — для жилых/офисных, кирпич/металл — для промышленных.</summary>
+        public static Material WallMat(string kind, Color tint, int hash)
+        {
+            var t = Color.Lerp(Color.white, tint, 0.35f);
+            switch (kind)
+            {
+                case "industrial": case "garage": return AssetCatalog.TexMat("metal", 2.5f, Color.Lerp(Color.white, tint, 0.2f), tint, hash);
+                case "theatre": case "bank": return AssetCatalog.TexMat("plaster", 3f, t, tint, hash);
+                case "shop": return AssetCatalog.TexMat("facade", 6.4f, t, tint, hash + 1);
+                case "residential": return AssetCatalog.TexMat(Mathf.Abs(hash) % 3 == 0 ? "bricks" : "facade", 6.4f, t, tint, hash);
+                default: return AssetCatalog.TexMat("facade", 6.4f, t, tint, hash);
+            }
+        }
+        public static Material RoofMat(int levels, int hash) => levels <= 2 ? AssetCatalog.TexMat("roofingtiles", 2.5f, null, new Color(0.5f, 0.3f, 0.25f), hash) : AssetCatalog.TexMat("concrete", 3f, new Color(0.8f, 0.8f, 0.8f), new Color(0.45f, 0.45f, 0.45f), hash);
+        public static Material FloorMat(string kind, int hash) => kind == "industrial" || kind == "garage" ? AssetCatalog.TexMat("concrete", 2f, null, new Color(0.4f, 0.4f, 0.4f), hash) : kind == "residential" ? AssetCatalog.TexMat("woodplanks", 1.5f, null, new Color(0.5f, 0.35f, 0.2f), hash) : AssetCatalog.TexMat("tiles", 1.2f, null, new Color(0.6f, 0.6f, 0.6f), hash);
+        public static Material Concrete => AssetCatalog.TexMat("concrete", 2.5f, null, new Color(0.5f, 0.5f, 0.5f));
+        public static Material Bricks => AssetCatalog.TexMat("bricks", 2f, null, new Color(0.6f, 0.3f, 0.25f));
+        public static Material Plaster => AssetCatalog.TexMat("plaster", 3f, null, new Color(0.85f, 0.85f, 0.8f));
+        public static Material Tiles => AssetCatalog.TexMat("tiles", 1.2f, null, new Color(0.7f, 0.7f, 0.7f));
+        public static Material Metal => AssetCatalog.TexMat("metal", 2f, null, new Color(0.55f, 0.57f, 0.6f));
+        public static Material Asphalt => AssetCatalog.TexMat("asphalt", 4f, null, new Color(0.28f, 0.28f, 0.29f));
 
         public static string KindFromTags(Dictionary<string, string> tags)
         {
@@ -47,7 +69,6 @@ namespace Vykhod
             return r;
         }
 
-        /// <summary>Случайная точка внутри полигона на расстоянии ≥ inset от края.</summary>
         public static bool RandomInside(List<Vector2> poly, System.Random rng, float inset, out Vector2 p)
         {
             float minX = poly.Min(v => v.x), maxX = poly.Max(v => v.x), minZ = poly.Min(v => v.y), maxZ = poly.Max(v => v.y);
@@ -68,9 +89,7 @@ namespace Vykhod
             return (a + ab * t - p).magnitude;
         }
 
-        /// <summary>
-        /// Строит здание. enterable — полый первый этаж с дверью; lockedKey — внутри запертая комната.
-        /// </summary>
+        /// <summary>Строит здание. enterable — полый первый этаж с дверью; lockedKey — внутри запертая комната.</summary>
         public static GameObject Make(List<Vector2> polyIn, int levels, string name, Color wall, bool enterable, string kind = "generic",
                                       string lockedKey = null, string lockedRoom = null, float floorH = FloorH, System.Random rng = null)
         {
@@ -80,19 +99,19 @@ namespace Vykhod
             float area = Mathf.Abs(MeshKit.SignedArea(poly));
             if (area < 4) return null;
             levels = Mathf.Max(1, levels);
+            int hash = name.GetHashCode();
             var root = new GameObject("B_" + name); root.transform.SetParent(World.Root, false);
             var t = root.transform;
             enterable = enterable && area > 35;
             float totalH = levels * floorH;
-            Color roofC = wall * 0.55f; roofC.a = 1;
+            var wallM = WallMat(kind, wall, hash); var roofM = RoofMat(levels, hash); var floorM = FloorMat(kind, hash);
             if (!enterable)
             {
-                MeshKit.Slab(t, poly, 0, totalH, wall, true, "solid");
+                MeshKit.Slab(t, poly, 0, totalH, wallM, true, "solid");
+                MeshKit.Slab(t, poly, totalH, 0.25f, roofM, true, "roof");
                 return root;
             }
-            // пол
-            MeshKit.Slab(t, poly, -0.05f, 0.15f, new Color(0.35f, 0.33f, 0.3f), true, "floor");
-            // стены первого этажа с дверными проёмами
+            MeshKit.Slab(t, poly, -0.05f, 0.15f, floorM, true, "floor");
             int n = poly.Count;
             var edgeLen = new float[n]; for (int i = 0; i < n; i++) edgeLen[i] = (poly[(i + 1) % n] - poly[i]).magnitude;
             var doorEdges = new HashSet<int>();
@@ -107,31 +126,20 @@ namespace Vykhod
                 if (doorEdges.Contains(i) && edgeLen[i] > doorW + 1.5f)
                 {
                     var dir = (b - a).normalized; var mid = (a + b) * 0.5f;
-                    MeshKit.Wall(t, a, mid - dir * doorW * 0.5f, floorH, thick, wall);
-                    MeshKit.Wall(t, mid + dir * doorW * 0.5f, b, floorH, thick, wall);
-                    MeshKit.Box(t, new Vector3(mid.x, floorH - 0.3f, mid.y), new Vector3(thick, 0.6f, doorW + 0.2f), wall, true, true, Quaternion.Euler(0, Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg, 0)); // перемычка
+                    MeshKit.Wall(t, a, mid - dir * doorW * 0.5f, floorH, thick, wallM);
+                    MeshKit.Wall(t, mid + dir * doorW * 0.5f, b, floorH, thick, wallM);
+                    MeshKit.Box(t, new Vector3(mid.x, floorH - 0.3f, mid.y), new Vector3(thick, 0.6f, doorW + 0.2f), wallM, true, true, Quaternion.Euler(0, Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg, 0));
                 }
-                else MeshKit.Wall(t, a, b, floorH, thick, wall);
-                // окна-полосы на верхних этажах (декор, без коллайдера)
-                if (levels > 1 && edgeLen[i] > 4)
-                {
-                    var dir = (b - a).normalized; var nrm = new Vector2(-dir.y, dir.x) * 0.02f;
-                    bool ccw = MeshKit.SignedArea(poly) > 0; if (!ccw) nrm = -nrm;
-                    for (int f = 1; f < Mathf.Min(levels, 12); f++)
-                    {
-                        var mid = (a + b) * 0.5f - nrm * 10;
-                        MeshKit.Box(t, new Vector3(mid.x, f * floorH + floorH * 0.5f, mid.y), new Vector3(0.05f, floorH * 0.4f, edgeLen[i] * 0.85f), new Color(0.25f, 0.35f, 0.45f), false, true, Quaternion.Euler(0, Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg, 0));
-                    }
-                }
+                else MeshKit.Wall(t, a, b, floorH, thick, wallM);
             }
-            // перекрытие + верхние этажи сплошным блоком, крыша с парапетом
-            MeshKit.Slab(t, poly, floorH, levels > 1 ? totalH - floorH : 0.3f, levels > 1 ? wall : roofC, true, "upper");
-            if (levels > 1) { MeshKit.Slab(t, poly, totalH, 0.2f, roofC, true, "roof"); for (int i = 0; i < n; i++) MeshKit.Wall(t, poly[i], poly[(i + 1) % n], 1.0f, 0.25f, roofC, totalH + 0.2f); }
-            // колонны в больших помещениях
+            // перекрытие и верхние этажи сплошным блоком с фасадом, крыша с парапетом
+            MeshKit.Slab(t, poly, floorH, levels > 1 ? totalH - floorH : 0.3f, levels > 1 ? wallM : roofM, true, "upper");
+            if (levels > 1) { MeshKit.Slab(t, poly, totalH, 0.2f, roofM, true, "roof"); for (int i = 0; i < n; i++) MeshKit.Wall(t, poly[i], poly[(i + 1) % n], 1.0f, 0.25f, Concrete, totalH + 0.2f); }
+            // колонны
             if (area > 300)
             {
                 int cols = Mathf.Min(12, (int)(area / 150));
-                for (int i = 0; i < cols; i++) if (RandomInside(poly, rng, 3f, out var cp)) MeshKit.Box(t, new Vector3(cp.x, floorH * 0.5f, cp.y), new Vector3(0.6f, floorH, 0.6f), wall * 0.8f);
+                for (int i = 0; i < cols; i++) if (RandomInside(poly, rng, 3f, out var cp)) MeshKit.Box(t, new Vector3(cp.x, floorH * 0.5f, cp.y), new Vector3(0.6f, floorH, 0.6f), Concrete);
             }
             // лут внутри
             var loot = kindLoot.TryGetValue(kind, out var kl) ? kl : kindLoot["generic"];
@@ -139,19 +147,17 @@ namespace Vykhod
             for (int i = 0; i < count; i++)
                 if (RandomInside(poly, rng, 1.2f, out var lp))
                     World.AddContainer(new Vector3(lp.x, 0.1f, lp.y), Quaternion.Euler(0, rng.Next(0, 4) * 90, 0), loot[rng.Next(loot.Length)], t);
-            // мебель-декор
-            int furn = Mathf.Clamp((int)(area / 90), 0, 6);
+            // мебель-декор из паков
+            int furn = Mathf.Clamp((int)(area / 80), 1, 7);
+            string[] furnHints = kind == "industrial" || kind == "garage" ? new[] { "barrel", "box", "workbench", "resource-planks" } : kind == "food" ? new[] { "table", "chair", "kitchen" } : new[] { "table", "chair", "bookcase", "sofa", "lamp", "plant" };
             for (int i = 0; i < furn; i++)
                 if (RandomInside(poly, rng, 1.5f, out var fp))
                 {
-                    var f = AssetCatalog.SpawnOrPlaceholder(rng.NextDouble() < 0.5 ? "table" : "chair", t, 1.2f, new Color(0.5f, 0.4f, 0.3f), PrimitiveType.Cube, "furniture", true);
-                    f.transform.position = new Vector3(fp.x, 0.1f, fp.y); f.transform.rotation = Quaternion.Euler(0, rng.Next(0, 360), 0);
-                    if (f.name.StartsWith("ph_")) { f.transform.localScale = new Vector3(1.4f, 0.8f, 0.8f); f.transform.position += Vector3.up * 0.4f; }
-                    f.isStatic = true;
+                    var hint = furnHints[rng.Next(furnHints.Length)];
+                    var f = AssetCatalog.Prop(hint, kind == "industrial" || kind == "garage" ? "survival" : "furniture", t, new Vector3(fp.x, 0.1f, fp.y), rng.Next(0, 360), hint == "barrel" || hint == "chair" || hint == "lamp" || hint == "plant" ? 1.0f : 1.6f, true);
+                    if (f == null) { var ph = MeshKit.Box(t, new Vector3(fp.x, 0.5f, fp.y), new Vector3(1.4f, 0.8f, 0.8f), new Color(0.5f, 0.4f, 0.3f)); ph.transform.rotation = Quaternion.Euler(0, rng.Next(0, 360), 0); }
                 }
-            // лампы в темноте
             if ((World.Night || World.Underground) && area > 60 && RandomInside(poly, rng, 2f, out var lamp)) World.Lamp(new Vector3(lamp.x, floorH - 0.4f, lamp.y), new Color(1f, 0.9f, 0.7f), 14f, 1.2f);
-            // запертая комната
             if (!string.IsNullOrEmpty(lockedKey) && area > 120 && RandomInside(poly, rng, 5f, out var lc))
                 LockedRoom(t, new Vector3(lc.x, 0.1f, lc.y), lockedKey, lockedRoom ?? "комната", floorH, rng, kind == "bank" ? "safe" : kind == "police" ? "weaponbox" : "safe");
             return root;
@@ -160,13 +166,11 @@ namespace Vykhod
         /// <summary>Запертая комната 6×6 с ценным лутом.</summary>
         public static void LockedRoom(Transform parent, Vector3 center, string keyId, string title, float h, System.Random rng, string mainKind = "safe")
         {
-            float s = 3f; var c = new Vector2(center.x, center.z);
-            var wallC = new Color(0.5f, 0.3f, 0.3f);
+            float s = 3f; var c = new Vector2(center.x, center.z); var wallM = Bricks;
             var a = c + new Vector2(-s, -s); var b = c + new Vector2(s, -s); var d = c + new Vector2(s, s); var e = c + new Vector2(-s, s);
-            MeshKit.Wall(parent, b, d, h, 0.25f, wallC); MeshKit.Wall(parent, d, e, h, 0.25f, wallC); MeshKit.Wall(parent, e, a, h, 0.25f, wallC);
-            // передняя стена с дверью
-            MeshKit.Wall(parent, a, c + new Vector2(-1f, -s), h, 0.25f, wallC); MeshKit.Wall(parent, c + new Vector2(1f, -s), b, h, 0.25f, wallC);
-            MeshKit.Box(parent, new Vector3(c.x, h - 0.3f, c.y - s), new Vector3(2.2f, 0.6f, 0.25f), wallC);
+            MeshKit.Wall(parent, b, d, h, 0.25f, wallM, center.y); MeshKit.Wall(parent, d, e, h, 0.25f, wallM, center.y); MeshKit.Wall(parent, e, a, h, 0.25f, wallM, center.y);
+            MeshKit.Wall(parent, a, c + new Vector2(-1f, -s), h, 0.25f, wallM, center.y); MeshKit.Wall(parent, c + new Vector2(1f, -s), b, h, 0.25f, wallM, center.y);
+            MeshKit.Box(parent, new Vector3(c.x, center.y + h - 0.3f, c.y - s), new Vector3(2.2f, 0.6f, 0.25f), wallM);
             World.AddDoor(new Vector3(c.x, center.y, c.y - s), 0, 2f, keyId, title, parent);
             World.AddContainer(new Vector3(c.x - 1.5f, center.y, c.y + 1.5f), Quaternion.identity, mainKind, parent);
             World.AddContainer(new Vector3(c.x + 1.5f, center.y, c.y + 1.5f), Quaternion.identity, mainKind == "safe" ? "desk" : "crate", parent);
@@ -174,7 +178,6 @@ namespace Vykhod
             World.Lamp(new Vector3(c.x, center.y + h - 0.5f, c.y), new Color(1f, 0.6f, 0.5f), 8f, 1.5f);
         }
 
-        /// <summary>Прямоугольник как полигон.</summary>
         public static List<Vector2> Rect(float cx, float cz, float w, float d, float yawDeg = 0)
         {
             var r = new List<Vector2>();
@@ -184,8 +187,11 @@ namespace Vykhod
             return r;
         }
 
-        /// <summary>Комната с проёмами (для ТЦ/метро): стены вокруг прямоугольника; doors — стороны 0=юг,1=восток,2=север,3=запад.</summary>
         public static void Room(Transform parent, float cx, float cz, float w, float d, float h, Color wall, IEnumerable<int> doors, float doorW = 2.4f, float yBase = 0, bool ceiling = false, Color? ceilColor = null)
+            => Room(parent, cx, cz, w, d, h, AssetCatalog.Mat(wall), doors, doorW, yBase, ceiling, ceilColor.HasValue ? AssetCatalog.Mat(ceilColor.Value) : null);
+
+        /// <summary>Комната с проёмами; doors — стороны 0=юг,1=восток,2=север,3=запад.</summary>
+        public static void Room(Transform parent, float cx, float cz, float w, float d, float h, Material wall, IEnumerable<int> doors, float doorW = 2.4f, float yBase = 0, bool ceiling = false, Material ceilMat = null)
         {
             var p = Rect(cx, cz, w, d);
             var ds = new HashSet<int>(doors ?? new int[0]);
@@ -201,31 +207,31 @@ namespace Vykhod
                 }
                 else MeshKit.Wall(parent, a, b, h, 0.3f, wall, yBase);
             }
-            if (ceiling) MeshKit.Slab(parent, p, yBase + h, 0.3f, ceilColor ?? wall * 0.6f, true, "ceil");
+            if (ceiling) MeshKit.Slab(parent, p, yBase + h, 0.3f, ceilMat ?? Concrete, true, "ceil");
         }
 
-        /// <summary>Коридор вдоль ломаной шириной w: две стены + потолок.</summary>
         public static void Corridor(Transform parent, List<Vector2> pts, float w, float h, Color wall, bool ceiling, float yBase = 0)
+            => Corridor(parent, pts, w, h, AssetCatalog.Mat(wall), ceiling, yBase);
+
+        public static void Corridor(Transform parent, List<Vector2> pts, float w, float h, Material wall, bool ceiling, float yBase = 0)
         {
             for (int i = 0; i + 1 < pts.Count; i++)
             {
                 var a = pts[i]; var b = pts[i + 1]; var dir = (b - a).normalized; var nrm = new Vector2(-dir.y, dir.x) * w * 0.5f;
                 MeshKit.Wall(parent, a + nrm, b + nrm, h, 0.3f, wall, yBase);
                 MeshKit.Wall(parent, a - nrm, b - nrm, h, 0.3f, wall, yBase);
-                if (ceiling) MeshKit.Slab(parent, new List<Vector2> { a + nrm * 1.1f, b + nrm * 1.1f, b - nrm * 1.1f, a - nrm * 1.1f }, yBase + h, 0.3f, wall * 0.5f, true, "ceil");
+                if (ceiling) MeshKit.Slab(parent, new List<Vector2> { a + nrm * 1.1f, b + nrm * 1.1f, b - nrm * 1.1f, a - nrm * 1.1f }, yBase + h, 0.3f, Concrete, true, "ceil");
             }
         }
 
-        /// <summary>Пандус (наклонная плита) от a (низ) к b (верх).</summary>
-        public static void Ramp(Transform parent, Vector3 a, Vector3 b, float width, Color c)
+        public static void Ramp(Transform parent, Vector3 a, Vector3 b, float width, Color c) => Ramp(parent, a, b, width, AssetCatalog.Mat(c));
+        public static void Ramp(Transform parent, Vector3 a, Vector3 b, float width, Material m)
         {
             var mid = (a + b) * 0.5f; var dir = b - a; float len = dir.magnitude;
             var rot = Quaternion.LookRotation(new Vector3(dir.x, 0, dir.z).normalized, Vector3.up) * Quaternion.Euler(-Mathf.Atan2(dir.y, new Vector3(dir.x, 0, dir.z).magnitude) * Mathf.Rad2Deg, 0, 0);
-            var go = MeshKit.Box(parent, mid, new Vector3(width, 0.3f, len), c, true, true, rot);
-            go.name = "ramp";
-            // перила
-            MeshKit.Box(parent, mid + rot * new Vector3(width / 2, 0.6f, 0), new Vector3(0.1f, 1.0f, len), c * 0.7f, true, true, rot);
-            MeshKit.Box(parent, mid + rot * new Vector3(-width / 2, 0.6f, 0), new Vector3(0.1f, 1.0f, len), c * 0.7f, true, true, rot);
+            var go = MeshKit.Box(parent, mid, new Vector3(width, 0.3f, len), m, true, true, rot); go.name = "ramp";
+            MeshKit.Box(parent, mid + rot * new Vector3(width / 2, 0.6f, 0), new Vector3(0.1f, 1.0f, len), Metal, true, true, rot);
+            MeshKit.Box(parent, mid + rot * new Vector3(-width / 2, 0.6f, 0), new Vector3(0.1f, 1.0f, len), Metal, true, true, rot);
         }
     }
 }

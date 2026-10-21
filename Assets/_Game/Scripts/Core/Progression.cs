@@ -24,7 +24,7 @@ namespace Vykhod
                 if (need > lv && !(black && need <= lv + 1) && !P.unlocked.Contains(info.id)) continue;
                 r.Add(info);
             }
-            return r.OrderBy(i => i.kind).ThenBy(i => i.lvl).ThenBy(i => i.price).ToList();
+            return r.OrderBy(i => i.kind == "weapon" ? 0 : i.kind == "mod" ? 1 : i.kind == "item" ? 2 : 3).ThenBy(i => i.lvl).ThenBy(i => i.price).ToList();
         }
 
         public static long BuyPrice(ItemInfo info, string traderId)

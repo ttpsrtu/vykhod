@@ -1,0 +1,7 @@
+Pack: kenney_ui-pack
+License: CC0 1.0
+Source: https://kenney.nl/assets/ui-pack
+Download: https://kenney.nl/media/pages/assets/ui-pack/f651646eab-1718203990/kenney_ui-pack.zip
+Note: UI Pack 2.x: buttons/panels/sliders/checkboxes as PNG/<Blue|Green|Grey|Red|Yellow|Extra>/<Default|Double>/*.png, plus Font/*.ttf and Sounds/*.ogg
+Fetched: 2026-10-21 by Tools/fetch_assets.py
+Only OGG/OTF/PNG/TTF/WAV files were kept; previews, vectors, spritesheets, GLTF/GLB, .blend and sample scenes were removed.

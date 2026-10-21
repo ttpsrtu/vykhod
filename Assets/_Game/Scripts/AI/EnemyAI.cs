@@ -93,7 +93,7 @@ namespace Vykhod
             eye = new GameObject("eye").transform; eye.SetParent(transform, false); eye.localPosition = new Vector3(0, 1.6f, 0.1f);
             gunT = new GameObject("gun").transform; gunT.SetParent(eye, false); gunT.localPosition = new Vector3(0.25f, -0.25f, 0.3f);
             var gp = AssetCatalog.FindModel(WDef.model, "weapon|guns");
-            var g = gp != null ? AssetCatalog.Spawn(gp, gunT, WDef.cls == "pistol" ? 0.25f : 0.8f, false) : AssetCatalog.GunPlaceholder(WDef, gunT);
+            var g = gp != null ? AssetCatalog.Spawn(gp, gunT, WDef.cls == "pistol" ? 0.25f : 0.8f, false, true) : AssetCatalog.GunPlaceholder(WDef, gunT);
             if (gp != null) g.transform.localRotation = Quaternion.Euler(0, 90, 0);
             gameObject.layer = 0;
         }

@@ -122,7 +122,7 @@ namespace Vykhod
             {
                 // третье лицо: оружие в руках и поворот тела
                 string w = WeaponId.Value.ToString();
-                if (w != shownWeapon) { shownWeapon = w; foreach (Transform ch in remoteGun) Destroy(ch.gameObject); var def = Database.Weapon(w); if (def != null) { var p = AssetCatalog.FindModel(def.model, "weapon|guns"); var g = p != null ? AssetCatalog.Spawn(p, remoteGun, def.cls == "pistol" ? 0.25f : 0.8f) : AssetCatalog.GunPlaceholder(def, remoteGun); if (p != null) g.transform.localRotation = Quaternion.Euler(0, 90, 0); } }
+                if (w != shownWeapon) { shownWeapon = w; foreach (Transform ch in remoteGun) Destroy(ch.gameObject); var def = Database.Weapon(w); if (def != null) { var p = AssetCatalog.FindModel(def.model, "weapon|guns"); var g = p != null ? AssetCatalog.Spawn(p, remoteGun, def.cls == "pistol" ? 0.25f : 0.8f, false, true) : AssetCatalog.GunPlaceholder(def, remoteGun); if (p != null) g.transform.localRotation = Quaternion.Euler(0, 90, 0); } }
                 if (body != null) body.transform.localScale = new Vector3(1, Crouching.Value ? 0.7f : 1f, 1);
                 if (remoteLight == null && Flashlight.Value) { remoteLight = new GameObject("rfl").AddComponent<Light>(); remoteLight.transform.SetParent(remoteGun, false); remoteLight.type = LightType.Spot; remoteLight.range = 40; remoteLight.spotAngle = 45; remoteLight.intensity = 2f; remoteLight.shadows = LightShadows.None; }
                 if (remoteLight != null) remoteLight.enabled = Flashlight.Value;

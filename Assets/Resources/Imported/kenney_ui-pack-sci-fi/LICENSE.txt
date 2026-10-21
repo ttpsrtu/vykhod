@@ -1,0 +1,7 @@
+Pack: kenney_ui-pack-sci-fi
+License: CC0 1.0
+Source: https://kenney.nl/assets/ui-pack-sci-fi
+Download: https://kenney.nl/media/pages/assets/ui-pack-sci-fi/b67c2acd31-1724181109/kenney_ui-pack-space-expansion.zip
+Note: UI Pack - Sci-Fi (zip is named kenney_ui-pack-space-expansion.zip): same layout as kenney_ui-pack
+Fetched: 2026-10-21 by Tools/fetch_assets.py
+Only OGG/OTF/PNG/TTF/WAV files were kept; previews, vectors, spritesheets, GLTF/GLB, .blend and sample scenes were removed.

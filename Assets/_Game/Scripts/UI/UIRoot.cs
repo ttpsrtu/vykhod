@@ -12,7 +12,7 @@ namespace Vykhod
         Canvas loadingCanvas; Text loadingText; Canvas toastCanvas; RectTransform toastCol;
         readonly List<(Text t, float until)> toasts = new List<(Text, float)>();
 
-        public bool IsMenuOpen => Game.State == GameState.Raid && raidMenu != null && raidMenu.Open || ChatOpen;
+        public bool IsMenuOpen => Game.State == GameState.Raid && raidMenu != null && raidMenu.Open || ChatOpen || UIKit.AnyPopup;
         public bool ChatOpen => hud != null && hud.ChatOpen;
 
         void Awake()
@@ -22,7 +22,7 @@ namespace Vykhod
             toastCol = UIKit.Column(toastCanvas.transform, 4, 0);
             toastCol.anchorMin = new Vector2(1, 1); toastCol.anchorMax = new Vector2(1, 1); toastCol.pivot = new Vector2(1, 1); toastCol.anchoredPosition = new Vector2(-16, -16); toastCol.sizeDelta = new Vector2(520, 400);
             toastCol.GetComponent<VerticalLayoutGroup>().childAlignment = TextAnchor.UpperRight;
-            loadingCanvas = UIKit.NewCanvas("Loading", 90); UIKit.Panel(loadingCanvas.transform, UIKit.Bg);
+            loadingCanvas = UIKit.NewCanvas("Loading", 90); UIKit.Background(loadingCanvas.transform);
             loadingText = UIKit.Label(loadingCanvas.transform, "", 34, TextAnchor.MiddleCenter, UIKit.Accent, true); UIKit.Stretch(loadingText.rectTransform);
             loadingCanvas.gameObject.SetActive(false);
         }
@@ -34,20 +34,23 @@ namespace Vykhod
 
         public void ShowMainMenu() { HideAll(); (menu ?? (menu = new MainMenuUI())).Show(); }
         public void ShowHideout() { HideAll(); (hideout ?? (hideout = new HideoutUI())).Show(); }
+        public void SetLobbyTab(int i) { hideout?.SetTab(i); }
         public void ShowLoading(string text) { HideAll(); loadingCanvas.gameObject.SetActive(true); loadingText.text = text; }
         public void ShowHUD() { HideAll(); (hud ?? (hud = new HUD())).Show(); (raidMenu ?? (raidMenu = new RaidMenuUI())).Hide(); }
         public void ShowResults(bool extracted) { HideAll(); (results ?? (results = new ResultsUI())).Show(extracted); }
 
         public void OnNotification(string msg)
         {
-            var t = UIKit.Label(toastCol, msg, 18, TextAnchor.MiddleRight, UIKit.TextC);
-            var bg = t.gameObject.AddComponent<Outline>(); bg.effectColor = Color.black; bg.effectDistance = new Vector2(1, -1);
+            var card = UIKit.Card(toastCol, new Color(0.05f, 0.08f, 0.26f, 0.85f), 16, "toast", false);
+            var le = card.gameObject.AddComponent<LayoutElement>(); le.minHeight = 44; le.preferredHeight = 44; le.flexibleHeight = 0;
+            var stripe = UIKit.Img(card.transform, UIKit.Yellow, "stripe"); stripe.sprite = UIKit.Rounded(16); stripe.type = Image.Type.Sliced; stripe.rectTransform.anchorMin = new Vector2(0, 0); stripe.rectTransform.anchorMax = new Vector2(0, 1); stripe.rectTransform.offsetMin = Vector2.zero; stripe.rectTransform.offsetMax = new Vector2(6, 0);
+            var t = UIKit.Label(card.transform, msg, 16, TextAnchor.MiddleLeft, UIKit.TextC, true, 0, true); UIKit.Stretch(t.rectTransform, 16, 2, 12, 2); t.horizontalOverflow = HorizontalWrapMode.Wrap; t.verticalOverflow = VerticalWrapMode.Truncate;
             toasts.Add((t, Time.unscaledTime + 5f));
         }
 
         void Update()
         {
-            for (int i = toasts.Count - 1; i >= 0; i--) if (Time.unscaledTime > toasts[i].until) { if (toasts[i].t != null) Destroy(toasts[i].t.gameObject); toasts.RemoveAt(i); }
+            for (int i = toasts.Count - 1; i >= 0; i--) if (Time.unscaledTime > toasts[i].until) { if (toasts[i].t != null) Destroy(toasts[i].t.transform.parent.gameObject); toasts.RemoveAt(i); }
             if (Game.State == GameState.Raid)
             {
                 hud?.Tick(); raidMenu?.Tick();

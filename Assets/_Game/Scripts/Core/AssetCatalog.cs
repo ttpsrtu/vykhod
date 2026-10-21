@@ -12,7 +12,31 @@ namespace Vykhod
     {
         class Pack { public string name, license; public List<string> models = new List<string>(), audio = new List<string>(), textures = new List<string>(); }
         static readonly List<Pack> packs = new List<Pack>();
-        static readonly List<string> allModels = new List<string>(), allAudio = new List<string>();
+        static readonly List<string> allModels = new List<string>(), allAudio = new List<string>(), allTextures = new List<string>();
+        static readonly Dictionary<string, Texture2D> texCache = new Dictionary<string, Texture2D>();
+
+        /// <summary>Текстура/спрайт по подсказке (имя файла содержит hint), packHint — альтернативы через '|'.</summary>
+        public static Texture2D FindTexture(string hint, string packHint = null)
+        {
+            Load();
+            if (string.IsNullOrEmpty(hint) || allTextures.Count == 0) return null;
+            string key = hint + "@" + packHint;
+            if (texCache.TryGetValue(key, out var cached)) return cached;
+            IEnumerable<string> pool = allTextures;
+            if (!string.IsNullOrEmpty(packHint))
+            {
+                var alts = packHint.ToLowerInvariant().Split('|');
+                var pp = allTextures.Where(m => { var ml = m.ToLowerInvariant(); foreach (var a in alts) if (ml.Contains(a)) return true; return false; }).ToList();
+                if (pp.Count > 0) pool = pp;
+            }
+            string h = hint.ToLowerInvariant();
+            string path = pool.FirstOrDefault(m => System.IO.Path.GetFileName(m).ToLowerInvariant() == h)
+                       ?? pool.FirstOrDefault(m => System.IO.Path.GetFileName(m).ToLowerInvariant().StartsWith(h))
+                       ?? pool.FirstOrDefault(m => System.IO.Path.GetFileName(m).ToLowerInvariant().Contains(h));
+            var tex = path != null ? Resources.Load<Texture2D>(path) : null;
+            texCache[key] = tex;
+            return tex;
+        }
         static readonly Dictionary<string, GameObject> prefabCache = new Dictionary<string, GameObject>();
         static readonly Dictionary<string, AudioClip> clipCache = new Dictionary<string, AudioClip>();
         static readonly Dictionary<Color, Material> matCache = new Dictionary<Color, Material>();
@@ -51,7 +75,7 @@ namespace Vykhod
             foreach (var d in list)
             {
                 var p = new Pack { name = J.S(d, "pack"), license = J.S(d, "license"), models = J.SL(d, "models"), audio = J.SL(d, "audio"), textures = J.SL(d, "textures") };
-                packs.Add(p); allModels.AddRange(p.models); allAudio.AddRange(p.audio);
+                packs.Add(p); allModels.AddRange(p.models); allAudio.AddRange(p.audio); allTextures.AddRange(p.textures);
             }
             Debug.Log($"[Assets] пакетов {packs.Count}, моделей {allModels.Count}, звуков {allAudio.Count}");
         }
@@ -101,23 +125,48 @@ namespace Vykhod
         }
 
         /// <summary>Создаёт экземпляр модели, нормализуя размер (targetSize = макс. габарит в метрах; 0 = как есть).</summary>
-        public static GameObject Spawn(string path, Transform parent, float targetSize = 0, bool colliders = false)
+        public static GameObject Spawn(string path, Transform parent, float targetSize = 0, bool colliders = false, bool center = false)
         {
             var prefab = LoadPrefab(path);
             if (prefab == null) return null;
             var go = Object.Instantiate(prefab, parent);
             go.transform.localPosition = Vector3.zero; go.transform.localRotation = Quaternion.identity;
             Normalize(go, targetSize, colliders);
+            if (center)
+            {
+                // центр модели — в точку привязки (у многих FBX пивот сбоку)
+                var b = MeshBounds(go);
+                if (b.size.sqrMagnitude > 0) go.transform.position += go.transform.position - b.center;
+            }
             return go;
+        }
+
+        /// <summary>Границы модели по мешам (надёжнее renderer.bounds сразу после Instantiate), в мировых координатах.</summary>
+        public static Bounds MeshBounds(GameObject go)
+        {
+            bool any = false; var b = new Bounds();
+            foreach (var mf in go.GetComponentsInChildren<MeshFilter>())
+            {
+                if (mf.sharedMesh == null) continue;
+                var mb = mf.sharedMesh.bounds; var m = mf.transform.localToWorldMatrix;
+                for (int i = 0; i < 8; i++)
+                {
+                    var c = new Vector3((i & 1) == 0 ? mb.min.x : mb.max.x, (i & 2) == 0 ? mb.min.y : mb.max.y, (i & 4) == 0 ? mb.min.z : mb.max.z);
+                    var w = m.MultiplyPoint3x4(c);
+                    if (!any) { b = new Bounds(w, Vector3.zero); any = true; } else b.Encapsulate(w);
+                }
+            }
+            foreach (var smr in go.GetComponentsInChildren<SkinnedMeshRenderer>()) { if (!any) { b = smr.bounds; any = true; } else b.Encapsulate(smr.bounds); }
+            return b;
         }
 
         public static void Normalize(GameObject go, float targetSize, bool colliders)
         {
             var rends = go.GetComponentsInChildren<Renderer>();
             if (rends.Length == 0) return;
-            var b = rends[0].bounds; foreach (var r in rends) b.Encapsulate(r.bounds);
+            var b = MeshBounds(go);
             float max = Mathf.Max(b.size.x, b.size.y, b.size.z);
-            if (targetSize > 0 && max > 0.0001f) go.transform.localScale = Vector3.one * (targetSize / max);
+            if (targetSize > 0 && max > 0.0001f) go.transform.localScale = go.transform.localScale * (targetSize / max);
             foreach (var r in rends) { r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On; foreach (var m in r.sharedMaterials) if (m != null) m.enableInstancing = true; }
             if (colliders && go.GetComponentInChildren<Collider>() == null)
             {
@@ -171,7 +220,7 @@ namespace Vykhod
             get
             {
                 if (font != null) return font;
-                foreach (var n in new[] { "Imported/fonts/Rubik", "Imported/fonts/Rubik-Regular", "Imported/fonts/Inter", "Imported/fonts/Inter-Regular", "Imported/fonts/Roboto-Regular", "Imported/fonts/Roboto" })
+                foreach (var n in new[] { "Imported/fonts/RussoOne-Regular", "Imported/fonts/Montserrat-ExtraBold", "Imported/fonts/Rubik-Variable", "Imported/fonts/Rubik", "Imported/fonts/Rubik-Regular", "Imported/fonts/Inter", "Imported/fonts/Roboto-Regular" })
                 { font = Resources.Load<Font>(n); if (font != null) return font; }
                 var fonts = Resources.LoadAll<Font>("Imported/fonts");
                 if (fonts != null && fonts.Length > 0) { font = fonts[0]; return font; }
@@ -190,6 +239,47 @@ namespace Vykhod
             m.SetFloat("_Glossiness", smooth); m.SetFloat("_Metallic", 0f);
             matCache[c] = m;
             return m;
+        }
+
+        // ------------------------------------------------------------ текстурированные материалы (триплaнар)
+        static readonly Dictionary<string, Material> texMatCache = new Dictionary<string, Material>();
+        static Shader triplanar;
+        public static bool HasTexture(string key) => FindTexture(key + "_Color", "textures_cc0") != null || FindTexture(key, "textures_cc0") != null;
+
+        /// <summary>Материал с CC0-текстурой по ключу (grass, asphalt, concrete, bricks, facade…). scale — метров на тайл. Без текстуры — плоский цвет.</summary>
+        public static Material TexMat(string key, float scale = 2f, Color? tint = null, Color? fallback = null, int variant = 0)
+        {
+            Load();
+            string ck = key + "|" + scale + "|" + (tint ?? Color.white) + "|" + variant;
+            if (texMatCache.TryGetValue(ck, out var m)) return m;
+            Texture2D tex = null;
+            // ключи → реальные имена ambientCG
+            string k = key.ToLowerInvariant();
+            if (k == "metal") k = "corrugated"; else if (k == "woodplanks") k = "planks"; else if (k == "ground" || k == "dirt") k = "ground048"; else if (k == "sand") k = "ground033"; else if (k == "paving") k = "pavingstones";
+            var candidates = allTextures.Where(t => t.ToLowerInvariant().Contains("textures_cc0") && t.ToLowerInvariant().Contains(k) && t.ToLowerInvariant().EndsWith("_color")).OrderBy(t => t).ToList();
+            if (candidates.Count > 0) tex = Resources.Load<Texture2D>(candidates[Mathf.Abs(variant) % candidates.Count]);
+            if (tex == null) { m = Mat(fallback ?? (tint ?? new Color(0.6f, 0.6f, 0.6f))); texMatCache[ck] = m; return m; }
+            if (triplanar == null) triplanar = Shader.Find("Vykhod/Triplanar") ?? Resources.Load<Shader>("Shaders/Triplanar");
+            if (triplanar == null) { m = Mat(fallback ?? Color.gray); texMatCache[ck] = m; return m; }
+            m = new Material(triplanar) { enableInstancing = true };
+            m.SetTexture("_MainTex", tex); m.SetFloat("_Scale", scale); m.SetColor("_Color", tint ?? Color.white);
+            texMatCache[ck] = m;
+            return m;
+        }
+
+        /// <summary>Расставить готовую модель из пака как пропс (с коллайдером), с нормализацией размера.</summary>
+        public static GameObject Prop(string nameHint, string packHint, Transform parent, Vector3 pos, float yaw, float size, bool collider = true)
+        {
+            var path = FindModel(nameHint, packHint);
+            if (path == null) return null;
+            var go = Spawn(path, parent, size, collider);
+            if (go == null) return null;
+            go.transform.position = pos; go.transform.rotation = Quaternion.Euler(0, yaw, 0);
+            // Kenney-модели стоят на своём пивоте снизу; на всякий случай опустим на землю по границам
+            var b = MeshBounds(go);
+            if (b.size.sqrMagnitude > 0) go.transform.position += Vector3.up * (pos.y - b.min.y);
+            go.isStatic = true;
+            return go;
         }
 
         public static Material Emissive(Color c, float power = 1.5f)

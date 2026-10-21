@@ -23,7 +23,9 @@ namespace Vykhod
 
         void OnEnable()
         {
+            if (net.Head == null) return; // до OnNetworkSpawn голова ещё не назначена — построим позже
             if (hands == null) { hands = new GameObject("Hands").transform; hands.SetParent(net.Head, false); }
+            if (hands.parent != net.Head) hands.SetParent(net.Head, false);
             if (Current == null) foreach (var s in new[] { "primary", "secondary", "holster", "melee" }) if (Game.Manager.RaidLoadout.eq.Get(s) != null) { Slot = s; break; }
             Rebuild();
         }
@@ -39,7 +41,7 @@ namespace Vykhod
             if (cur == null) return;
             var def = cur.Info.weapon;
             var path = AssetCatalog.FindModel(def.model, "weapon|guns");
-            GameObject g = path != null ? AssetCatalog.Spawn(path, model.transform, def.cls == "pistol" ? 0.26f : def.cls == "melee" ? 0.35f : def.cls == "smg" ? 0.5f : def.cls == "sniper" || def.cls == "lmg" ? 1.05f : 0.78f) : null;
+            GameObject g = path != null ? AssetCatalog.Spawn(path, model.transform, def.cls == "pistol" ? 0.26f : def.cls == "melee" ? 0.35f : def.cls == "smg" ? 0.5f : def.cls == "sniper" || def.cls == "lmg" ? 1.05f : 0.78f, false, true) : null;
             if (g != null) g.transform.localRotation = Quaternion.Euler(0, 90, 0); else g = AssetCatalog.GunPlaceholder(def, model.transform);
             float len = def.cls == "pistol" ? 0.2f : def.cls == "smg" ? 0.45f : def.cls == "sniper" || def.cls == "lmg" ? 1.05f : 0.75f;
             // визуализация модов
@@ -57,6 +59,9 @@ namespace Vykhod
             }
             foreach (var r in model.GetComponentsInChildren<Renderer>()) r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             foreach (var t in model.GetComponentsInChildren<Transform>()) t.gameObject.layer = 2;
+            var rr = model.GetComponentsInChildren<Renderer>();
+            if (rr.Length > 0) { var bb = rr[0].bounds; foreach (var r in rr) bb.Encapsulate(r.bounds); Debug.Log($"[Weapons] {def.id}: модель {(path ?? "placeholder")}, рендереров {rr.Length}, bounds {bb.center} {bb.size}, hands={hands.position} parent={hands.parent?.name}, cam={(net.Cam != null ? net.Cam.transform.position.ToString() : "нет")}"); }
+            else Debug.LogWarning($"[Weapons] {def.id}: у модели нет рендереров ({path})");
             FireMode = Mathf.Clamp(FireMode, 0, Mathf.Max(0, def.modes.Count - 1));
             swapEnd = Time.time + (WC?.swapTime ?? 0.4f);
             Ads = false;

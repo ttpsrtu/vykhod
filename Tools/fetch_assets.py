@@ -12,10 +12,17 @@ Output: Assets/Resources/Imported/<packname>/...   + LICENSE.txt per pack
         Assets/Resources/Imported/asset_index.json
 
 Downloads land in <scratch>/downloads/<packname>/ (each pack in its own dir).
-Only FBX/OBJ(+MTL)/PNG/JPG/WAV/OGG/MP3/TTF/HDR files are kept; GLB/GLTF/blend/
+Only FBX/OBJ(+MTL)/PNG/JPG/WAV/OGG/MP3/TTF/OTF/HDR files are kept; GLB/GLTF/blend/
 previews/sample scenes/unitypackages are dropped.  When a pack ships both FBX
 and OBJ versions of the same models, only the FBX set is kept (OBJ is dropped)
 to keep the Unity import light.
+
+Packs may override the filter with keep_ext={...} (e.g. UI/icon packs keep only
+PNG/TTF/OTF/WAV/OGG) and junk_dirs={...} (extra directory names to drop).
+"multi" packs that are already present are updated additively: file items whose
+target is missing are fetched and appended to LICENSE.txt (no --force needed).
+"pbr" packs (textures_cc0) pull 1K-JPG materials from ambientCG (Poly Haven as per-asset
+fallback) and keep only <id>/<id>_Color.jpg + <id>_Normal.jpg; they update additively too.
 """
 import argparse
 import datetime
@@ -38,10 +45,13 @@ DOWNLOADS = SCRATCH / "downloads"
 
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36"}
 
-KEEP_EXT = {".fbx", ".obj", ".mtl", ".png", ".jpg", ".jpeg", ".wav", ".ogg", ".mp3", ".ttf", ".hdr"}
+KEEP_EXT = {".fbx", ".obj", ".mtl", ".png", ".jpg", ".jpeg", ".wav", ".ogg", ".mp3", ".ttf", ".otf", ".hdr"}
 MODEL_EXT = {".fbx", ".obj"}
 AUDIO_EXT = {".wav", ".ogg", ".mp3"}
 TEX_EXT = {".png", ".jpg", ".jpeg", ".hdr"}
+FONT_EXT = {".ttf", ".otf"}
+# filter for 2D UI / icon packs: PNG folders + fonts + UI sounds only (vectors, spritesheets, previews dropped)
+UI_KEEP_EXT = {".png", ".ttf", ".otf", ".wav", ".ogg"}
 # directory names (case-insensitive) that are junk for the game
 JUNK_DIRS = {"preview", "previews", "isometric", "sample", "samples", "extras", "unity", "unitypackage",
              "gltf", "gltf format", "glb", "glb format", "blend", "blend format", "sketchfab", "__macosx",
@@ -112,9 +122,27 @@ PACKS = [
              dict(kind="file", url="https://opengameart.org/sites/default/files/reload.wav", sub="reload", target="reload_handgun_full.wav",
                   source="https://opengameart.org/content/handgun-reload-sound-effect (zer0_sol, CC0)"),
          ]),
+    # ---- UI: icons + widgets (2D, PNG only) ----
+    dict(name="kenney_game-icons", kind="kenney", slug="game-icons", license="CC0 1.0",
+         keep_ext=UI_KEEP_EXT,
+         note="105 flat game icons (white/black on transparent) as PNG/<Color>/<1x|2x>/<name>.png"),
+    dict(name="kenney_game-icons-expansion", kind="kenney", slug="game-icons-expansion", license="CC0 1.0", optional=True,
+         keep_ext=UI_KEEP_EXT, junk_dirs={"game icons (base)"},
+         note="81 extra icons + 17 colored; the bundled copy of the base pack ('Game icons (base)/') is dropped - see kenney_game-icons"),
+    dict(name="kenney_ui-pack", kind="kenney", slug="ui-pack", license="CC0 1.0",
+         keep_ext=UI_KEEP_EXT,
+         note="UI Pack 2.x: buttons/panels/sliders/checkboxes as PNG/<Blue|Green|Grey|Red|Yellow|Extra>/<Default|Double>/*.png, plus Font/*.ttf and Sounds/*.ogg"),
+    dict(name="kenney_ui-pack-sci-fi", kind="kenney", slug="ui-pack-sci-fi", license="CC0 1.0", optional=True,
+         keep_ext=UI_KEEP_EXT,
+         note="UI Pack - Sci-Fi (zip is named kenney_ui-pack-space-expansion.zip): same layout as kenney_ui-pack"),
+    dict(name="kenney_ui-pack-adventure", kind="kenney", slug="ui-pack-adventure", license="CC0 1.0", optional=True,
+         keep_ext=UI_KEEP_EXT,
+         note="UI Pack - Adventure: wooden/parchment widgets as PNG/<Default|Double>/*.png"),
     # ---- font ----
     dict(name="fonts", kind="multi", license="SIL Open Font License 1.1",
-         source="https://github.com/google/fonts/tree/main/ofl/rubik (Rubik, Cyrillic+Latin)",
+         source="Google Fonts (OFL): https://github.com/google/fonts/tree/main/ofl/rubik (Rubik), "
+                "https://github.com/google/fonts/tree/main/ofl/russoone (Russo One, Cyrillic display), "
+                "https://github.com/google/fonts/tree/main/ofl/montserrat (Montserrat)",
          items=[
              dict(kind="file", url="https://raw.githubusercontent.com/google/fonts/main/ofl/rubik/static/Rubik-Regular.ttf", target="Rubik-Regular.ttf",
                   fallback="https://raw.githubusercontent.com/google/fonts/main/ofl/rubik/Rubik%5Bwght%5D.ttf", fallback_target="Rubik-Variable.ttf",
@@ -123,6 +151,18 @@ PACKS = [
                   optional=True, source="https://github.com/google/fonts/tree/main/ofl/rubik"),
              dict(kind="file", url="https://raw.githubusercontent.com/google/fonts/main/ofl/rubik/OFL.txt", target="OFL_Rubik.txt",
                   source="https://github.com/google/fonts/tree/main/ofl/rubik"),
+             # Russo One - heavy display face with Cyrillic, good for titles / HUD numbers
+             dict(kind="file", url="https://raw.githubusercontent.com/google/fonts/main/ofl/russoone/RussoOne-Regular.ttf", target="RussoOne-Regular.ttf",
+                  source="https://github.com/google/fonts/tree/main/ofl/russoone (Russo One, OFL 1.1, Cyrillic+Latin)"),
+             dict(kind="file", url="https://raw.githubusercontent.com/google/fonts/main/ofl/russoone/OFL.txt", target="OFL_RussoOne.txt",
+                  source="https://github.com/google/fonts/tree/main/ofl/russoone"),
+             # Montserrat ExtraBold - only if a static TTF is published (google/fonts ships the variable font only -> skipped)
+             dict(kind="file", url="https://raw.githubusercontent.com/google/fonts/main/ofl/montserrat/static/Montserrat-ExtraBold.ttf",
+                  target="Montserrat-ExtraBold.ttf", optional=True,
+                  source="https://github.com/google/fonts/tree/main/ofl/montserrat (Montserrat, OFL 1.1, Cyrillic+Latin)"),
+             dict(kind="file", url="https://raw.githubusercontent.com/google/fonts/main/ofl/montserrat/OFL.txt", target="OFL_Montserrat.txt",
+                  optional=True, requires="Montserrat-ExtraBold.ttf",
+                  source="https://github.com/google/fonts/tree/main/ofl/montserrat"),
          ]),
     # ---- sky ----
     dict(name="sky", kind="multi", license="CC0 1.0",
@@ -131,6 +171,45 @@ PACKS = [
              dict(kind="file", url="https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/kloofendal_48d_partly_cloudy_puresky_2k.hdr",
                   target="kloofendal_48d_partly_cloudy_puresky_2k.hdr",
                   source="https://polyhaven.com/a/kloofendal_48d_partly_cloudy_puresky"),
+         ]),
+    # ---- PBR textures (ambientCG 1K-JPG, CC0; Poly Haven 1k jpg as per-asset fallback) ----
+    # Each item: key = what the game looks up by substring, id = ambientCG asset id (folder + file prefix),
+    # ph = Poly Haven asset id used only when the ambientCG download fails. Only Color + NormalGL are kept:
+    #   Imported/textures_cc0/<id>/<id>_Color.jpg  and  <id>_Normal.jpg
+    dict(name="textures_cc0", kind="pbr", license="CC0 1.0",
+         source="https://ambientcg.com (CC0 1.0; per-asset pages https://ambientcg.com/view?id=<id>); "
+                "fallback https://polyhaven.com (CC0 1.0)",
+         keep_ext={".jpg"},
+         note="1K JPG PBR materials, only <id>_Color.jpg (albedo) and <id>_Normal.jpg (OpenGL normal) per asset; "
+              "Roughness/Displacement/AO/metal/DX-normal maps and .blend/.usdc/.mtlx were dropped to save space.",
+         items=[
+             dict(key="grass", id="Grass004", ph="leafy_grass"),            # neat lawn
+             dict(key="grass", id="Grass001", ph="sparse_grass"),           # wilder, darker, dense
+             dict(key="ground_dirt", id="Ground048", ph="dirt_floor"),      # brown soil
+             dict(key="asphalt", id="Asphalt015", ph="asphalt_02"),         # plain road
+             dict(key="asphalt", id="Asphalt026C", ph="worn_asphalt"),      # cracked
+             dict(key="concrete", id="Concrete034", ph="concrete_floor_02"),  # smooth light
+             dict(key="concrete", id="Concrete044C", ph="dirty_concrete"),    # damaged
+             dict(key="bricks", id="Bricks059", ph="brick_wall_001"),       # red
+             dict(key="bricks", id="Bricks061", ph="brick_wall_02"),        # grey
+             dict(key="plaster", id="PaintedPlaster012", ph="painted_plaster_wall"),  # old painted wall
+             dict(key="roofingtiles", id="RoofingTiles007", ph="clay_roof_tiles"),    # orange clay
+             dict(key="roofingtiles", id="RoofingTiles013A", ph="grey_roof_tiles"),   # dark
+             dict(key="corrugated", id="CorrugatedSteel009", ph="corrugated_iron"),   # dark industrial
+             dict(key="woodplanks", id="Planks037A", ph="brown_planks_03"),           # worn floor planks
+             dict(key="tiles", id="Tiles141", ph="dirty_tiles"),            # beige bathroom floor
+             dict(key="tiles", id="Tiles012", ph="floor_tiles_02"),         # black/white checker
+             dict(key="pavingstones", id="PavingStones070", ph="cobblestone_floor_01"),  # old cobble
+             dict(key="gravel", id="Gravel022", ph="gravel"),
+             dict(key="facade", id="Facade018A", ph="rectangular_facade_tiles"),  # brick office
+             dict(key="facade", id="Facade019A", ph="concrete_tile_facade"),      # concrete office
+             dict(key="facade", id="Facade001", ph="rectangular_facade_tiles_02"),  # glass
+             dict(key="rock", id="Rock030", ph="gray_rocks"),
+             dict(key="sand", id="Ground033", ph="coast_sand_01"),          # light beach sand
+             dict(key="carpet", id="Carpet001", ph="dirty_carpet"),
+             dict(key="fabric", id="Fabric030", ph="denim_fabric"),
+             dict(key="marble", id="Marble012", ph="marble_01"),
+             dict(key="rust", id="Rust009", ph="rusty_metal"),
          ]),
 ]
 
@@ -193,9 +272,9 @@ def kenney_zip_url(slug):
 # ----------------------------------------------------------------------------------------------
 # Extraction with filtering
 # ----------------------------------------------------------------------------------------------
-def _is_junk_path(parts):
+def _is_junk_path(parts, junk_dirs=JUNK_DIRS):
     for p in parts[:-1]:
-        if p.lower() in JUNK_DIRS:
+        if p.lower() in junk_dirs:
             return True
     name = parts[-1]
     if JUNK_NAMES.match(name) and Path(name).suffix.lower() in TEX_EXT:
@@ -203,8 +282,14 @@ def _is_junk_path(parts):
     return False
 
 
-def plan_members(zf: zipfile.ZipFile):
-    """Return list of (member, relative_target_parts) that we want to keep."""
+def plan_members(zf: zipfile.ZipFile, keep_ext=None, junk_dirs=None):
+    """Return list of (member, relative_target_parts) that we want to keep.
+
+    keep_ext  - per-pack set of extensions to keep (default KEEP_EXT)
+    junk_dirs - extra directory names (lower-case) to drop, on top of JUNK_DIRS
+    """
+    keep_ext = KEEP_EXT if keep_ext is None else keep_ext
+    junk = JUNK_DIRS | {d.lower() for d in (junk_dirs or ())}
     infos = [i for i in zf.infolist() if not i.is_dir()]
     names = [i.filename.replace("\\", "/") for i in infos]
     # strip common single root dir
@@ -223,12 +308,13 @@ def plan_members(zf: zipfile.ZipFile):
             continue
         ext = Path(parts[-1]).suffix.lower()
         lower_name = parts[-1].lower()
-        if ext not in KEEP_EXT:
-            # keep the pack's own license/readme text
-            if ext == ".txt" and ("licen" in lower_name or "readme" in lower_name or "credit" in lower_name):
+        if ext not in keep_ext:
+            # keep the pack's own license/readme text (unless it sits in a dropped sub-folder)
+            if ext == ".txt" and ("licen" in lower_name or "readme" in lower_name or "credit" in lower_name) \
+                    and not _is_junk_path(parts, junk):
                 keep.append((info, ["_pack_" + parts[-1]]))
             continue
-        if _is_junk_path(parts):
+        if _is_junk_path(parts, junk):
             continue
         # when FBX exists, drop the OBJ/MTL duplicates (same models, double import otherwise)
         if have_fbx and ext in (".obj", ".mtl"):
@@ -240,12 +326,12 @@ def plan_members(zf: zipfile.ZipFile):
     return keep
 
 
-def extract_zip(zip_path: Path, out_dir: Path, subdir=None):
+def extract_zip(zip_path: Path, out_dir: Path, subdir=None, keep_ext=None, junk_dirs=None):
     with zipfile.ZipFile(zip_path) as zf:
         bad = zf.testzip()
         if bad:
             raise RuntimeError(f"corrupt zip member {bad} in {zip_path}")
-        keep = plan_members(zf)
+        keep = plan_members(zf, keep_ext=keep_ext, junk_dirs=junk_dirs)
         n = 0
         for info, parts in keep:
             target = out_dir
@@ -279,39 +365,204 @@ def write_license(pack_dir: Path, pack, download_urls, extra_lines=()):
         lines.append(f"Note: {pack['note']}")
     lines += list(extra_lines)
     lines.append(f"Fetched: {datetime.date.today().isoformat()} by Tools/fetch_assets.py")
-    lines.append("Only FBX/OBJ/PNG/WAV/OGG/MP3/TTF/HDR files were kept; previews, GLTF/GLB, .blend and sample scenes were removed.")
+    kept = "/".join(sorted(e.lstrip(".").upper() for e in pack.get("keep_ext", KEEP_EXT)))
+    lines.append(f"Only {kept} files were kept; previews, vectors, spritesheets, GLTF/GLB, .blend and sample scenes were removed.")
     (pack_dir / "LICENSE.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def append_license(pack_dir: Path, pack, extra_lines):
+    """Additive update of an existing LICENSE.txt: refresh the Source line, append the new items."""
+    lf = pack_dir / "LICENSE.txt"
+    lines = lf.read_text(encoding="utf-8", errors="replace").splitlines() if lf.exists() else []
+    lines = [f"Source: {pack.get('source', '')}" if l.startswith("Source:") else l for l in lines]
+    lines.append(f"Added {datetime.date.today().isoformat()} by Tools/fetch_assets.py:")
+    lines += list(extra_lines)
+    lf.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 # ----------------------------------------------------------------------------------------------
 # Per-pack fetch
 # ----------------------------------------------------------------------------------------------
+def _file_item_present(it, pack_dir: Path):
+    tgt_dir = pack_dir / it["sub"] if it.get("sub") else pack_dir
+    if (tgt_dir / it["target"]).exists():
+        return True
+    return bool(it.get("fallback_target")) and (tgt_dir / it["fallback_target"]).exists()
+
+
+def fetch_file_item(it, pack_dir: Path, dl_dir: Path, force, urls, extra):
+    """Download one single-file item (with fallback / optional / requires handling). Returns 1 if a file landed."""
+    tgt_dir = pack_dir / it["sub"] if it.get("sub") else pack_dir
+    tgt_dir.mkdir(parents=True, exist_ok=True)
+    if it.get("requires") and not (tgt_dir / it["requires"]).exists():
+        log(f"    skip {it['target']} (requires {it['requires']}, which is absent)")
+        return 0
+    try:
+        f = download(it["url"], dl_dir / it["target"], force)
+        shutil.copyfile(f, tgt_dir / it["target"])
+        urls.append(it["url"])
+        extra.append(f"  {it['target']}  <- {it['source']}")
+    except Exception as e:
+        if it.get("fallback"):
+            log(f"    primary failed ({e}); trying fallback")
+            f = download(it["fallback"], dl_dir / it["fallback_target"], force)
+            shutil.copyfile(f, tgt_dir / it["fallback_target"])
+            urls.append(it["fallback"])
+            extra.append(f"  {it['fallback_target']}  <- {it['source']}")
+        elif it.get("optional"):
+            log(f"    optional item failed: {e}")
+            return 0
+        else:
+            raise
+    return 1
+
+
+# ---- PBR textures (ambientCG with Poly Haven fallback) ----
+PBR_MAPS = {"Color": "_Color.jpg", "NormalGL": "_Normal.jpg"}   # zip-member suffix -> target suffix
+
+
+def _pbr_present(it, pack_dir: Path):
+    for aid in (it["id"], it.get("ph")):
+        if aid and (pack_dir / aid / f"{aid}_Color.jpg").exists():
+            return True
+    return False
+
+
+def fetch_pbr_ambientcg(aid, pack_dir: Path, dl_dir: Path, force):
+    """Download <aid>_1K-JPG.zip from ambientCG, keep only Color + NormalGL as <aid>/<aid>_Color.jpg, <aid>_Normal.jpg."""
+    url = f"https://ambientcg.com/get?file={aid}_1K-JPG.zip"
+    zp = download(url, dl_dir / f"{aid}_1K-JPG.zip", force)
+    out = pack_dir / aid
+    got = {}
+    with zipfile.ZipFile(zp) as zf:
+        if zf.testzip():
+            raise RuntimeError(f"corrupt zip {zp.name}")
+        for info in zf.infolist():
+            if info.is_dir():
+                continue
+            base = Path(info.filename.replace("\\", "/")).name
+            for suffix, tgt_suffix in PBR_MAPS.items():
+                if base.lower().endswith(f"_{suffix}.jpg".lower()) and suffix not in got:
+                    out.mkdir(parents=True, exist_ok=True)
+                    tgt = out / f"{aid}{tgt_suffix}"
+                    with zf.open(info) as src, open(tgt, "wb") as dst:
+                        shutil.copyfileobj(src, dst)
+                    got[suffix] = tgt
+    if "Color" not in got:
+        shutil.rmtree(out, ignore_errors=True)
+        raise RuntimeError(f"{aid}: no *_Color.jpg in {zp.name}")
+    if "NormalGL" not in got:
+        log(f"    warning: {aid} has no NormalGL map")
+    return url, len(got)
+
+
+def fetch_pbr_polyhaven(ph, pack_dir: Path, dl_dir: Path, force):
+    """Fallback: Poly Haven 1k jpg Diffuse + nor_gl -> <ph>/<ph>_Color.jpg, <ph>_Normal.jpg."""
+    api = f"https://api.polyhaven.com/files/{ph}"
+    files = http_get(api, timeout=60).json()
+
+    def url_of(*cats):
+        for c in cats:
+            node = files.get(c) or {}
+            u = ((node.get("1k") or {}).get("jpg") or {}).get("url")
+            if u:
+                return u
+        return None
+
+    color = url_of("Diffuse", "diffuse", "Color")
+    normal = url_of("nor_gl")
+    if not color:
+        raise RuntimeError(f"polyhaven {ph}: no 1k jpg Diffuse map")
+    out = pack_dir / ph
+    out.mkdir(parents=True, exist_ok=True)
+    n = 0
+    for u, tgt in ((color, f"{ph}_Color.jpg"), (normal, f"{ph}_Normal.jpg")):
+        if not u:
+            continue
+        f = download(u, dl_dir / tgt, force)
+        shutil.copyfile(f, out / tgt)
+        n += 1
+    return api, n
+
+
+def fetch_pbr_item(it, pack_dir: Path, dl_dir: Path, force, urls, extra):
+    """One PBR material: ambientCG first, Poly Haven fallback. Returns number of jpg files that landed."""
+    aid = it["id"]
+    try:
+        url, n = fetch_pbr_ambientcg(aid, pack_dir, dl_dir, force)
+        urls.append(url)
+        extra.append(f"  {aid}/  key={it['key']}  https://ambientcg.com/view?id={aid}  (ambientCG, CC0 1.0)")
+        return n
+    except Exception as e:
+        if not it.get("ph"):
+            raise
+        log(f"    ambientCG {aid} failed ({e}); falling back to Poly Haven {it['ph']}")
+        ph = it["ph"]
+        api, n = fetch_pbr_polyhaven(ph, pack_dir, dl_dir, force)
+        urls.append(api)
+        extra.append(f"  {ph}/  key={it['key']}  https://polyhaven.com/a/{ph}  (Poly Haven, CC0 1.0; fallback for ambientCG {aid})")
+        return n
+
+
 def fetch_pack(pack, force=False):
     name = pack["name"]
     pack_dir = IMPORTED / name
     dl_dir = DOWNLOADS / name
+    kind = pack["kind"]
     if pack_dir.exists() and (pack_dir / "LICENSE.txt").exists() and not force:
+        if kind == "pbr":
+            missing = [it for it in pack["items"] if not _pbr_present(it, pack_dir)]
+            if missing:
+                dl_dir.mkdir(parents=True, exist_ok=True)
+                urls, extra, n = [], [], 0
+                for it in missing:
+                    try:
+                        n += fetch_pbr_item(it, pack_dir, dl_dir, force, urls, extra)
+                    except Exception as e:
+                        log(f"    {it['id']} failed: {e}")
+                if n:
+                    append_license(pack_dir, pack, extra)
+                    log(f"[{name}] updated: +{n} files, {dir_size(pack_dir) // 1024} KB -> {pack_dir}")
+                    return "updated"
+        if kind == "multi":
+            # additive update: fetch only file items whose target is missing (keeps Unity .meta of existing files)
+            missing = [it for it in pack["items"] if it["kind"] == "file" and not _file_item_present(it, pack_dir)]
+            if missing:
+                dl_dir.mkdir(parents=True, exist_ok=True)
+                urls, extra, n = [], [], 0
+                for it in missing:
+                    try:
+                        n += fetch_file_item(it, pack_dir, dl_dir, force, urls, extra)
+                    except Exception as e:
+                        if it.get("optional"):
+                            log(f"    optional item failed: {e}")
+                        else:
+                            raise
+                if n:
+                    append_license(pack_dir, pack, extra)
+                    log(f"[{name}] updated: +{n} files, {dir_size(pack_dir) // 1024} KB -> {pack_dir}")
+                    return "updated"
         log(f"[{name}] already present ({dir_size(pack_dir) // 1024} KB) - skip (use --force)")
         return "skipped"
     if pack_dir.exists() and force:
         shutil.rmtree(pack_dir)
     dl_dir.mkdir(parents=True, exist_ok=True)
 
-    kind = pack["kind"]
     urls = []
     extra = []
+    filt = dict(keep_ext=pack.get("keep_ext"), junk_dirs=pack.get("junk_dirs"))
     if kind == "kenney":
         url, page, lic = kenney_zip_url(pack["slug"])
         pack["source"] = page
         if "check page" in lic:
             pack["license"] = lic
         zp = download(url, dl_dir / Path(url).name, force)
-        n = extract_zip(zp, pack_dir)
+        n = extract_zip(zp, pack_dir, **filt)
         urls.append(url)
     elif kind == "zip":
         url = pack["url"]
         zp = download(url, dl_dir / Path(url).name, force)
-        n = extract_zip(zp, pack_dir)
+        n = extract_zip(zp, pack_dir, **filt)
         urls.append(url)
     elif kind == "multi":
         n = 0
@@ -319,35 +570,29 @@ def fetch_pack(pack, force=False):
             try:
                 if it["kind"] == "zip":
                     zp = download(it["url"], dl_dir / Path(it["url"]).name.replace("%20", "_"), force)
-                    n += extract_zip(zp, pack_dir, subdir=it.get("sub"))
+                    n += extract_zip(zp, pack_dir, subdir=it.get("sub"), **filt)
                     urls.append(it["url"])
                     extra.append(f"  {it.get('sub','')}/  <- {it['source']}")
                 else:
-                    tgt_dir = pack_dir / it["sub"] if it.get("sub") else pack_dir
-                    tgt_dir.mkdir(parents=True, exist_ok=True)
-                    try:
-                        f = download(it["url"], dl_dir / it["target"], force)
-                        shutil.copyfile(f, tgt_dir / it["target"])
-                        urls.append(it["url"])
-                        extra.append(f"  {it['target']}  <- {it['source']}")
-                    except Exception as e:
-                        if it.get("fallback"):
-                            log(f"    primary failed ({e}); trying fallback")
-                            f = download(it["fallback"], dl_dir / it["fallback_target"], force)
-                            shutil.copyfile(f, tgt_dir / it["fallback_target"])
-                            urls.append(it["fallback"])
-                            extra.append(f"  {it['fallback_target']}  <- {it['source']}")
-                        elif it.get("optional"):
-                            log(f"    optional item failed: {e}")
-                            continue
-                        else:
-                            raise
-                    n += 1
+                    n += fetch_file_item(it, pack_dir, dl_dir, force, urls, extra)
             except Exception as e:
                 if it.get("optional"):
                     log(f"    optional item failed: {e}")
                 else:
                     raise
+    elif kind == "pbr":
+        n, failed = 0, []
+        for it in pack["items"]:
+            log(f"  - {it['key']}: {it['id']}")
+            try:
+                n += fetch_pbr_item(it, pack_dir, dl_dir, force, urls, extra)
+            except Exception as e:
+                failed.append(it["id"])
+                log(f"    {it['id']} failed: {e}")
+        if n == 0:
+            raise RuntimeError("no textures downloaded (ambientCG and Poly Haven both unreachable?)")
+        if failed:
+            extra.append(f"  FAILED (not downloaded): {', '.join(failed)}")
     else:
         raise RuntimeError(f"unknown kind {kind}")
     write_license(pack_dir, pack, urls, extra)
@@ -389,7 +634,7 @@ def build_index():
                 audio.append(rel)
             elif ext in TEX_EXT:
                 textures.append(rel)
-            elif ext == ".ttf":
+            elif ext in FONT_EXT:
                 fonts.append(rel)
         entry = {"pack": pack_dir.name, "license": meta["license"], "source": meta["source"],
                  "models": models, "audio": audio, "textures": textures}

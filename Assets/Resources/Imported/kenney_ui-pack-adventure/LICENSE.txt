@@ -1,0 +1,7 @@
+Pack: kenney_ui-pack-adventure
+License: CC0 1.0
+Source: https://kenney.nl/assets/ui-pack-adventure
+Download: https://kenney.nl/media/pages/assets/ui-pack-adventure/9a877376bc-1723597274/kenney_ui-pack-adventure.zip
+Note: UI Pack - Adventure: wooden/parchment widgets as PNG/<Default|Double>/*.png
+Fetched: 2026-10-21 by Tools/fetch_assets.py
+Only OGG/OTF/PNG/TTF/WAV files were kept; previews, vectors, spritesheets, GLTF/GLB, .blend and sample scenes were removed.

@@ -29,7 +29,7 @@ namespace Vykhod
             var d = J.D(Json.Parse(File.ReadAllText(path)));
             var rng = World.Rng; var root = World.Root;
             float half = World.Half;
-            MeshKit.Ground(root, map.size + 300, map.id == "mirea" ? new Color(0.42f, 0.5f, 0.35f) : new Color(0.45f, 0.45f, 0.42f), 6f);
+            if (map.id == "mirea") MeshKit.Ground(root, map.size + 300, "grass", 3f, null); else MeshKit.Ground(root, map.size + 300, "paving", 2f, null);
 
             // --- площади: парки, вода, парковки
             int trees = 0;
@@ -37,8 +37,12 @@ namespace Vykhod
             {
                 var poly = Poly(a); if (poly.Count < 3) continue;
                 string kind = J.S(a, "kind");
-                Color c = kind == "water" ? new Color(0.2f, 0.4f, 0.6f) : kind == "park" || kind == "grass" ? new Color(0.3f, 0.55f, 0.25f) : kind == "forest" ? new Color(0.2f, 0.4f, 0.2f) : kind == "parking" ? new Color(0.35f, 0.35f, 0.36f) : new Color(0.5f, 0.5f, 0.45f);
-                MeshKit.Slab(root, poly, 0.0f, 0.03f, c, false, "area_" + kind);
+                Material am = kind == "water" ? AssetCatalog.Mat(new Color(0.2f, 0.45f, 0.7f), 0.8f)
+                    : kind == "park" || kind == "grass" ? AssetCatalog.TexMat("grass", 3f, null, new Color(0.3f, 0.55f, 0.25f), 1)
+                    : kind == "forest" ? AssetCatalog.TexMat("grass", 3f, new Color(0.75f, 0.85f, 0.7f), new Color(0.2f, 0.4f, 0.2f), 0)
+                    : kind == "parking" ? AssetCatalog.TexMat("asphalt", 4f, null, new Color(0.35f, 0.35f, 0.36f), 1)
+                    : AssetCatalog.TexMat("gravel", 2f, null, new Color(0.5f, 0.5f, 0.45f));
+                MeshKit.Slab(root, poly, 0.0f, 0.03f, am, false, "area_" + kind);
                 if ((kind == "park" || kind == "forest" || kind == "grass") && trees < 220)
                 {
                     int n = Mathf.Clamp((int)(Mathf.Abs(MeshKit.SignedArea(poly)) / (kind == "forest" ? 250 : 700)), 1, 40);
@@ -54,7 +58,9 @@ namespace Vykhod
                 var pts = Line(r); if (pts.Count < 2) continue;
                 string type = J.S(r, "type"); float w = J.F(r, "width", 5);
                 Color c = roadColors.TryGetValue(type, out var cc) ? cc : new Color(0.3f, 0.3f, 0.3f);
-                MeshKit.Strip(roadsRoot, pts, w, 0.04f, c, "road_" + type);
+                bool foot = type == "footway" || type == "path" || type == "pedestrian" || type == "steps";
+                var rm = foot ? AssetCatalog.TexMat("paving", 1.5f, null, c) : AssetCatalog.TexMat("asphalt", 5f, null, c, type == "primary" || type == "secondary" ? 0 : 1);
+                MeshKit.Strip(roadsRoot, pts, w, foot ? 0.05f : 0.04f, rm, "road_" + type);
                 if (w >= 5) foreach (var p in pts) if (Mathf.Abs(p.x) < half - 5 && Mathf.Abs(p.y) < half - 5) roadPts.Add(p);
                 // машины вдоль дорог
                 if (w >= 6) for (int i = 0; i + 1 < pts.Count; i++)
@@ -150,8 +156,9 @@ namespace Vykhod
 
         public static void Car(Transform parent, Vector3 pos, float yaw, System.Random rng)
         {
-            var path = AssetCatalog.FindModel("car", "car");
-            GameObject go = path != null ? AssetCatalog.Spawn(path, parent, 4.5f, true) : null;
+            string[] cars = { "sedan", "sedan-sports", "suv", "suv-luxury", "hatchback-sports", "taxi", "van", "delivery", "truck", "police", "ambulance" };
+            var path = AssetCatalog.FindModel(cars[rng.Next(cars.Length)], "car-kit");
+            GameObject go = path != null ? AssetCatalog.Spawn(path, parent, rng.NextDouble() < 0.2 ? 6.5f : 4.6f, true) : null;
             if (go == null)
             {
                 go = new GameObject("car"); go.transform.SetParent(parent, false);

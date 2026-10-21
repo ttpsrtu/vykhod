@@ -1,0 +1,7 @@
+Pack: kenney_game-icons-expansion
+License: CC0 1.0
+Source: https://kenney.nl/assets/game-icons-expansion
+Download: https://kenney.nl/media/pages/assets/game-icons-expansion/afac4593af-1677661643/kenney_game-icons-expansion.zip
+Note: 81 extra icons + 17 colored; the bundled copy of the base pack ('Game icons (base)/') is dropped - see kenney_game-icons
+Fetched: 2026-10-21 by Tools/fetch_assets.py
+Only OGG/OTF/PNG/TTF/WAV files were kept; previews, vectors, spritesheets, GLTF/GLB, .blend and sample scenes were removed.

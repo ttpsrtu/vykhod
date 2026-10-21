@@ -22,6 +22,7 @@ namespace Vykhod
         public static readonly List<Vector3> SniperSpots = new List<Vector3>();
         public static Vector3 BossSpawn;
         public static bool Night;
+        public static bool ForceDay;   // для автотестов/скриншотов
         public static bool Underground;
         public static float Half => Map != null ? Map.size * 0.5f : 250f;
         public static Light Sun;
@@ -41,7 +42,7 @@ namespace Vykhod
             Clear();
             var sw = System.Diagnostics.Stopwatch.StartNew();
             Map = map; Seed = seed; Rng = new System.Random(seed);
-            Night = new System.Random(seed).NextDouble() < 0.3;
+            Night = !ForceDay && new System.Random(seed).NextDouble() < 0.15;
             Root = new GameObject("World_" + map.id).transform;
             Underground = map.kind == "metro";
             SetupLighting();
@@ -54,6 +55,8 @@ namespace Vykhod
                 case "metro": ProceduralMaps.BuildMetro(); break;
                 default: ProceduralMaps.BuildIndustrial(); break;
             }
+            Physics.SyncTransforms();
+            MapDetails.Decorate(map.kind == "metro" ? 0.6f : map.kind == "mall" ? 0.5f : 1.1f, !Underground);
             Bounds();
             PlaceExtracts();
             PlacePois();
@@ -82,21 +85,23 @@ namespace Vykhod
             }
             else if (Night)
             {
-                Sun.intensity = 0.12f; Sun.color = new Color(0.55f, 0.6f, 0.9f); lgo.transform.rotation = Quaternion.Euler(35, 120, 0);
-                RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Flat; RenderSettings.ambientLight = new Color(0.07f, 0.08f, 0.13f);
-                RenderSettings.fog = true; RenderSettings.fogMode = FogMode.Exponential; RenderSettings.fogDensity = 0.006f; RenderSettings.fogColor = new Color(0.03f, 0.03f, 0.06f);
+                // «синий час»: ночь читаемая и цветная, а не чёрная
+                Sun.intensity = 0.7f; Sun.color = new Color(0.65f, 0.75f, 1f); lgo.transform.rotation = Quaternion.Euler(35, 120, 0);
+                RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Trilight;
+                RenderSettings.ambientSkyColor = new Color(0.4f, 0.45f, 0.8f); RenderSettings.ambientEquatorColor = new Color(0.3f, 0.3f, 0.5f); RenderSettings.ambientGroundColor = new Color(0.15f, 0.15f, 0.22f);
+                RenderSettings.fog = true; RenderSettings.fogMode = FogMode.Linear; RenderSettings.fogStartDistance = 120; RenderSettings.fogEndDistance = 600; RenderSettings.fogColor = new Color(0.08f, 0.1f, 0.25f);
             }
             else
             {
-                Sun.intensity = 1.15f; Sun.color = new Color(1f, 0.96f, 0.88f); lgo.transform.rotation = Quaternion.Euler(50, 35, 0);
+                Sun.intensity = 1.35f; Sun.color = new Color(1f, 0.97f, 0.9f); lgo.transform.rotation = Quaternion.Euler(48, 35, 0);
                 RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Trilight;
-                RenderSettings.ambientSkyColor = new Color(0.55f, 0.65f, 0.8f); RenderSettings.ambientEquatorColor = new Color(0.45f, 0.45f, 0.45f); RenderSettings.ambientGroundColor = new Color(0.2f, 0.2f, 0.18f);
-                RenderSettings.fog = true; RenderSettings.fogMode = FogMode.Linear; RenderSettings.fogStartDistance = 150; RenderSettings.fogEndDistance = 700; RenderSettings.fogColor = new Color(0.7f, 0.76f, 0.85f);
+                RenderSettings.ambientSkyColor = new Color(0.65f, 0.8f, 1f); RenderSettings.ambientEquatorColor = new Color(0.6f, 0.62f, 0.7f); RenderSettings.ambientGroundColor = new Color(0.35f, 0.4f, 0.3f);
+                RenderSettings.fog = true; RenderSettings.fogMode = FogMode.Linear; RenderSettings.fogStartDistance = 200; RenderSettings.fogEndDistance = 900; RenderSettings.fogColor = new Color(0.62f, 0.8f, 1f);
             }
             RenderSettings.skybox = null;
         }
 
-        public static Color SkyColor => Underground ? new Color(0.01f, 0.01f, 0.015f) : Night ? new Color(0.02f, 0.03f, 0.07f) : new Color(0.52f, 0.7f, 0.9f);
+        public static Color SkyColor => Underground ? new Color(0.01f, 0.01f, 0.015f) : Night ? new Color(0.1f, 0.12f, 0.32f) : new Color(0.42f, 0.74f, 1f);
 
         /// <summary>Точечный свет (ограниченно, ради производительности).</summary>
         public static void Lamp(Vector3 pos, Color c, float range = 12f, float intensity = 1.5f)

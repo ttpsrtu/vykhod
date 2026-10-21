@@ -107,6 +107,7 @@ namespace Vykhod
             {
                 if (args[i] == "-autoraid" && i + 1 < args.Length) StartCoroutine(AutoRaid(args[i + 1]));
                 if (args[i] == "-autojoin" && i + 1 < args.Length) StartCoroutine(AutoJoin(args[i + 1]));
+                if (args[i] == "-shots" && i + 1 < args.Length) StartCoroutine(AutoShots(args[i + 1]));
                 if (args[i] == "-autoquit" && i + 1 < args.Length && float.TryParse(args[i + 1], out var sec)) StartCoroutine(AutoQuit(sec));
             }
         }
@@ -142,6 +143,46 @@ namespace Vykhod
             if (Net.Session != null) Net.Session.ChatRpc("Привет от клиента!");
             yield return new WaitForSeconds(5f);
             Debug.Log($"[AutoTest] клиент: состояние {State}, соединение {(Net.IsRunning ? "есть" : "нет")}");
+        }
+
+        /// <summary>Скриншоты интерфейса: VYKHOD.exe -shots <папка> — меню, вкладки лобби, HUD в рейде, инвентарь.</summary>
+        System.Collections.IEnumerator AutoShots(string dir)
+        {
+            System.IO.Directory.CreateDirectory(dir); World.ForceDay = true;
+            yield return new WaitForSeconds(2f);
+            ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir, "01_menu.png")); yield return new WaitForSeconds(1f);
+            if (!ContinueGame()) NewGame("Боец");
+            yield return new WaitForSeconds(1.5f);
+            for (int t = 0; t < 6; t++) { UI.SetLobbyTab(t); yield return new WaitForSeconds(1f); ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir, $"0{2 + t}_lobby_{t}.png")); yield return new WaitForSeconds(0.5f); }
+            StartRaidHost("suburb", "coop");
+            float w = 0; while (State != GameState.Raid && w < 60) { w += Time.deltaTime; yield return null; }
+            yield return new WaitForSeconds(3f);
+            LookAtCenter();
+            yield return new WaitForSeconds(0.5f);
+            ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir, "08_hud.png")); yield return new WaitForSeconds(1f);
+            UI.ToggleInventory(); yield return new WaitForSeconds(1f);
+            ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir, "09_inventory.png")); yield return new WaitForSeconds(1f);
+            UI.ToggleInventory(); FinishRaid(true, "Скриншоты"); yield return new WaitForSeconds(2f);
+            ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir, "10_results.png")); yield return new WaitForSeconds(1.5f);
+            // ещё две карты для оценки визуала
+            int shot = 11;
+            foreach (var mapId in new[] { "factory", "mirea", "mall" })
+            {
+                EnterHideout(); yield return new WaitForSeconds(1f);
+                StartRaidHost(mapId, "coop");
+                w = 0; while (State != GameState.Raid && w < 60) { w += Time.deltaTime; yield return null; }
+                yield return new WaitForSeconds(3f); LookAtCenter(); yield return new WaitForSeconds(0.5f);
+                ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir, $"{shot++}_raid_{mapId}.png")); yield return new WaitForSeconds(1f);
+                FinishRaid(true, "Скриншоты"); yield return new WaitForSeconds(2f);
+            }
+            Debug.Log("[AutoTest] скриншоты готовы"); Application.Quit();
+        }
+
+        void LookAtCenter()
+        {
+            var lp = Net.LocalPlayer; if (lp == null) return;
+            var dir = -lp.transform.position; dir.y = 0; if (dir.sqrMagnitude < 1) dir = Vector3.forward;
+            lp.transform.rotation = Quaternion.LookRotation(dir.normalized); lp.Ctrl.Pitch = 2f;
         }
 
         System.Collections.IEnumerator AutoQuit(float sec) { yield return new WaitForSeconds(sec); Debug.Log("[AutoTest] выход"); Application.Quit(); }
