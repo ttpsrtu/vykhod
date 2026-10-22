@@ -37,7 +37,7 @@ namespace Vykhod
         public EnemyDef Def; public WeaponDef WDef; public AmmoDef AmmoD; public WeaponComputed WC;
         public bool IsSniperPost;
 
-        NavMeshAgent agent; Transform eye; GameObject body; Transform gunT;
+        NavMeshAgent agent; Transform eye; GameObject body; Transform gunT; Animator anim; Vector3 lastPos;
         enum S { Patrol, Investigate, Combat, Flee }
         S state = S.Patrol;
         PlayerNet target; Vector3 lastKnown, home; float lastSeen = -99, nextPerception, nextShot, burstLeft, burstPause, reloadEnd, nextRepath, stateTime, fleeUntil, detectTimer, idleUntil;
@@ -78,9 +78,17 @@ namespace Vykhod
         {
             body = new GameObject("body"); body.transform.SetParent(transform, false);
             Color c = Def.boss ? new Color(0.6f, 0.1f, 0.1f) : Def.id == "raider" ? new Color(0.2f, 0.25f, 0.2f) : Def.id == "cultist" ? new Color(0.1f, 0.05f, 0.15f) : Def.sniper ? new Color(0.3f, 0.35f, 0.25f) : new Color(0.45f, 0.4f, 0.3f);
-            var path = AssetCatalog.FindModel("character", "character");
+            // люди: анимированные персонажи Quaternius (солдаты/рабочие/гражданские по типу бота)
+            string who = Def.boss ? "BlueSoldier_Male" : Def.id == "raider" ? "Soldier_Male" : Def.id == "cultist" ? "Ninja_Male" : Def.sniper ? "Soldier_Female" : (Random.value < 0.5f ? "Worker_Male" : "Casual_Male");
+            var path = AssetCatalog.FindModel(who, "quaternius_characters") ?? AssetCatalog.FindModel("Soldier", "quaternius_characters") ?? AssetCatalog.FindModel("character", "character");
             GameObject model = path != null ? AssetCatalog.Spawn(path, body.transform, 1.8f, false) : null;
-            if (model != null) { foreach (var r in model.GetComponentsInChildren<Renderer>()) foreach (var m in r.materials) m.color = Color.Lerp(m.color, c, 0.5f); }
+            if (model != null)
+            {
+                var mb = AssetCatalog.MeshBounds(model); model.transform.position += Vector3.up * (transform.position.y - mb.min.y); model.transform.localRotation = Quaternion.identity;
+                anim = model.GetComponent<Animator>() ?? model.AddComponent<Animator>();
+                var ctrl = Resources.Load<RuntimeAnimatorController>("Anim/Soldier"); if (ctrl != null) anim.runtimeAnimatorController = ctrl; anim.applyRootMotion = false; anim.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
+                if (Def.boss) foreach (var r in model.GetComponentsInChildren<Renderer>()) foreach (var m in r.materials) m.color = Color.Lerp(m.color, c, 0.35f);
+            }
             else
             {
                 var torso = AssetCatalog.Prim(PrimitiveType.Capsule, body.transform, new Vector3(0, 1.0f, 0), new Vector3(0.6f, 0.62f, 0.6f), c, false);
@@ -93,8 +101,8 @@ namespace Vykhod
             eye = new GameObject("eye").transform; eye.SetParent(transform, false); eye.localPosition = new Vector3(0, 1.6f, 0.1f);
             gunT = new GameObject("gun").transform; gunT.SetParent(eye, false); gunT.localPosition = new Vector3(0.25f, -0.25f, 0.3f);
             var gp = AssetCatalog.FindModel(WDef.model, "weapon|guns");
-            var g = gp != null ? AssetCatalog.Spawn(gp, gunT, WDef.cls == "pistol" ? 0.25f : 0.8f, false, true) : AssetCatalog.GunPlaceholder(WDef, gunT);
-            if (gp != null) g.transform.localRotation = Quaternion.Euler(0, 90, 0);
+            var g = gp != null ? AssetCatalog.Spawn(gp, gunT, WDef.cls == "pistol" ? 0.25f : 0.8f, false, false) : AssetCatalog.GunPlaceholder(WDef, gunT);
+            if (gp != null) { AssetCatalog.OrientGun(g); AssetCatalog.Recenter(g); }
             gameObject.layer = 0;
         }
 
@@ -109,6 +117,11 @@ namespace Vykhod
         // ------------------------------------------------------------ серверная логика
         void Update()
         {
+            if (anim != null && !Dead.Value)
+            {
+                float sp = Time.deltaTime > 0 ? (transform.position - lastPos).magnitude / Time.deltaTime : 0; lastPos = transform.position;
+                anim.SetFloat("Speed", Mathf.Clamp(sp, 0, 6));
+            }
             if (!IsServer || !ready || Dead.Value) return;
             if (agent == null || !agent.enabled) { if (NavMesh.SamplePosition(transform.position, out var h, 10f, NavMesh.AllAreas)) { agent.enabled = true; agent.Warp(h.position); } else return; }
             Yaw.Value = transform.eulerAngles.y;
@@ -256,6 +269,7 @@ namespace Vykhod
             Fx.Tracer(origin, dir, 120f, new Color(1f, 0.8f, 0.4f));
             Fx.Gunshot(origin, WDef.cls, suppressed, 0.8f);
             if (gunT != null) Fx.MuzzleFlash(gunT);
+            if (anim != null) anim.SetTrigger("Shoot");
         }
 
         /// <summary>Попадание от игрока (клиент → сервер).</summary>
@@ -313,11 +327,12 @@ namespace Vykhod
 
         void OnDeadVisual()
         {
-            if (body != null) { body.transform.localRotation = Quaternion.Euler(-90, 0, 0); body.transform.localPosition = new Vector3(0, 0.3f, -0.6f); }
+            if (anim != null) anim.SetBool("Dead", true);
+            else if (body != null) { body.transform.localRotation = Quaternion.Euler(-90, 0, 0); body.transform.localPosition = new Vector3(0, 0.3f, -0.6f); }
             foreach (var c in GetComponentsInChildren<Collider>()) c.enabled = false;
             if (IsServer) StartCoroutine(DespawnLater());
         }
 
-        System.Collections.IEnumerator DespawnLater() { yield return new WaitForSeconds(3f); if (IsSpawned) NetworkObject.Despawn(true); }
+        System.Collections.IEnumerator DespawnLater() { yield return new WaitForSeconds(anim != null ? 12f : 3f); if (IsSpawned) NetworkObject.Despawn(true); }
     }
 }

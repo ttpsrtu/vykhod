@@ -23,6 +23,9 @@ PNG/TTF/OTF/WAV/OGG) and junk_dirs={...} (extra directory names to drop).
 target is missing are fetched and appended to LICENSE.txt (no --force needed).
 "pbr" packs (textures_cc0) pull 1K-JPG materials from ambientCG (Poly Haven as per-asset
 fallback) and keep only <id>/<id>_Color.jpg + <id>_Normal.jpg; they update additively too.
+"polyhaven" packs (polyhaven_models) pull realistic CC0 props from Poly Haven: the 1k FBX
+(renamed <id>/<id>.fbx) plus its included JPG/PNG textures under <id>/textures/ (EXR
+displacement maps dropped). Models without an FBX or above max_mb are skipped; additive too.
 """
 import argparse
 import datetime
@@ -210,6 +213,53 @@ PACKS = [
              dict(key="fabric", id="Fabric030", ph="denim_fabric"),
              dict(key="marble", id="Marble012", ph="marble_01"),
              dict(key="rust", id="Rust009", ph="rusty_metal"),
+         ]),
+    # ---- realistic props (Poly Haven models, CC0) ----
+    # Each item: id = Poly Haven asset id (https://polyhaven.com/a/<id>), desc = what it is (for the report/LICENSE).
+    # Fetched via https://api.polyhaven.com/files/<id> -> fbx -> <res> -> fbx -> {url, include{textures/...}}:
+    #   Imported/polyhaven_models/<id>/<id>.fbx  +  <id>/textures/<name>_<res>.(jpg|png)
+    dict(name="polyhaven_models", kind="polyhaven", license="CC0 1.0",
+         source="https://polyhaven.com/models (Poly Haven, CC0 1.0; per-asset pages https://polyhaven.com/a/<id>)",
+         keep_ext={".fbx", ".jpg", ".png"}, res="1k", max_mb=40,
+         note="Realistic scanned/PBR props for the urban-industrial map; 1k FBX + included 1k JPG/PNG textures only "
+              "(EXR displacement maps and higher resolutions were dropped).",
+         items=[
+             dict(id="concrete_road_barrier", desc="concrete jersey barrier"),
+             dict(id="concrete_road_barrier_02", desc="concrete road barrier, worn"),
+             dict(id="Barrel_01", desc="explosive metal barrel"),
+             dict(id="barrel_03", desc="rusty oil drum"),
+             dict(id="metal_jerrycan", desc="metal jerrycan"),
+             dict(id="wooden_crate_01", desc="wooden crate"),
+             dict(id="plastic_crate_01", desc="plastic crate"),
+             dict(id="cardboard_box_01", desc="cardboard box"),
+             dict(id="old_tyre", desc="old car tyre"),
+             dict(id="metal_trash_can", desc="metal trash can"),
+             dict(id="trashbag", desc="black trash bag"),
+             dict(id="modular_street_seating", desc="modular street bench"),
+             dict(id="street_lamp_01", desc="street lamp post"),
+             dict(id="fire_hydrant", desc="fire hydrant"),
+             dict(id="portable_generator", desc="portable generator"),
+             dict(id="steel_frame_shelves_01", desc="steel frame shelves"),
+             dict(id="worn_metal_rack", desc="worn metal rack"),
+             dict(id="Sofa_01", desc="fabric sofa"),
+             dict(id="ArmChair_01", desc="armchair"),
+             dict(id="plastic_monobloc_chair_01", desc="plastic monobloc chair"),
+             dict(id="metal_office_desk", desc="metal office desk"),
+             dict(id="WoodenTable_02", desc="wooden table"),
+             dict(id="painted_wooden_cabinet", desc="painted wooden cabinet"),
+             dict(id="old_bed_frame", desc="old metal bed frame"),
+             dict(id="wooden_bookshelf_worn", desc="worn wooden bookshelf"),
+             dict(id="Television_01", desc="old CRT television"),
+             dict(id="potted_plant_01", desc="potted plant"),
+             dict(id="modular_chainlink_fence", desc="chainlink fence module"),
+             dict(id="ladder_sectioned_01", desc="aluminium sectioned ladder"),
+             dict(id="metal_toolbox", desc="metal toolbox"),
+             dict(id="korean_fire_extinguisher_01", desc="fire extinguisher"),
+             dict(id="utility_box_01", desc="wall utility box"),
+             dict(id="propane_tank", desc="propane gas tank"),
+             dict(id="hand_truck", desc="hand truck dolly"),
+             dict(id="ammo_box", desc="ammo box"),
+             dict(id="covered_car", desc="car under tarp cover"),
          ]),
 ]
 
@@ -504,6 +554,95 @@ def fetch_pbr_item(it, pack_dir: Path, dl_dir: Path, force, urls, extra):
         return n
 
 
+# ---- Poly Haven models (FBX + included textures) ----
+PH_TEX_EXT = {".jpg", ".jpeg", ".png"}     # include members kept; .exr displacement maps are dropped
+_PH_NAMES = None                           # id -> display name, from /assets?t=models (fetched once)
+
+
+def _ph_model_present(it, pack_dir: Path):
+    return (pack_dir / it["id"] / f"{it['id']}.fbx").exists()
+
+
+def _ph_name(aid):
+    global _PH_NAMES
+    if _PH_NAMES is None:
+        try:
+            _PH_NAMES = {k: v.get("name", k) for k, v in http_get("https://api.polyhaven.com/assets?t=models", timeout=60).json().items()}
+        except Exception as e:  # noqa
+            log(f"    warning: could not fetch Poly Haven model list ({e})")
+            _PH_NAMES = {}
+    return _PH_NAMES.get(aid, aid)
+
+
+def fetch_ph_model(it, pack_dir: Path, dl_dir: Path, force, urls, extra, res="1k", max_mb=40):
+    """One Poly Haven model: <id>/<id>.fbx + <id>/textures/*.jpg|png (layout as the API's 'include' says).
+
+    Returns the number of files that landed. Raises when the asset has no FBX or exceeds max_mb.
+    """
+    aid = it["id"]
+    api = f"https://api.polyhaven.com/files/{aid}"
+    files = http_get(api, timeout=60).json()
+    fbx_res = files.get("fbx") or {}
+    node = None
+    for r in (res, "2k", "1k"):
+        node = (fbx_res.get(r) or {}).get("fbx")
+        if node and node.get("url"):
+            res = r
+            break
+    if not node or not node.get("url"):
+        raise RuntimeError(f"{aid}: no FBX variant (have: {sorted(files.keys())})")
+    include = node.get("include") or {}
+    tex = []
+    for rel, meta in include.items():
+        rel = rel.replace("\\", "/")
+        parts = rel.split("/")
+        if Path(parts[-1]).suffix.lower() not in PH_TEX_EXT:
+            continue
+        if any(p in ("..", "", ".") for p in parts) or rel.startswith("/") or ":" in rel:
+            continue
+        if not meta.get("url"):
+            continue
+        tex.append((parts, meta))
+    total = node.get("size", 0) + sum(m.get("size", 0) for _, m in tex)
+    if total > max_mb * 1024 * 1024:
+        raise RuntimeError(f"{aid}: {total / 1048576:.1f} MB exceeds max_mb={max_mb}")
+    if not tex:
+        log(f"    warning: {aid} has no jpg/png textures in its FBX include list")
+
+    out = pack_dir / aid
+    dl = dl_dir / aid
+    try:
+        f = download(node["url"], dl / f"{aid}.fbx", force)
+        out.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(f, out / f"{aid}.fbx")
+        n = 1
+        for parts, meta in tex:
+            f = download(meta["url"], dl.joinpath(*parts), force)
+            tgt = out.joinpath(*parts)
+            tgt.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(f, tgt)
+            n += 1
+    except Exception:
+        shutil.rmtree(out, ignore_errors=True)   # never leave a half-downloaded model behind
+        raise
+    urls.append(node["url"])
+    extra.append(f"  {aid}/  {_ph_name(aid)} ({it.get('desc', '')})  https://polyhaven.com/a/{aid}  (Poly Haven, CC0 1.0; {res} FBX + {len(tex)} textures, {total / 1048576:.1f} MB)")
+    return n
+
+
+def fetch_ph_items(items, pack, pack_dir: Path, dl_dir: Path, force, urls, extra):
+    """Fetch a list of Poly Haven model items; returns (files_landed, failed_ids)."""
+    n, failed = 0, []
+    for it in items:
+        log(f"  - {it['id']} ({it.get('desc', '')})")
+        try:
+            n += fetch_ph_model(it, pack_dir, dl_dir, force, urls, extra, res=pack.get("res", "1k"), max_mb=pack.get("max_mb", 40))
+        except Exception as e:
+            failed.append(it["id"])
+            log(f"    {it['id']} failed: {e}")
+    return n, failed
+
+
 def fetch_pack(pack, force=False):
     name = pack["name"]
     pack_dir = IMPORTED / name
@@ -520,6 +659,18 @@ def fetch_pack(pack, force=False):
                         n += fetch_pbr_item(it, pack_dir, dl_dir, force, urls, extra)
                     except Exception as e:
                         log(f"    {it['id']} failed: {e}")
+                if n:
+                    append_license(pack_dir, pack, extra)
+                    log(f"[{name}] updated: +{n} files, {dir_size(pack_dir) // 1024} KB -> {pack_dir}")
+                    return "updated"
+        if kind == "polyhaven":
+            missing = [it for it in pack["items"] if not _ph_model_present(it, pack_dir)]
+            if missing:
+                dl_dir.mkdir(parents=True, exist_ok=True)
+                urls, extra = [], []
+                n, failed = fetch_ph_items(missing, pack, pack_dir, dl_dir, force, urls, extra)
+                if failed:
+                    extra.append(f"  FAILED (not downloaded): {', '.join(failed)}")
                 if n:
                     append_license(pack_dir, pack, extra)
                     log(f"[{name}] updated: +{n} files, {dir_size(pack_dir) // 1024} KB -> {pack_dir}")
@@ -591,6 +742,12 @@ def fetch_pack(pack, force=False):
                 log(f"    {it['id']} failed: {e}")
         if n == 0:
             raise RuntimeError("no textures downloaded (ambientCG and Poly Haven both unreachable?)")
+        if failed:
+            extra.append(f"  FAILED (not downloaded): {', '.join(failed)}")
+    elif kind == "polyhaven":
+        n, failed = fetch_ph_items(pack["items"], pack, pack_dir, dl_dir, force, urls, extra)
+        if n == 0:
+            raise RuntimeError("no models downloaded (Poly Haven unreachable?)")
         if failed:
             extra.append(f"  FAILED (not downloaded): {', '.join(failed)}")
     else:

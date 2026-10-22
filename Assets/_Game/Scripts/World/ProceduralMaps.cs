@@ -30,6 +30,13 @@ namespace Vykhod
         }
 
         static void Crate(Vector3 p, string kind = "crate") => World.AddContainer(p, Quaternion.Euler(0, R.Next(0, 360), 0), kind);
+
+        /// <summary>Дорога-лента + регистрация точек для слоя укрытий.</summary>
+        static void Road(List<Vector2> pts, float w, Material m)
+        {
+            MeshKit.Strip(T, pts, w, 0.04f, m);
+            for (int i = 0; i + 1 < pts.Count; i++) { float len = (pts[i + 1] - pts[i]).magnitude; int n = Mathf.Max(1, (int)(len / 8)); for (int k = 0; k <= n; k++) World.RoadPoints.Add(Vector2.Lerp(pts[i], pts[i + 1], (float)k / n)); }
+        }
         static bool Free(Vector3 p, float r) => !Physics.CheckSphere(p + Vector3.up * (r + 0.35f), r);
 
         /// <summary>Готовая модель из пака (или ничего, если пака нет). Возвращает bounds-размер по XZ для расстановки лута рядом.</summary>
@@ -56,7 +63,7 @@ namespace Vykhod
             MeshKit.Ground(T, World.Map.size + 200, "asphalt", 6f, new Color(0.55f, 0.55f, 0.58f));
             Fence(half - 4, 2.6f, AssetCatalog.TexMat("metal", 2.5f, null, new Color(0.45f, 0.45f, 0.45f)));
             var road = AssetCatalog.TexMat("asphalt", 5f, new Color(0.85f, 0.85f, 0.85f), new Color(0.25f, 0.25f, 0.26f), 1);
-            for (int i = -1; i <= 1; i++) { MeshKit.Strip(T, new List<Vector2> { new Vector2(-half, i * 150), new Vector2(half, i * 150) }, 8, 0.04f, road); MeshKit.Strip(T, new List<Vector2> { new Vector2(i * 150, -half), new Vector2(i * 150, half) }, 8, 0.04f, road); }
+            for (int i = -1; i <= 1; i++) { Road(new List<Vector2> { new Vector2(-half, i * 150), new Vector2(half, i * 150) }, 8, road); Road(new List<Vector2> { new Vector2(i * 150, -half), new Vector2(i * 150, half) }, 8, road); }
             // ж/д
             MeshKit.Strip(T, new List<Vector2> { new Vector2(-half, -230), new Vector2(half, -230) }, 4, 0.05f, AssetCatalog.TexMat("gravel", 2f, null, new Color(0.3f, 0.25f, 0.2f)));
             for (float x = -half; x < half; x += 0.7f) MeshKit.Box(T, new Vector3(x, 0.07f, -230), new Vector3(0.25f, 0.12f, 2.6f), new Color(0.35f, 0.25f, 0.15f), false);
@@ -73,15 +80,20 @@ namespace Vykhod
             for (int i = 0; i < 8; i++) Buildings.Make(Buildings.Rect(-185 + i * 10, -120, 9, 7), 1, "Гараж" + i, new Color(0.45f, 0.45f, 0.5f), true, "garage", null, null, 3f);
             Buildings.Make(Buildings.Rect(0, 80, 30, 14), 3, "Администрация", new Color(0.8f, 0.75f, 0.65f), true, "office", "key_factory_director", "кабинет директора");
             World.SniperSpots.Add(new Vector3(0, 3 * Buildings.FloorH + 0.5f, 80));
-            // готовые промышленные здания Kenney вдоль дорог
-            string[] inds = { "building-a", "building-b", "building-c", "building-d", "building-e", "building-f", "building-g", "building-h", "building-i", "building-j", "building-k", "building-l", "building-m", "building-n", "building-o", "building-p" };
+            // склады и цеха (гофрометалл, роллетные ворота, ленты окон) вдоль дорог
+            int wi = 0;
             foreach (var (x, z) in new[] { (-200f, 60f), (-200f, 0f), (-90f, 170f), (90f, 170f), (200f, 40f), (200f, -40f), (60f, -170f), (-60f, -170f), (200f, 180f), (-200f, 200f) })
             {
-                var m = Model(inds[R.Next(inds.Length)], "industrial", new Vector3(x, 0, z), R.Next(0, 4) * 90, Rnd(22, 34));
-                if (m != null && Chance(0.7)) Crate(new Vector3(x + Rnd(-8, 8), 0.1f, z + Rnd(16, 20)), Chance(0.5) ? "crate" : "toolbox");
+                float w = Rnd(22, 36), d = Rnd(14, 24); int lv = Chance(0.3) ? 2 : 1; float fh = lv == 1 ? Rnd(5, 7) : 4f;
+                Buildings.Make(Buildings.Rect(x, z, w, d, R.Next(0, 2) * 90), lv, "Склад" + wi++, new Color(0.6f, 0.62f, 0.65f), true, "industrial", null, null, fh);
+                if (Chance(0.7)) Crate(new Vector3(x + Rnd(-8, 8), 0.1f, z + d * 0.5f + 3), Chance(0.5) ? "crate" : "toolbox");
+                if (Chance(0.5)) AssetCatalog.Prop("portable_generator", "polyhaven", T, new Vector3(x + w * 0.5f + 2, 0, z + Rnd(-4, 4)), R.Next(0, 360), 1.2f);
             }
-            for (int i = 0; i < 4; i++) if (Model("detail-tank-large", "industrial", new Vector3(120 + i * 18, 0, -100), 0, 13f) == null) { var tank = GameObject.CreatePrimitive(PrimitiveType.Cylinder); tank.transform.SetParent(T, false); tank.transform.position = new Vector3(120 + i * 18, 6, -100); tank.transform.localScale = new Vector3(12, 6, 12); tank.GetComponent<Renderer>().sharedMaterial = Buildings.Metal; tank.isStatic = true; }
-            Model("water-tower", "industrial", new Vector3(-60, 0, 180), 0, 24f);
+            var tankM = AssetCatalog.TexMat("rust", 2.5f, new Color(0.85f, 0.85f, 0.85f), new Color(0.6f, 0.55f, 0.5f));
+            for (int i = 0; i < 4; i++) { var tank = GameObject.CreatePrimitive(PrimitiveType.Cylinder); tank.transform.SetParent(T, false); tank.transform.position = new Vector3(120 + i * 18, 5, -100); tank.transform.localScale = new Vector3(11, 5, 11); tank.GetComponent<Renderer>().sharedMaterial = tankM; tank.isStatic = true; var cap = GameObject.CreatePrimitive(PrimitiveType.Sphere); cap.transform.SetParent(T, false); cap.transform.position = new Vector3(120 + i * 18, 10, -100); cap.transform.localScale = new Vector3(11, 3, 11); cap.GetComponent<Renderer>().sharedMaterial = tankM; cap.isStatic = true; }
+            for (int i = 0; i < 6; i++) AssetCatalog.Prop("propane_tank", "polyhaven", T, new Vector3(100 + i * 5, 0, -118), R.Next(0, 360), 1.3f);
+            // водонапорная башня
+            { var leg = Buildings.Metal; foreach (var (lx, lz) in new[] { (-3f, -3f), (3f, -3f), (3f, 3f), (-3f, 3f) }) MeshKit.Box(T, new Vector3(-60 + lx, 9, 180 + lz), new Vector3(0.5f, 18, 0.5f), leg); var wt = GameObject.CreatePrimitive(PrimitiveType.Cylinder); wt.transform.SetParent(T, false); wt.transform.position = new Vector3(-60, 21, 180); wt.transform.localScale = new Vector3(9, 3.5f, 9); wt.GetComponent<Renderer>().sharedMaterial = tankM; wt.isStatic = true; }
             MeshKit.Box(T, new Vector3(100, 3.5f, -60), new Vector3(0.6f, 0.6f, 120), Buildings.Metal); for (int i = 0; i < 6; i++) MeshKit.Box(T, new Vector3(100, 1.6f, -110 + i * 20), new Vector3(0.4f, 3.2f, 0.4f), Buildings.Metal);
             for (int i = 0; i < 14; i++) Container(new Vector3(Rnd(-220, -60), 0, Rnd(-200, -150)), Chance(0.5) ? 0 : 90);
             var crane = AssetCatalog.TexMat("metal", 2f, new Color(0.9f, 0.6f, 0.1f), new Color(0.85f, 0.6f, 0.1f));
@@ -102,10 +114,9 @@ namespace Vykhod
             MeshKit.Ground(T, World.Map.size + 200, "grass", 3f, null);
             var road = AssetCatalog.TexMat("asphalt", 5f, null, new Color(0.3f, 0.3f, 0.3f));
             var dirt = AssetCatalog.TexMat("ground", 3f, null, new Color(0.45f, 0.4f, 0.32f));
-            MeshKit.Strip(T, new List<Vector2> { new Vector2(-half, half), new Vector2(-200, 150), new Vector2(0, 0), new Vector2(half, -half) }, 7, 0.04f, road);
-            for (int i = 0; i < 4; i++) MeshKit.Strip(T, new List<Vector2> { new Vector2(-80 + i * 90, -half + 60), new Vector2(-80 + i * 90, 160) }, 5, 0.04f, dirt);
-            for (int i = 0; i < 4; i++) MeshKit.Strip(T, new List<Vector2> { new Vector2(-120, -300 + i * 110), new Vector2(230, -300 + i * 110) }, 5, 0.04f, dirt);
-            string[] houses = { "building-type-a", "building-type-b", "building-type-c", "building-type-d", "building-type-e", "building-type-f", "building-type-g", "building-type-h", "building-type-i", "building-type-j", "building-type-k", "building-type-l", "building-type-m", "building-type-n", "building-type-o", "building-type-p", "building-type-q", "building-type-r", "building-type-s", "building-type-t", "building-type-u" };
+            Road(new List<Vector2> { new Vector2(-half, half), new Vector2(-200, 150), new Vector2(0, 0), new Vector2(half, -half) }, 7, road);
+            for (int i = 0; i < 4; i++) Road(new List<Vector2> { new Vector2(-80 + i * 90, -half + 60), new Vector2(-80 + i * 90, 160) }, 5, dirt);
+            for (int i = 0; i < 4; i++) Road(new List<Vector2> { new Vector2(-120, -300 + i * 110), new Vector2(230, -300 + i * 110) }, 5, dirt);
             var fenceM = AssetCatalog.TexMat("woodplanks", 1.5f, null, new Color(0.5f, 0.4f, 0.3f));
             int n = 0;
             for (int gx = 0; gx < 4; gx++) for (int gz = 0; gz < 4; gz++) for (int k = 0; k < 2; k++)
@@ -113,10 +124,10 @@ namespace Vykhod
                         float cx = -80 + gx * 90 + (k == 0 ? -25 : 25) + Rnd(-5, 5), cz = -300 + gz * 110 + 50 + Rnd(-10, 10);
                         if (Mathf.Abs(cx - 150) < 30 && Mathf.Abs(cz + 150) < 30) continue;
                         n++;
-                        // 2 из 3 домов — готовые модели Kenney (лут на крыльце и в гараже), каждый третий — полый с лутом внутри
-                        bool model = n % 3 != 0 && Model(houses[R.Next(houses.Length)], "suburban", new Vector3(cx, 0, cz), R.Next(0, 4) * 90, Rnd(11, 15)) != null;
-                        if (!model) Buildings.Make(Buildings.Rect(cx, cz, Rnd(9, 13), Rnd(8, 11), Rnd(-10, 10)), Chance(0.4) ? 2 : 1, "Дом" + n, Buildings.ColorFor(n * 31), true, "residential");
-                        else { Crate(new Vector3(cx + Rnd(-6, 6), 0.1f, cz - 9), Chance(0.5) ? "bag" : "cabinet"); if (Chance(0.5)) Crate(new Vector3(cx + 8, 0.1f, cz + Rnd(-4, 4)), "jacket"); }
+                        // дома: кирпич/штукатурка, окна с рамами, двускатная крыша, полый первый этаж с лутом
+                        Buildings.Make(Buildings.Rect(cx, cz, Rnd(10, 14), Rnd(8, 11), Rnd(-8, 8)), Chance(0.45) ? 2 : 1, "Дом" + n, Buildings.ColorFor(n * 31), true, "residential");
+                        if (Chance(0.5)) Crate(new Vector3(cx + Rnd(-6, 6), 0.1f, cz - 9), Chance(0.5) ? "bag" : "cabinet");
+                        if (Chance(0.4)) AssetCatalog.Prop(Chance(0.5) ? "plastic_monobloc_chair_01" : "WoodenTable_02", "polyhaven", T, new Vector3(cx + Rnd(-7, 7), 0, cz + 8), R.Next(0, 360), 1.0f);
                         float fx = 20, fz = 22; var c = new Vector2(cx, cz);
                         MeshKit.Wall(T, c + new Vector2(-fx, -fz), c + new Vector2(-2, -fz), 1.3f, 0.1f, fenceM); MeshKit.Wall(T, c + new Vector2(2, -fz), c + new Vector2(fx, -fz), 1.3f, 0.1f, fenceM);
                         MeshKit.Wall(T, c + new Vector2(fx, -fz), c + new Vector2(fx, fz), 1.3f, 0.1f, fenceM); MeshKit.Wall(T, c + new Vector2(fx, fz), c + new Vector2(-fx, fz), 1.3f, 0.1f, fenceM); MeshKit.Wall(T, c + new Vector2(-fx, fz), c + new Vector2(-fx, -fz), 1.3f, 0.1f, fenceM);
@@ -163,7 +174,7 @@ namespace Vykhod
         public static void BuildMall()
         {
             float half = World.Half;
-            MeshKit.Ground(T, World.Map.size + 200, "asphalt", 6f, null);
+            MeshKit.Ground(T, World.Map.size + 200, "asphalt", 6f, new Color(0.5f, 0.5f, 0.52f));
             float W = 180, D = 120, fh = 4.5f; int floors = 3;
             var wall = AssetCatalog.TexMat("plaster", 3f, null, new Color(0.85f, 0.85f, 0.88f)); var floorM = AssetCatalog.TexMat("tiles", 1.5f, null, new Color(0.75f, 0.72f, 0.68f)); var shopM = AssetCatalog.TexMat("plaster", 2f, new Color(0.8f, 0.85f, 1f), new Color(0.6f, 0.6f, 0.7f), 1);
             var outer = Buildings.Rect(0, 0, W, D);
@@ -275,7 +286,7 @@ namespace Vykhod
             MeshKit.Ground(T, map.size + 200, "paving", 2f, null);
             var road = AssetCatalog.TexMat("asphalt", 5f, null, new Color(0.25f, 0.25f, 0.26f));
             int blocks = Mathf.Max(3, (int)(map.size / 120)); float step = map.size / blocks;
-            for (int i = 0; i <= blocks; i++) { float c = -half + i * step; MeshKit.Strip(T, new List<Vector2> { new Vector2(-half, c), new Vector2(half, c) }, 10, 0.04f, road); MeshKit.Strip(T, new List<Vector2> { new Vector2(c, -half), new Vector2(c, half) }, 10, 0.04f, road); }
+            for (int i = 0; i <= blocks; i++) { float c = -half + i * step; Road(new List<Vector2> { new Vector2(-half, c), new Vector2(half, c) }, 10, road); Road(new List<Vector2> { new Vector2(c, -half), new Vector2(c, half) }, 10, road); }
             var keys = Database.Items.Values.Where(i => i.type == "key" && i.PS("map") == map.id).ToList(); int k = 0, n = 0;
             string[] comm = { "building-a", "building-b", "building-c", "building-d", "building-e", "building-f", "building-g", "building-h", "building-skyscraper-a", "building-skyscraper-b" };
             for (int bx = 0; bx < blocks; bx++) for (int bz = 0; bz < blocks; bz++)

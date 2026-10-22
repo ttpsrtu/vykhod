@@ -34,6 +34,9 @@ namespace Vykhod.EditorTools
             FixAllHashes();
             MakeScene();
             ApplyPlayerSettings();
+            ConfigureImports();
+            MakeSkyMaterial();
+            MakeAnimator();
             AssetDatabase.SaveAssets(); AssetDatabase.Refresh();
             Debug.Log("[Vykhod] Проект настроен. Откройте сцену " + ScenePath + " и нажмите Play.");
         }
@@ -222,6 +225,90 @@ namespace Vykhod.EditorTools
                 prop.SetValue(null, val);
             }
             catch (Exception e) { Debug.LogWarning("Mac architecture: " + e.Message); }
+        }
+
+        /// <summary>Импорт: меши оружия читаемые (для авто-ориентации), нормал-карты как Normal map, клипы персонажей зациклены.</summary>
+        [MenuItem("Vykhod/Configure Imports")]
+        public static void ConfigureImports()
+        {
+            int changed = 0;
+            foreach (var guid in AssetDatabase.FindAssets("t:Model", new[] { "Assets/Resources/Imported/quaternius_guns", "Assets/Resources/Imported/kenney_weapon-pack", "Assets/Resources/Imported/polyhaven_models" }))
+            {
+                var path = AssetDatabase.GUIDToAssetPath(guid); var mi = AssetImporter.GetAtPath(path) as ModelImporter; if (mi == null || mi.isReadable) continue;
+                mi.isReadable = true; mi.SaveAndReimport(); changed++;
+            }
+            foreach (var guid in AssetDatabase.FindAssets("t:Texture2D", new[] { "Assets/Resources/Imported/textures_cc0", "Assets/Resources/Imported/polyhaven_models" }))
+            {
+                var path = AssetDatabase.GUIDToAssetPath(guid); string n = Path.GetFileNameWithoutExtension(path).ToLowerInvariant();
+                bool isNormal = n.EndsWith("_normal") || n.Contains("_nor_gl") || n.Contains("_nor_");
+                var ti = AssetImporter.GetAtPath(path) as TextureImporter; if (ti == null) continue;
+                if (isNormal && ti.textureType != TextureImporterType.NormalMap) { ti.textureType = TextureImporterType.NormalMap; ti.SaveAndReimport(); changed++; }
+                else if (!isNormal && ti.maxTextureSize > 1024 && path.Contains("textures_cc0")) { ti.maxTextureSize = 1024; ti.SaveAndReimport(); changed++; }
+            }
+            foreach (var guid in AssetDatabase.FindAssets("t:Model", new[] { "Assets/Resources/Imported/quaternius_characters" }))
+            {
+                var path = AssetDatabase.GUIDToAssetPath(guid); var mi = AssetImporter.GetAtPath(path) as ModelImporter; if (mi == null) continue;
+                var clips = mi.defaultClipAnimations; if (clips == null || clips.Length == 0) continue;
+                bool need = mi.clipAnimations == null || mi.clipAnimations.Length == 0 || !mi.clipAnimations[0].loopTime;
+                if (!need) continue;
+                foreach (var c in clips) c.loopTime = !(c.name.Contains("Defeat") || c.name.Contains("Death") || c.name.Contains("PickUp"));
+                mi.clipAnimations = clips; mi.animationType = ModelImporterAnimationType.Generic; mi.SaveAndReimport(); changed++;
+            }
+            Debug.Log($"[Vykhod] Импорт настроен, изменено ассетов: {changed}");
+        }
+
+        /// <summary>Материал неба в Resources (чтобы шейдер попал в сборку): HDRI-панорама Poly Haven или процедурное небо.</summary>
+        static void MakeSkyMaterial()
+        {
+            const string matPath = "Assets/Resources/Materials/Sky.mat";
+            if (File.Exists(matPath)) return;
+            Directory.CreateDirectory("Assets/Resources/Materials");
+            Material m = null;
+            var hdrGuids = AssetDatabase.FindAssets("t:Texture2D", new[] { "Assets/Resources/Imported/sky" });
+            if (hdrGuids.Length > 0)
+            {
+                var hdrPath = AssetDatabase.GUIDToAssetPath(hdrGuids[0]);
+                var ti = AssetImporter.GetAtPath(hdrPath) as TextureImporter; if (ti != null && ti.maxTextureSize < 2048) { ti.maxTextureSize = 2048; ti.SaveAndReimport(); }
+                var tex = AssetDatabase.LoadAssetAtPath<Texture2D>(hdrPath);
+                var sh = Shader.Find("Skybox/Panoramic");
+                if (sh != null && tex != null) { m = new Material(sh); m.SetTexture("_MainTex", tex); m.SetFloat("_Exposure", 1.0f); m.SetFloat("_Rotation", 215f); }
+            }
+            if (m == null) { var sh = Shader.Find("Skybox/Procedural"); if (sh == null) return; m = new Material(sh); m.SetFloat("_Exposure", 1.2f); m.SetFloat("_AtmosphereThickness", 1.1f); }
+            AssetDatabase.CreateAsset(m, matPath); AssetDatabase.SaveAssets();
+            Debug.Log("[Vykhod] Небо: " + m.shader.name);
+        }
+
+        /// <summary>Контроллер анимаций для персонажей Quaternius: Idle / Walk по Speed, Shoot по триггеру, Dead по флагу.</summary>
+        static void MakeAnimator()
+        {
+            const string ctrlPath = "Assets/Resources/Anim/Soldier.controller";
+            if (File.Exists(ctrlPath)) return;
+            var fbxGuids = AssetDatabase.FindAssets("BlueSoldier_Male t:Model", new[] { "Assets/Resources/Imported/quaternius_characters" });
+            if (fbxGuids.Length == 0) fbxGuids = AssetDatabase.FindAssets("Soldier t:Model", new[] { "Assets/Resources/Imported/quaternius_characters" });
+            if (fbxGuids.Length == 0) { Debug.Log("[Vykhod] Персонажи Quaternius не найдены — контроллер не создан"); return; }
+            var fbxPath = AssetDatabase.GUIDToAssetPath(fbxGuids[0]);
+            AnimationClip idle = null, walk = null, shoot = null, dead = null, hit = null;
+            foreach (var a in AssetDatabase.LoadAllAssetsAtPath(fbxPath))
+            {
+                if (!(a is AnimationClip c) || c.name.StartsWith("__preview")) continue;
+                string n = c.name; if (n.EndsWith("Idle")) idle = c; else if (n.EndsWith("Walk")) walk = c; else if (n.Contains("Shoot")) shoot = c; else if (n.Contains("Defeat")) dead = c; else if (n.Contains("RecieveHit") || n.Contains("ReceiveHit")) hit = c;
+            }
+            if (idle == null) { Debug.Log("[Vykhod] В FBX нет клипа Idle"); return; }
+            Directory.CreateDirectory("Assets/Resources/Anim");
+            var ctrl = UnityEditor.Animations.AnimatorController.CreateAnimatorControllerAtPath(ctrlPath);
+            ctrl.AddParameter("Speed", AnimatorControllerParameterType.Float); ctrl.AddParameter("Shoot", AnimatorControllerParameterType.Trigger); ctrl.AddParameter("Dead", AnimatorControllerParameterType.Bool);
+            var sm = ctrl.layers[0].stateMachine;
+            var sIdle = sm.AddState("Idle"); sIdle.motion = idle; sm.defaultState = sIdle;
+            var sWalk = sm.AddState("Walk"); sWalk.motion = walk ?? idle;
+            var sShoot = sm.AddState("Shoot"); sShoot.motion = shoot ?? idle;
+            var sDead = sm.AddState("Dead"); sDead.motion = dead ?? idle;
+            var t1 = sIdle.AddTransition(sWalk); t1.AddCondition(UnityEditor.Animations.AnimatorConditionMode.Greater, 0.3f, "Speed"); t1.hasExitTime = false; t1.duration = 0.15f;
+            var t2 = sWalk.AddTransition(sIdle); t2.AddCondition(UnityEditor.Animations.AnimatorConditionMode.Less, 0.3f, "Speed"); t2.hasExitTime = false; t2.duration = 0.15f;
+            var t3 = sm.AddAnyStateTransition(sShoot); t3.AddCondition(UnityEditor.Animations.AnimatorConditionMode.If, 0, "Shoot"); t3.hasExitTime = false; t3.duration = 0.05f; t3.canTransitionToSelf = false;
+            var t4 = sShoot.AddTransition(sIdle); t4.hasExitTime = true; t4.exitTime = 0.6f; t4.duration = 0.1f;
+            var t5 = sm.AddAnyStateTransition(sDead); t5.AddCondition(UnityEditor.Animations.AnimatorConditionMode.If, 0, "Dead"); t5.hasExitTime = false; t5.duration = 0.1f; t5.canTransitionToSelf = false;
+            AssetDatabase.SaveAssets();
+            Debug.Log("[Vykhod] Контроллер анимаций создан из " + fbxPath);
         }
 
         [MenuItem("Vykhod/Build/Windows x64")]

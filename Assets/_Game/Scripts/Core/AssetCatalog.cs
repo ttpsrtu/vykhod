@@ -131,6 +131,7 @@ namespace Vykhod
             if (prefab == null) return null;
             var go = Object.Instantiate(prefab, parent);
             go.transform.localPosition = Vector3.zero; go.transform.localRotation = Quaternion.identity;
+            if (path.Contains("polyhaven_models")) ApplyPolyhavenTextures(go, path);
             Normalize(go, targetSize, colliders);
             if (center)
             {
@@ -139,6 +140,73 @@ namespace Vykhod
                 if (b.size.sqrMagnitude > 0) go.transform.position += go.transform.position - b.center;
             }
             return go;
+        }
+
+        /// <summary>
+        /// Ориентирует модель оружия: самая длинная ось → вперёд (+Z), самая тонкая → вбок (+X), средняя → вверх (+Y).
+        /// Если меш читаемый, определяет знаки: рукоять/магазин висят вниз, дуло — тонкий конец.
+        /// </summary>
+        public static void OrientGun(GameObject go)
+        {
+            var mfs = go.GetComponentsInChildren<MeshFilter>();
+            if (mfs.Length == 0) return;
+            // границы в локальном пространстве go
+            var toLocal = go.transform.worldToLocalMatrix; bool any = false; var b = new Bounds();
+            var pts = new List<Vector3>();
+            foreach (var mf in mfs)
+            {
+                if (mf.sharedMesh == null) continue;
+                var m = toLocal * mf.transform.localToWorldMatrix;
+                if (mf.sharedMesh.isReadable) { var vs = mf.sharedMesh.vertices; for (int i = 0; i < vs.Length; i += Mathf.Max(1, vs.Length / 4000)) pts.Add(m.MultiplyPoint3x4(vs[i])); }
+                var mb = mf.sharedMesh.bounds;
+                for (int i = 0; i < 8; i++) { var c = m.MultiplyPoint3x4(new Vector3((i & 1) == 0 ? mb.min.x : mb.max.x, (i & 2) == 0 ? mb.min.y : mb.max.y, (i & 4) == 0 ? mb.min.z : mb.max.z)); if (!any) { b = new Bounds(c, Vector3.zero); any = true; } else b.Encapsulate(c); }
+            }
+            if (!any) return;
+            var size = b.size; int longest = size.x >= size.y && size.x >= size.z ? 0 : size.y >= size.z ? 1 : 2;
+            int shortest = size.x <= size.y && size.x <= size.z ? 0 : size.y <= size.z ? 1 : 2;
+            if (shortest == longest) shortest = (longest + 1) % 3;
+            int middle = 3 - longest - shortest;
+            Vector3 Axis(int i) => i == 0 ? Vector3.right : i == 1 ? Vector3.up : Vector3.forward;
+            Vector3 fwd = Axis(longest), up = Axis(middle);
+            if (pts.Count > 50)
+            {
+                // вверх: центр масс ниже центра габаритов (рукоять и магазин снизу)
+                float meanUp = 0; foreach (var p in pts) meanUp += Vector3.Dot(p - b.center, up); meanUp /= pts.Count;
+                if (meanUp < 0) up = -up; // магазин и рукоять тянут центр масс вниз относительно оси ствола
+                // вперёд: конец с меньшим разбросом по вертикали — дуло
+                float frontSpread = 0, backSpread = 0; int nf = 0, nb = 0; float half = Vector3.Dot(size, Vector3.Scale(fwd, fwd)) * 0.5f;
+                foreach (var p in pts) { float a = Vector3.Dot(p - b.center, fwd); float h = Mathf.Abs(Vector3.Dot(p - b.center, up)); if (a > half * 0.5f) { frontSpread += h; nf++; } else if (a < -half * 0.5f) { backSpread += h; nb++; } }
+                if (nf > 0 && nb > 0 && frontSpread / nf < backSpread / nb) fwd = -fwd; // дуло — тонкий конец, приклад/рукоять — широкий
+            }
+            var rot = Quaternion.LookRotation(fwd, up);           // поворачивает Z→fwd, Y→up
+            go.transform.localRotation = Quaternion.Inverse(rot); // значит обратный поворот ставит fwd→Z, up→Y
+        }
+
+        static readonly Dictionary<string, Material> phMatCache = new Dictionary<string, Material>();
+        /// <summary>Модели Poly Haven: FBX не всегда подхватывает текстуры из textures/ — назначаем диффуз/нормаль/шероховатость сами.</summary>
+        static void ApplyPolyhavenTextures(GameObject go, string modelPath)
+        {
+            string dir = modelPath.Substring(0, modelPath.LastIndexOf('/') + 1).ToLowerInvariant();
+            if (!phMatCache.TryGetValue(dir, out var mat))
+            {
+                var texs = allTextures.Where(t => t.ToLowerInvariant().StartsWith(dir)).ToList();
+                string diff = texs.FirstOrDefault(t => t.ToLowerInvariant().Contains("_diff")), nor = texs.FirstOrDefault(t => t.ToLowerInvariant().Contains("_nor")), rough = texs.FirstOrDefault(t => t.ToLowerInvariant().Contains("_rough"));
+                if (diff == null) { phMatCache[dir] = null; return; }
+                mat = new Material(Shader.Find("Standard")) { enableInstancing = true };
+                mat.mainTexture = Resources.Load<Texture2D>(diff);
+                var n = nor != null ? Resources.Load<Texture2D>(nor) : null; if (n != null) { mat.EnableKeyword("_NORMALMAP"); mat.SetTexture("_BumpMap", n); }
+                mat.SetFloat("_Glossiness", rough != null ? 0.35f : 0.2f); mat.SetFloat("_Metallic", 0f);
+                phMatCache[dir] = mat;
+            }
+            if (mat == null) return;
+            foreach (var r in go.GetComponentsInChildren<Renderer>()) { var ms = r.sharedMaterials; for (int i = 0; i < ms.Length; i++) ms[i] = mat; r.sharedMaterials = ms; }
+        }
+
+        /// <summary>Сдвинуть модель так, чтобы центр её габаритов оказался в точке привязки.</summary>
+        public static void Recenter(GameObject go)
+        {
+            var b = MeshBounds(go);
+            if (b.size.sqrMagnitude > 0) go.transform.position += go.transform.position - b.center;
         }
 
         /// <summary>Границы модели по мешам (надёжнее renderer.bounds сразу после Instantiate), в мировых координатах.</summary>
@@ -263,6 +331,15 @@ namespace Vykhod
             if (triplanar == null) { m = Mat(fallback ?? Color.gray); texMatCache[ck] = m; return m; }
             m = new Material(triplanar) { enableInstancing = true };
             m.SetTexture("_MainTex", tex); m.SetFloat("_Scale", scale); m.SetColor("_Color", tint ?? Color.white);
+            string colorPath = candidates[Mathf.Abs(variant) % candidates.Count];
+            var nrm = Resources.Load<Texture2D>(colorPath.Substring(0, colorPath.Length - "_Color".Length) + "_Normal");
+            if (nrm != null) { m.SetTexture("_BumpMap", nrm); m.SetFloat("_BumpScale", 1f); } else m.SetFloat("_BumpScale", 0f);
+            // земля/трава: подмешиваем вторую вариацию по шуму, чтобы не было видимого тайлинга
+            if (candidates.Count > 1 && (k == "grass" || k == "asphalt" || k == "concrete" || k == "ground048" || k == "gravel"))
+            {
+                var t2 = Resources.Load<Texture2D>(candidates[(Mathf.Abs(variant) + 1) % candidates.Count]);
+                if (t2 != null) { m.SetTexture("_Tex2", t2); m.SetFloat("_Blend", 0.7f); }
+            }
             texMatCache[ck] = m;
             return m;
         }

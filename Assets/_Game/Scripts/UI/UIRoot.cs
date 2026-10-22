@@ -42,7 +42,8 @@ namespace Vykhod
         public void OnNotification(string msg)
         {
             var card = UIKit.Card(toastCol, new Color(0.05f, 0.08f, 0.26f, 0.85f), 16, "toast", false);
-            var le = card.gameObject.AddComponent<LayoutElement>(); le.minHeight = 44; le.preferredHeight = 44; le.flexibleHeight = 0;
+            if (Game.State == GameState.Raid && !msg.StartsWith("Квест") && !msg.StartsWith("Убит") && !msg.StartsWith("Точка") && !msg.StartsWith("Нет") && !msg.StartsWith("Установлено")) { Destroy(card.gameObject); return; } // в рейде показываем только важное
+            var le = card.gameObject.AddComponent<LayoutElement>(); le.minHeight = 40; le.preferredHeight = 40; le.flexibleHeight = 0;
             var stripe = UIKit.Img(card.transform, UIKit.Yellow, "stripe"); stripe.sprite = UIKit.Rounded(16); stripe.type = Image.Type.Sliced; stripe.rectTransform.anchorMin = new Vector2(0, 0); stripe.rectTransform.anchorMax = new Vector2(0, 1); stripe.rectTransform.offsetMin = Vector2.zero; stripe.rectTransform.offsetMax = new Vector2(6, 0);
             var t = UIKit.Label(card.transform, msg, 16, TextAnchor.MiddleLeft, UIKit.TextC, true, 0, true); UIKit.Stretch(t.rectTransform, 16, 2, 12, 2); t.horizontalOverflow = HorizontalWrapMode.Wrap; t.verticalOverflow = VerticalWrapMode.Truncate;
             toasts.Add((t, Time.unscaledTime + 5f));

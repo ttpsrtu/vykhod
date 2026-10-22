@@ -41,8 +41,8 @@ namespace Vykhod
             if (cur == null) return;
             var def = cur.Info.weapon;
             var path = AssetCatalog.FindModel(def.model, "weapon|guns");
-            GameObject g = path != null ? AssetCatalog.Spawn(path, model.transform, def.cls == "pistol" ? 0.26f : def.cls == "melee" ? 0.35f : def.cls == "smg" ? 0.5f : def.cls == "sniper" || def.cls == "lmg" ? 1.05f : 0.78f, false, true) : null;
-            if (g != null) g.transform.localRotation = Quaternion.Euler(0, 90, 0); else g = AssetCatalog.GunPlaceholder(def, model.transform);
+            GameObject g = path != null ? AssetCatalog.Spawn(path, model.transform, def.cls == "pistol" ? 0.26f : def.cls == "melee" ? 0.35f : def.cls == "smg" ? 0.5f : def.cls == "sniper" || def.cls == "lmg" ? 1.05f : 0.78f, false, false) : null;
+            if (g != null) { AssetCatalog.OrientGun(g); AssetCatalog.Recenter(g); } else g = AssetCatalog.GunPlaceholder(def, model.transform);
             float len = def.cls == "pistol" ? 0.2f : def.cls == "smg" ? 0.45f : def.cls == "sniper" || def.cls == "lmg" ? 1.05f : 0.75f;
             // визуализация модов
             foreach (var kv in cur.mods)
@@ -99,7 +99,7 @@ namespace Vykhod
             float sway = (net.InPain && !net.PainFree ? 1.6f : 1f) * (net.Health.Value.larm <= 0 || net.Health.Value.rarm <= 0 ? 2f : 1f) * Mathf.Max(0.3f, 1f + Stats.Get("swayHurt"));
             var swayOff = new Vector3(Mathf.Sin(Time.time * 1.3f) * 0.004f, Mathf.Sin(Time.time * 1.7f) * 0.003f, 0) * sway * (Ads ? 0.5f : 1f);
             hands.localPosition = Vector3.Lerp(hands.localPosition, targetPos + swayOff, Time.deltaTime * 14);
-            hands.localRotation = Quaternion.Slerp(hands.localRotation, Quaternion.Euler(ctrl.Sprinting ? 8 : 0, ctrl.Sprinting ? -12 : 0, 0), Time.deltaTime * 10);
+            hands.localRotation = Quaternion.Slerp(hands.localRotation, Quaternion.Euler(ctrl.Sprinting ? 8 : 0, ctrl.Sprinting ? -14 : (Ads ? 0 : -4), 0), Time.deltaTime * 10);
             // отдача: возврат
             recoilPitch = Mathf.Lerp(recoilPitch, 0, Time.deltaTime * 8); recoilYaw = Mathf.Lerp(recoilYaw, 0, Time.deltaTime * 8);
             hands.localRotation *= Quaternion.Euler(-recoilPitch * 2.5f, recoilYaw, 0);

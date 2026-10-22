@@ -148,7 +148,7 @@ namespace Vykhod
             go.transform.SetParent(parent, false);
             var mesh = new Mesh { indexFormat = verts.Count > 65000 ? UnityEngine.Rendering.IndexFormat.UInt32 : UnityEngine.Rendering.IndexFormat.UInt16 };
             mesh.SetVertices(verts); mesh.SetTriangles(tris, 0); mesh.SetNormals(norms); mesh.SetUVs(0, uvs);
-            mesh.RecalculateBounds();
+            mesh.RecalculateBounds(); mesh.RecalculateTangents();
             go.AddComponent<MeshFilter>().sharedMesh = mesh;
             go.AddComponent<MeshRenderer>().sharedMaterial = m;
             if (collider) go.AddComponent<MeshCollider>().sharedMesh = mesh;

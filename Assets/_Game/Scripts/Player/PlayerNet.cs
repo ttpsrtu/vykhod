@@ -25,7 +25,7 @@ namespace Vykhod
 
         public FPSController Ctrl; public PlayerWeapons Weapons; public PlayerInteract Interact; public Camera Cam;
         public Transform Head;
-        GameObject body; Transform remoteGun; Light remoteLight; string shownWeapon = "";
+        GameObject body; Transform remoteGun; Light remoteLight; string shownWeapon = ""; Animator bodyAnim; Vector3 lastBodyPos;
         float serverTick; bool initDone; float painUntil; public bool LastStandUsed, SecondWindUsed;
         public bool IsAlive => !Dead.Value && !Extracted.Value;
         public float Hp => Health.Value.Total;
@@ -78,7 +78,9 @@ namespace Vykhod
             if (!IsOwner) return;
             Game.Manager.SetSceneCameras(false);
             var cgo = new GameObject("PlayerCamera"); cgo.transform.SetParent(Head, false);
-            Cam = cgo.AddComponent<Camera>(); Cam.nearClipPlane = 0.04f; Cam.farClipPlane = 1200f; Cam.fieldOfView = Game.Settings.fov; Cam.backgroundColor = World.SkyColor; Cam.clearFlags = CameraClearFlags.SolidColor;
+            Cam = cgo.AddComponent<Camera>(); Cam.nearClipPlane = 0.04f; Cam.farClipPlane = 1200f; Cam.fieldOfView = Game.Settings.fov; Cam.backgroundColor = World.SkyColor;
+            Cam.clearFlags = RenderSettings.skybox != null && !World.Underground ? CameraClearFlags.Skybox : CameraClearFlags.SolidColor;
+            Cam.allowHDR = true; Cam.allowMSAA = true;
             Cam.tag = "MainCamera";
             var rootListener = Game.Manager.GetComponent<AudioListener>(); if (rootListener != null) rootListener.enabled = false;
             cgo.AddComponent<AudioListener>();
@@ -93,9 +95,20 @@ namespace Vykhod
         {
             body = new GameObject("body"); body.transform.SetParent(transform, false);
             Color c = new Color(0.25f, 0.35f, 0.5f);
-            AssetCatalog.Prim(PrimitiveType.Capsule, body.transform, new Vector3(0, 1.0f, 0), new Vector3(0.6f, 0.62f, 0.6f), c, false);
-            AssetCatalog.Prim(PrimitiveType.Sphere, body.transform, new Vector3(0, 1.62f, 0), new Vector3(0.32f, 0.32f, 0.32f), new Color(0.85f, 0.7f, 0.6f), false);
-            AssetCatalog.Prim(PrimitiveType.Cube, body.transform, new Vector3(0, 0.4f, 0), new Vector3(0.45f, 0.8f, 0.35f), c * 0.7f, false);
+            var path = AssetCatalog.FindModel("BlueSoldier_Male", "quaternius_characters") ?? AssetCatalog.FindModel("Soldier", "quaternius_characters");
+            var model = path != null ? AssetCatalog.Spawn(path, body.transform, 1.8f, false) : null;
+            if (model != null)
+            {
+                var mb = AssetCatalog.MeshBounds(model); model.transform.position += Vector3.up * (transform.position.y - mb.min.y);
+                bodyAnim = model.GetComponent<Animator>() ?? model.AddComponent<Animator>();
+                var ctrl = Resources.Load<RuntimeAnimatorController>("Anim/Soldier"); if (ctrl != null) bodyAnim.runtimeAnimatorController = ctrl; bodyAnim.applyRootMotion = false;
+            }
+            else
+            {
+                AssetCatalog.Prim(PrimitiveType.Capsule, body.transform, new Vector3(0, 1.0f, 0), new Vector3(0.6f, 0.62f, 0.6f), c, false);
+                AssetCatalog.Prim(PrimitiveType.Sphere, body.transform, new Vector3(0, 1.62f, 0), new Vector3(0.32f, 0.32f, 0.32f), new Color(0.85f, 0.7f, 0.6f), false);
+                AssetCatalog.Prim(PrimitiveType.Cube, body.transform, new Vector3(0, 0.4f, 0), new Vector3(0.45f, 0.8f, 0.35f), c * 0.7f, false);
+            }
             Hit("head", new Vector3(0, 1.62f, 0), 0.2f); Hit("thorax", new Vector3(0, 1.15f, 0), 0.32f); Hit("stomach", new Vector3(0, 0.78f, 0), 0.3f); Hit("legs", new Vector3(0, 0.35f, 0), 0.28f);
             remoteGun = new GameObject("rgun").transform; remoteGun.SetParent(body.transform, false); remoteGun.localPosition = new Vector3(0.25f, 1.3f, 0.35f);
             gameObject.layer = 0;
@@ -111,6 +124,11 @@ namespace Vykhod
         void Update()
         {
             if (!IsSpawned) return;
+            if (bodyAnim != null && !Dead.Value)
+            {
+                float sp = Time.deltaTime > 0 ? (transform.position - lastBodyPos).magnitude / Time.deltaTime : 0; lastBodyPos = transform.position;
+                bodyAnim.SetFloat("Speed", Mathf.Clamp(sp, 0, 7));
+            }
             if (IsOwner)
             {
                 string w = Weapons != null && Weapons.Current != null ? Weapons.Current.id : "";
@@ -122,8 +140,8 @@ namespace Vykhod
             {
                 // третье лицо: оружие в руках и поворот тела
                 string w = WeaponId.Value.ToString();
-                if (w != shownWeapon) { shownWeapon = w; foreach (Transform ch in remoteGun) Destroy(ch.gameObject); var def = Database.Weapon(w); if (def != null) { var p = AssetCatalog.FindModel(def.model, "weapon|guns"); var g = p != null ? AssetCatalog.Spawn(p, remoteGun, def.cls == "pistol" ? 0.25f : 0.8f, false, true) : AssetCatalog.GunPlaceholder(def, remoteGun); if (p != null) g.transform.localRotation = Quaternion.Euler(0, 90, 0); } }
-                if (body != null) body.transform.localScale = new Vector3(1, Crouching.Value ? 0.7f : 1f, 1);
+                if (w != shownWeapon) { shownWeapon = w; foreach (Transform ch in remoteGun) Destroy(ch.gameObject); var def = Database.Weapon(w); if (def != null) { var p = AssetCatalog.FindModel(def.model, "weapon|guns"); var g = p != null ? AssetCatalog.Spawn(p, remoteGun, def.cls == "pistol" ? 0.25f : 0.8f, false, false) : AssetCatalog.GunPlaceholder(def, remoteGun); if (p != null) { AssetCatalog.OrientGun(g); AssetCatalog.Recenter(g); } } }
+                if (body != null && bodyAnim == null) body.transform.localScale = new Vector3(1, Crouching.Value ? 0.7f : 1f, 1);
                 if (remoteLight == null && Flashlight.Value) { remoteLight = new GameObject("rfl").AddComponent<Light>(); remoteLight.transform.SetParent(remoteGun, false); remoteLight.type = LightType.Spot; remoteLight.range = 40; remoteLight.spotAngle = 45; remoteLight.intensity = 2f; remoteLight.shadows = LightShadows.None; }
                 if (remoteLight != null) remoteLight.enabled = Flashlight.Value;
             }
@@ -219,7 +237,8 @@ namespace Vykhod
 
         void OnDied()
         {
-            if (body != null) { body.transform.localRotation = Quaternion.Euler(-90, 0, 0); body.transform.localPosition = new Vector3(0, 0.3f, -0.6f); }
+            if (bodyAnim != null) bodyAnim.SetBool("Dead", true);
+            else if (body != null) { body.transform.localRotation = Quaternion.Euler(-90, 0, 0); body.transform.localPosition = new Vector3(0, 0.3f, -0.6f); }
             if (IsOwner) { Ctrl.enabled = false; Weapons.enabled = false; Interact.enabled = false; }
         }
 

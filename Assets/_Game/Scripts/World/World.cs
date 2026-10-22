@@ -20,6 +20,7 @@ namespace Vykhod
         public static readonly List<Vector3> PlayerSpawns = new List<Vector3>();
         public static readonly List<Vector3> EnemySpawns = new List<Vector3>();
         public static readonly List<Vector3> SniperSpots = new List<Vector3>();
+        public static readonly List<Vector2> RoadPoints = new List<Vector2>();   // точки дорог (XZ) — для логичной расстановки укрытий
         public static Vector3 BossSpawn;
         public static bool Night;
         public static bool ForceDay;   // для автотестов/скриншотов
@@ -33,7 +34,7 @@ namespace Vykhod
             IsReady = false;
             if (Root != null) Object.Destroy(Root.gameObject);
             Root = null; Map = null;
-            Containers.Clear(); Doors.Clear(); Extracts.Clear(); Pois.Clear(); PlayerSpawns.Clear(); EnemySpawns.Clear(); SniperSpots.Clear(); lamps.Clear();
+            Containers.Clear(); Doors.Clear(); Extracts.Clear(); Pois.Clear(); PlayerSpawns.Clear(); EnemySpawns.Clear(); SniperSpots.Clear(); RoadPoints.Clear(); lamps.Clear();
             Underground = false;
         }
 
@@ -61,6 +62,10 @@ namespace Vykhod
             PlaceExtracts();
             PlacePois();
             if (PlayerSpawns.Count == 0) DefaultSpawns();
+            // спавн не должен совпадать с выходом — сдвигаем к центру карты
+            for (int i = 0; i < PlayerSpawns.Count; i++)
+                foreach (var e in Extracts)
+                    if (Vector3.Distance(PlayerSpawns[i], e.transform.position) < 18f) { var dir = (-PlayerSpawns[i]); dir.y = 0; PlayerSpawns[i] = Snap(PlayerSpawns[i] + dir.normalized * 30f); }
             if (EnemySpawns.Count == 0) RandomEnemySpawns(60);
             if (BossSpawn == Vector3.zero && Map.pois.Count > 0) BossSpawn = new Vector3(Map.pois[0].x, 0, Map.pois[0].z);
             Physics.SyncTransforms();
@@ -98,7 +103,17 @@ namespace Vykhod
                 RenderSettings.ambientSkyColor = new Color(0.65f, 0.8f, 1f); RenderSettings.ambientEquatorColor = new Color(0.6f, 0.62f, 0.7f); RenderSettings.ambientGroundColor = new Color(0.35f, 0.4f, 0.3f);
                 RenderSettings.fog = true; RenderSettings.fogMode = FogMode.Linear; RenderSettings.fogStartDistance = 200; RenderSettings.fogEndDistance = 900; RenderSettings.fogColor = new Color(0.62f, 0.8f, 1f);
             }
-            RenderSettings.skybox = null;
+            // небо: HDRI-панорама (создаётся редакторным скриптом в Resources/Materials/Sky), ночью приглушаем
+            var sky = Underground ? null : Resources.Load<Material>("Materials/Sky");
+            RenderSettings.skybox = sky;
+            if (sky != null)
+            {
+                if (sky.HasProperty("_Exposure")) sky.SetFloat("_Exposure", Night ? 0.12f : 1.0f);
+                if (sky.HasProperty("_Tint")) sky.SetColor("_Tint", Night ? new Color(0.35f, 0.4f, 0.7f) : new Color(0.5f, 0.5f, 0.5f));
+                if (sky.HasProperty("_Rotation")) sky.SetFloat("_Rotation", 215f);
+                RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Skybox; RenderSettings.ambientIntensity = Night ? 0.6f : 1.1f;
+                DynamicGI.UpdateEnvironment();
+            }
         }
 
         public static Color SkyColor => Underground ? new Color(0.01f, 0.01f, 0.015f) : Night ? new Color(0.1f, 0.12f, 0.32f) : new Color(0.42f, 0.74f, 1f);
@@ -134,8 +149,9 @@ namespace Vykhod
                 ring.transform.localScale = new Vector3(10, 0.05f, 10); ring.transform.localPosition = Vector3.up * 0.06f;
                 ring.GetComponent<Renderer>().sharedMaterial = AssetCatalog.Emissive(string.IsNullOrEmpty(e.cond) ? new Color(0.2f, 0.9f, 0.3f) : new Color(0.9f, 0.7f, 0.2f), 0.8f);
                 Object.Destroy(ring.GetComponent<Collider>());
-                var beam = MeshKit.Box(go.transform, new Vector3(0, 12, 0), new Vector3(0.3f, 24, 0.3f), new Color(0.3f, 1f, 0.4f), false, false);
-                beam.GetComponent<Renderer>().sharedMaterial = AssetCatalog.Emissive(new Color(0.3f, 1f, 0.4f), 1.5f);
+                var beam = MeshKit.Box(go.transform, new Vector3(0, 20, 0), new Vector3(0.12f, 40, 0.12f), new Color(0.3f, 1f, 0.4f), false, false);
+                beam.GetComponent<Renderer>().sharedMaterial = AssetCatalog.Emissive(new Color(0.3f, 1f, 0.4f), 2.5f);
+                ring.transform.localScale = new Vector3(10, 0.02f, 10); ring.GetComponent<Renderer>().sharedMaterial = AssetCatalog.Mat(new Color(0.2f, 0.9f, 0.3f, 0.35f), 0.5f);
                 Extracts.Add(z);
             }
         }
@@ -201,9 +217,27 @@ namespace Vykhod
             lc.Title = LootContainer.Titles.TryGetValue(kind, out var t) ? t : kind;
             Containers.Add(lc);
             Color col = kind == "safe" ? new Color(0.25f, 0.25f, 0.3f) : kind == "medbag" ? new Color(0.9f, 0.3f, 0.3f) : kind == "weaponbox" ? new Color(0.3f, 0.4f, 0.25f) : kind == "jacket" ? new Color(0.4f, 0.3f, 0.5f) : kind == "body" ? new Color(0.5f, 0.45f, 0.4f) : new Color(0.6f, 0.45f, 0.25f);
+            // реалистичные модели Poly Haven по типу контейнера; запасной вариант — паки Kenney, потом примитив
+            string ph = kind == "crate" ? "wooden_crate_01" : kind == "locker" ? "painted_wooden_cabinet" : kind == "cabinet" ? "painted_wooden_cabinet" : kind == "desk" ? "metal_office_desk" : kind == "shelf" ? "steel_frame_shelves_01"
+                      : kind == "toolbox" ? "metal_toolbox" : kind == "weaponbox" ? "ammo_box" : kind == "server" ? "worn_metal_rack" : kind == "register" ? "cardboard_box_01" : kind == "fridge" ? "painted_wooden_cabinet" : kind == "bag" || kind == "medbag" ? "cardboard_box_01" : kind == "jacket" ? "trashbag" : kind == "safe" ? "utility_box_01" : null;
             string hint = kind == "safe" ? "safe" : kind == "locker" || kind == "cabinet" ? "locker" : kind == "desk" ? "table" : kind == "shelf" ? "shelf" : kind == "fridge" ? "fridge" : kind == "medbag" || kind == "bag" ? "bag" : kind == "body" ? "character" : kind == "server" ? "server" : "crate";
-            float size = kind == "locker" || kind == "cabinet" || kind == "server" ? 1.9f : kind == "desk" ? 1.4f : kind == "shelf" ? 1.8f : kind == "body" ? 1.7f : kind == "medbag" || kind == "jacket" || kind == "bag" ? 0.5f : 0.9f;
-            var vis = AssetCatalog.SpawnOrPlaceholder(hint, go.transform, size, col, PrimitiveType.Cube, null, true);
+            float size = kind == "locker" || kind == "cabinet" || kind == "server" ? 1.9f : kind == "desk" ? 1.4f : kind == "shelf" ? 1.8f : kind == "body" ? 1.7f : kind == "medbag" || kind == "jacket" || kind == "bag" ? 0.5f : kind == "toolbox" || kind == "weaponbox" ? 0.6f : 0.9f;
+            GameObject vis = null;
+            if (kind == "body")
+            {   // труп: персонаж Quaternius в позе поражения
+                string[] whos = { "Casual_Male", "Worker_Male", "Casual2_Male", "Soldier_Male", "Casual_Female" };
+                var cp = AssetCatalog.FindModel(whos[Mathf.Abs(Containers.Count * 7 + Seed) % whos.Length], "quaternius_characters");
+                if (cp != null)
+                {
+                    vis = AssetCatalog.Spawn(cp, go.transform, 1.8f, false);
+                    var mb = AssetCatalog.MeshBounds(vis); vis.transform.position += Vector3.up * (go.transform.position.y - mb.min.y);
+                    var an = vis.GetComponent<Animator>() ?? vis.AddComponent<Animator>(); var ctrl = Resources.Load<RuntimeAnimatorController>("Anim/Soldier");
+                    if (ctrl != null) { an.runtimeAnimatorController = ctrl; an.applyRootMotion = false; an.SetBool("Dead", true); an.Update(0f); }
+                    var cc = go.AddComponent<CapsuleCollider>(); cc.direction = 2; cc.radius = 0.35f; cc.height = 1.8f; cc.center = new Vector3(0, 0.3f, 0.3f);
+                }
+            }
+            else if (ph != null) { var phPath = AssetCatalog.FindModel(ph, "polyhaven"); if (phPath != null) { vis = AssetCatalog.Spawn(phPath, go.transform, size, true); if (vis != null) { var mb = AssetCatalog.MeshBounds(vis); vis.transform.position += Vector3.up * (go.transform.position.y - mb.min.y); } } }
+            if (vis == null) vis = AssetCatalog.SpawnOrPlaceholder(hint, go.transform, size, col, PrimitiveType.Cube, null, true);
             if (vis.name.StartsWith("ph_")) { vis.transform.localPosition = Vector3.up * size * 0.5f; if (kind == "body") { vis.transform.localScale = new Vector3(0.5f, 0.3f, 1.7f); vis.transform.localPosition = Vector3.up * 0.15f; } }
             var col2 = go.GetComponent<Collider>(); if (col2 == null) { var bc = go.AddComponent<BoxCollider>(); bc.size = Vector3.one * Mathf.Max(0.8f, size); bc.center = Vector3.up * size * 0.5f; }
             foreach (var c in vis.GetComponentsInChildren<Collider>()) c.enabled = true;

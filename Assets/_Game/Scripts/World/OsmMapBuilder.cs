@@ -62,6 +62,7 @@ namespace Vykhod
                 var rm = foot ? AssetCatalog.TexMat("paving", 1.5f, null, c) : AssetCatalog.TexMat("asphalt", 5f, null, c, type == "primary" || type == "secondary" ? 0 : 1);
                 MeshKit.Strip(roadsRoot, pts, w, foot ? 0.05f : 0.04f, rm, "road_" + type);
                 if (w >= 5) foreach (var p in pts) if (Mathf.Abs(p.x) < half - 5 && Mathf.Abs(p.y) < half - 5) roadPts.Add(p);
+                if (w >= 4) for (int i = 0; i + 1 < pts.Count; i++) { float len = (pts[i + 1] - pts[i]).magnitude; int n = Mathf.Max(1, (int)(len / 8)); for (int k = 0; k <= n; k++) { var q = Vector2.Lerp(pts[i], pts[i + 1], (float)k / n); if (Mathf.Abs(q.x) < half - 6 && Mathf.Abs(q.y) < half - 6) World.RoadPoints.Add(q); } }
                 // машины вдоль дорог
                 if (w >= 6) for (int i = 0; i + 1 < pts.Count; i++)
                     {
