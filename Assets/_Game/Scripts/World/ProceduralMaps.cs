@@ -102,6 +102,24 @@ namespace Vykhod
             for (int i = 0; i < 18; i++) { var p = new Vector3(Rnd(-half + 10, half - 10), 0, Rnd(-half + 10, half - 10)); if (Free(p, 1.2f)) Crate(p, Chance(0.3) ? "body" : Chance(0.5) ? "crate" : "toolbox"); }
             for (int i = 0; i < 6; i++) OsmMapBuilder.Car(T, new Vector3(Rnd(-120, 120), 0, -150 + Rnd(-3, 3)), 90, R);
             Buildings.Make(Buildings.Rect(225, -215, 10, 8), 1, "Проходная", new Color(0.7f, 0.7f, 0.7f), true, "office");
+            // пустыри: грунтовые площадки с бурьяном и деревья вдоль забора — чтобы асфальт не был бесконечной плоскостью
+            var dirt = AssetCatalog.TexMat("dirt", 3f, null, new Color(0.45f, 0.4f, 0.32f));
+            for (int i = 0; i < 14; i++)
+            {
+                var c = new Vector3(Rnd(-half + 40, half - 40), 0, Rnd(-half + 40, half - 40)); float w = Rnd(25, 60), d = Rnd(20, 50);
+                if (Mathf.Abs(c.x) < 60 && Mathf.Abs(c.z) < 40) continue;
+                var poly = new List<Vector2> { new Vector2(c.x - w / 2, c.z - d / 2), new Vector2(c.x + w / 2, c.z - d / 2), new Vector2(c.x + w / 2, c.z + d / 2), new Vector2(c.x - w / 2, c.z + d / 2) };
+                MeshKit.Slab(T, poly, 0.0f, 0.03f, dirt, false, "dirt");
+                for (int k = 0; k < 10; k++) { var p = c + new Vector3(Rnd(-w / 2, w / 2), 0, Rnd(-d / 2, d / 2)); if (Free(p, 1.5f)) AssetCatalog.Prop(Chance(0.5) ? "Grass_Common_Tall" : Chance(0.5) ? "Bush_Common" : "Plant_7_Big", "quaternius_nature", T, p, R.Next(0, 360), Rnd(0.8f, 1.6f), false); }
+                if (Chance(0.5)) { var p = c + new Vector3(Rnd(-w / 3, w / 3), 0, Rnd(-d / 3, d / 3)); if (Free(p, 3f)) MeshKit.Tree(T, p, R, "dead"); }
+            }
+            for (int i = 0; i < 2500; i++)
+            {
+                var p = new Vector3(Rnd(-half + 8, half - 8), 0, Rnd(-half + 8, half - 8));
+                bool edge = Mathf.Abs(p.x) > half - 40 || Mathf.Abs(p.z) > half - 40;
+                if (!edge || !Free(p, 2.5f)) continue;
+                MeshKit.Tree(T, p, R, Chance(0.6) ? "pine" : null);
+            }
             if (World.Night) for (int i = 0; i < 16; i++) World.Lamp(new Vector3(Rnd(-half, half), 6, Rnd(-half, half)), new Color(1f, 0.8f, 0.5f), 20, 1.8f);
             Spawns(half - 15);
             World.BossSpawn = new Vector3(0, 0.1f, 0);
@@ -147,13 +165,17 @@ namespace Vykhod
             MeshKit.Slab(T, lake, 0.0f, 0.02f, AssetCatalog.Mat(new Color(0.2f, 0.45f, 0.7f), 0.9f), false, "lake");
             var sand = new List<Vector2>(); for (int i = 0; i < 24; i++) { float a = i / 24f * Mathf.PI * 2; sand.Add(new Vector2(300 + Mathf.Cos(a) * 78, 250 + Mathf.Sin(a) * 68)); }
             MeshKit.Slab(T, sand, -0.01f, 0.02f, AssetCatalog.TexMat("sand", 2f, null, new Color(0.8f, 0.75f, 0.55f)), false, "beach");
+            // лес: широкое кольцо по краю карты, лесной массив на северо-западе и несколько рощ — чтобы спавн у края не был голым полем
             int trees = 0;
-            for (int i = 0; i < 700 && trees < 320; i++)
+            var groves = new List<Vector3>(); for (int g = 0; g < 7; g++) groves.Add(new Vector3(Rnd(-half + 80, half - 80), 0, Rnd(-half + 80, half - 80)));
+            for (int i = 0; i < 6000 && trees < 1400; i++)
             {
                 var p = new Vector3(Rnd(-half + 5, half - 5), 0, Rnd(-half + 5, half - 5));
-                bool forest = (p.x < -130 && p.z > 60) || Mathf.Abs(p.x) > half - 60 || Mathf.Abs(p.z) > half - 60;
-                if (!forest || !Free(p, 2.5f)) continue;
-                MeshKit.Tree(T, p, R); trees++;
+                bool forest = (p.x < -130 && p.z > 60) || Mathf.Abs(p.x) > half - 120 || Mathf.Abs(p.z) > half - 120;
+                if (!forest) foreach (var gc in groves) if (Vector3.Distance(gc, p) < 38) { forest = true; break; }
+                if (!forest || !Free(p, 2.2f)) continue;
+                if (Mathf.Abs(p.x - 150) < 40 && Mathf.Abs(p.z + 150) < 40) continue; // коттедж
+                MeshKit.Tree(T, p, R, Chance(0.35) ? "pine" : null); trees++;
             }
             for (int i = 0; i < 40; i++) { var p = new Vector3(Rnd(-half + 5, half - 5), 0, Rnd(-half + 5, half - 5)); if (Free(p, 2f)) Model(Chance(0.5) ? "rock-a" : "rock-b", "survival", p, R.Next(0, 360), Rnd(1.5f, 3f)); }
             foreach (var p in new[] { new Vector3(-250, 0, -250), new Vector3(300, 0, 100) })
@@ -233,7 +255,35 @@ namespace Vykhod
             for (int i = 0; i < 18; i++) OsmMapBuilder.Car(T, new Vector3(-100 + i * 11, 0, -95 + (i % 2) * 8), 0, R);
             for (int i = 0; i < 6; i++) OsmMapBuilder.Car(T, new Vector3(-110, 0, 70 + i * 7), 90, R);
             for (int i = 0; i < 12; i++) { var p = new Vector3(Rnd(-half + 8, half - 8), 0, Rnd(-half + 8, half - 8)); if (Mathf.Abs(p.x) < W / 2 + 3 && Mathf.Abs(p.z) < D / 2 + 3) continue; if (Free(p, 1.2f)) Crate(p, Chance(0.4) ? "body" : "crate"); }
-            for (int i = 0; i < 10; i++) MeshKit.Tree(T, new Vector3(Rnd(-half + 8, half - 8), 0, D / 2 + Rnd(10, 25)), R);
+            // парковка: газонные «острова» с деревьями и фонарями, ряды машин, разметка; по краю карты — лесополоса
+            var lawn = AssetCatalog.TexMat("grass", 3f, null, new Color(0.3f, 0.5f, 0.25f), 1); var curb = AssetCatalog.TexMat("concrete", 1.5f, null, new Color(0.7f, 0.7f, 0.7f));
+            var lineM = AssetCatalog.Mat(new Color(0.9f, 0.9f, 0.85f));
+            for (int side = -1; side <= 1; side += 2) for (int row = 0; row < 3; row++)
+                {
+                    float z = side * (D / 2 + 30 + row * 42); if (Mathf.Abs(z) > half - 25) continue;
+                    for (int ix = -3; ix <= 3; ix++)
+                    {
+                        float x = ix * 52; if (Mathf.Abs(x) > half - 30) continue;
+                        var isl = Buildings.Rect(x, z, 4, 34); MeshKit.Slab(T, isl, 0.0f, 0.18f, curb, true, "island"); MeshKit.Slab(T, Buildings.Rect(x, z, 3.2f, 33), 0.18f, 0.06f, lawn, false, "lawn");
+                        for (int k = -1; k <= 1; k++) MeshKit.Tree(T, new Vector3(x, 0.2f, z + k * 11), R, Chance(0.5) ? "pine" : null);
+                        AssetCatalog.Prop("street_lamp_01", "polyhaven", T, new Vector3(x + 1.2f, 0.2f, z + 5.5f), 90, 7f);
+                        if (Chance(0.6)) AssetCatalog.Prop("Bush_Common", "quaternius_nature", T, new Vector3(x - 0.8f, 0.2f, z - 6), R.Next(0, 360), 1.6f, true);
+                        // машины вдоль острова с двух сторон + разметка
+                        for (int k = 0; k < 6; k++) foreach (var sx in new[] { -1f, 1f })
+                            {
+                                var cp = new Vector3(x + sx * 5.5f, 0, z - 15 + k * 6);
+                                MeshKit.Box(T, cp + new Vector3(0, 0.045f, 3), new Vector3(5f, 0.01f, 0.12f), lineM, false);
+                                if (Chance(0.45) && Free(cp, 2f)) OsmMapBuilder.Car(T, cp, 90 + Rnd(-6, 6), R);
+                            }
+                    }
+                }
+            for (int i = 0; i < 2000; i++)
+            {
+                var p = new Vector3(Rnd(-half + 6, half - 6), 0, Rnd(-half + 6, half - 6));
+                bool edge = Mathf.Abs(p.x) > half - 36 || Mathf.Abs(p.z) > half - 36;
+                if (!edge || !Free(p, 2.5f)) continue;
+                MeshKit.Tree(T, p, R, Chance(0.4) ? "pine" : null);
+            }
             Spawns(half - 10);
             World.BossSpawn = new Vector3(0, 0.1f, 0);
             for (int i = 0; i < 40; i++) World.EnemySpawns.Add(new Vector3(Rnd(-W / 2 + 10, W / 2 - 10), (R.Next(0, floors)) * fh + 0.2f, Rnd(-D / 2 + 10, D / 2 - 10)));

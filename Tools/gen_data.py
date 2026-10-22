@@ -154,11 +154,45 @@ W = [
  ('sledge',   'Кувалда',          'melee','',        'melee',   45,'s',   0, 0, 55, 0,   0, 15000, 2,'mech','hammer',         1,3,4.5),
 ]
 MELEE_DMG = {'knife':40,'bayonet':45,'machete':60,'axe':85,'crowbar':55,'sledge':120}
+# Конкретная 3D-модель для каждого оружия (имя файла в Assets/Resources/Imported/*; см. Tools/fetch_assets.py):
+#   guns_flat  — Pichuliru «Flat Guns East/West» (CC0): силуэты АК/СВД/Сайга/ПП и M4/SCAR/MP5/Benelli
+#   guns_oga   — AK (текстурный), M4A1, Soviet_Assault_Rifle, Soviet_Special_Sniper_Rifle (ВСС), Quaternius FPS Pack, byzmod (CC0)
+#   quaternius_guns — запасные вариации.  Второй элемент — вариант текстур (для AK: 0 чёрный, 1 деревянный).
+WEAPON_MODELS = {
+    # пистолеты
+    'pm':'Pistol_Compact_East', 'tt33':'Pistol_Full_East', 'fort12':'Pistol_Compact_East',
+    'g17':'Glock_HighPoly', 'g18c':'Glock_HighPoly', 'p226':'Pistol_Full_West', 'm1911':'byz_colt1911',
+    'usp45':'Pistol_Compact_West', 'fiveseven':'Pistol_6', 'm9':'Pistol', 'rev357':'Revolver',
+    # ПП
+    'kedr':'SMG_Compact_East', 'vityaz':'SMG_Full_East', 'bizon':'SMG_Full_East', 'ppsh':'SubmachineGun_1',
+    'mp5':'SMG_Full_West', 'mp5k':'SMG_Compact_West', 'ump45':'SubmachineGun_3', 'vector45':'SubmachineGun_2',
+    'mp7':'SubmachineGun_5', 'p90':'P90', 'uzi':'SubmachineGun_4', 'scorpion':'SMG_Compact_West',
+    # дробовики
+    'mp133':'Shotgun_Pump_East', 'mp153':'Shotgun_Auto_East', 'saiga12':'Shotgun_Auto_East', 'toz106':'Shotgun_SawedOff',
+    'ks23':'Shotgun_3', 'm870':'Shotgun_Pump_West', 'm590':'Shotgun_2', 'm4super':'Shotgun_Auto_West',
+    # штурмовые (Rifle_Battle_East — короткий АК со складным прикладом → АКС-74У/АК-104/СР-3М)
+    'ak74m':'Rifle_Assault_East', 'ak74n':'AssaultRifle_5', 'ak12':'Rifle_Assault_East', 'an94':'AssaultRifle_4',
+    'aks74u':'Rifle_Battle_East', 'ak104':'Rifle_Battle_East', 'sr3m':'Rifle_Battle_East', 'ak105':'Soviet_Assault_Rifle',
+    'akm':'AK', 'akms':'AssaultRifle_3', 'ak103':'AssaultRifle_4', 'vpo136':'AK',
+    'm4a1':'M4A1', 'hk416':'Rifle_Assault_West', 'adar':'AssaultRifle2_1', 'scarl':'Rifle_Battle_West', 'scarh':'Rifle_Battle_West',
+    'aug':'Bullpup_1', 'g36':'AssaultRifle2_3', 'fal':'AssaultRifle2_4', 'asval':'Soviet_Special_Sniper_Rifle', 'mdr':'Bullpup_2',
+    'sks':'Rifle',
+    # марксманские
+    'svd':'Sniper_Material_East', 'svds':'Sniper_Material_East', 'vss':'Soviet_Special_Sniper_Rifle',
+    'rsass':'Sniper_Rifle_West', 'sr25':'Sniper_Rifle_West', 'm1a':'byz_sniper',
+    # снайперские
+    'mosin':'byz_kar98k', 'sv98':'Sniper_Rifle_East', 'vpo215':'SniperRifle_6',
+    'm700':'SniperRifle_1', 't5000':'Sniper_Material_West', 'dvl10':'Sniper_Material_West', 'axmc':'SniperRifle',
+    # пулемёты (ленточных моделей в CC0-паках нет — длинные АК/AR-образные)
+    'rpk16':'Rifle_Battle_East', 'pkm':'AssaultRifle_4', 'pkp':'AssaultRifle_4', 'm249':'AssaultRifle2_4', 'rpd':'AssaultRifle_3',
+}
+MODEL_VARIANT = {'akm':1, 'akms':1, 'vpo136':1}
 weapons = []
 for (wid, nm, cls, cal, fam, rpm, modes, rv, rh, ergo, moa, mag, price, lvl, trader, model, w, h, wt) in W:
     weapons.append(dict(id=wid, name=nm, cls=cls, clsName=CLASS_NAMES[cls], caliber=cal, family=fam, rpm=rpm,
                         modes=[{'s':'single','b':'burst','a':'auto'}[c] for c in modes], recoilV=rv, recoilH=rh,
-                        ergo=ergo, moa=moa, magCap=mag, price=price, lvl=lvl, trader=trader, model=model, w=w, h=h,
+                        ergo=ergo, moa=moa, magCap=mag, price=price, lvl=lvl, trader=trader,
+                        model=WEAPON_MODELS.get(wid, model), modelClass=model, modelVariant=MODEL_VARIANT.get(wid, 0), w=w, h=h,
                         weight=wt, slots=SLOTS[cls], meleeDmg=MELEE_DMG.get(wid, 0), durability=100,
                         rarity={1:1,2:2,3:3,4:4,5:5}[lvl]))
 

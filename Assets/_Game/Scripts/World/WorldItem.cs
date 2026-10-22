@@ -23,8 +23,18 @@ namespace Vykhod
             if (visual != null) Destroy(visual);
             if (Item == null) return;
             var info = Item.Info;
-            string hint = info?.IsWeapon == true ? info.weapon.model : info?.IsMod == true ? info.mod.model : info?.model ?? "crate";
-            visual = AssetCatalog.SpawnOrPlaceholder(hint, transform, info?.IsWeapon == true ? 0.8f : 0.35f, info?.IsWeapon == true ? new Color(0.15f, 0.15f, 0.15f) : new Color(0.8f, 0.6f, 0.2f), PrimitiveType.Cube, info?.IsWeapon == true ? "weapon|guns" : null, false);
+            if (info?.IsWeapon == true)
+            {
+                var gp = AssetCatalog.GunModel(info.weapon);
+                visual = gp != null ? AssetCatalog.Spawn(gp, transform, 0.8f, false, false, info.weapon.modelVariant) : AssetCatalog.GunPlaceholder(info.weapon, transform);
+                if (gp != null) { AssetCatalog.OrientGun(visual); AssetCatalog.Recenter(visual); }
+                visual.transform.localRotation = Quaternion.Euler(90, 0, 0) * visual.transform.localRotation; // лежит на земле
+            }
+            else
+            {
+                string hint = info?.IsMod == true ? info.mod.model : info?.model ?? "crate";
+                visual = AssetCatalog.SpawnOrPlaceholder(hint, transform, 0.35f, new Color(0.8f, 0.6f, 0.2f), PrimitiveType.Cube, null, false);
+            }
             visual.transform.localPosition = Vector3.up * 0.15f;
             var col = GetComponent<Collider>(); if (col == null) { var sc = gameObject.AddComponent<SphereCollider>(); sc.radius = 0.5f; sc.isTrigger = true; }
         }

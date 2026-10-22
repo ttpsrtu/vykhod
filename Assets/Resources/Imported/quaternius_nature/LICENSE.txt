@@ -1,0 +1,7 @@
+Pack: quaternius_nature
+License: CC0 1.0
+Source: https://opengameart.org/content/stylized-nature-megakit (Quaternius 'Stylized Nature MegaKit' Standard, CC0)
+Download: https://opengameart.org/sites/default/files/stylized_nature_megakitstandard.zip
+Note: Stylized trees, bushes, rocks and grass (FBX + textures) - replaces the cartoon Kenney trees.
+Fetched: 2026-10-22 by Tools/fetch_assets.py
+Only FBX/HDR/JPEG/JPG/MP3/MTL/OBJ/OGG/OTF/PNG/TTF/WAV files were kept; previews, vectors, spritesheets, GLTF/GLB, .blend and sample scenes were removed.

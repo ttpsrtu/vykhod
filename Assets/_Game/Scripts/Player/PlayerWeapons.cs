@@ -40,8 +40,8 @@ namespace Vykhod
             model = new GameObject("vm"); model.transform.SetParent(hands, false);
             if (cur == null) return;
             var def = cur.Info.weapon;
-            var path = AssetCatalog.FindModel(def.model, "weapon|guns");
-            GameObject g = path != null ? AssetCatalog.Spawn(path, model.transform, def.cls == "pistol" ? 0.26f : def.cls == "melee" ? 0.35f : def.cls == "smg" ? 0.5f : def.cls == "sniper" || def.cls == "lmg" ? 1.05f : 0.78f, false, false) : null;
+            var path = AssetCatalog.GunModel(def);
+            GameObject g = path != null ? AssetCatalog.Spawn(path, model.transform, def.cls == "pistol" ? 0.26f : def.cls == "melee" ? 0.35f : def.cls == "smg" ? 0.5f : def.cls == "sniper" || def.cls == "lmg" ? 1.05f : 0.78f, false, false, def.modelVariant) : null;
             if (g != null) { AssetCatalog.OrientGun(g); AssetCatalog.Recenter(g); } else g = AssetCatalog.GunPlaceholder(def, model.transform);
             float len = def.cls == "pistol" ? 0.2f : def.cls == "smg" ? 0.45f : def.cls == "sniper" || def.cls == "lmg" ? 1.05f : 0.75f;
             // визуализация модов

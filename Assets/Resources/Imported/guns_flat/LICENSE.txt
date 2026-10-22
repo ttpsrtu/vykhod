@@ -1,0 +1,10 @@
+Pack: guns_flat
+License: CC0 1.0
+Source: OpenGameArt 'CC0 Flat Guns East' + 'CC0 Flat Guns West' by Pichuliru (CC0)
+Download: https://opengameart.org/sites/default/files/flat_guns_east.zip
+Download: https://opengameart.org/sites/default/files/flat_guns_west.zip
+Note: Flat-shaded low-poly firearms with recognisable silhouettes (AK/SVD/Saiga/PP vs M4/SCAR/MP5/Benelli...). OBJ+MTL kept (the FBX files are rigged and import as skinned meshes).
+  east/  <- https://opengameart.org/content/cc0-flat-guns-east (Pichuliru, CC0) - 10 guns based on Russian designs
+  west/  <- https://opengameart.org/content/cc0-flat-guns-west (Pichuliru, CC0) - 10 guns based on US/European designs
+Fetched: 2026-10-22 by Tools/fetch_assets.py
+Only MTL/OBJ files were kept; previews, vectors, spritesheets, GLTF/GLB, .blend and sample scenes were removed.

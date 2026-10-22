@@ -5,15 +5,16 @@ namespace Vykhod
 {
     public class WeaponDef
     {
-        public string id, name, cls, clsName, caliber, family, trader, model;
+        public string id, name, cls, clsName, caliber, family, trader, model, modelClass;
         public float rpm, recoilV, recoilH, ergo, moa, weight, meleeDmg;
-        public int magCap, price, lvl, w, h, rarity;
+        public int magCap, price, lvl, w, h, rarity, modelVariant;
         public List<string> modes, slots;
 
         public WeaponDef(Dictionary<string, object> d)
         {
             id = J.S(d, "id"); name = J.S(d, "name"); cls = J.S(d, "cls"); clsName = J.S(d, "clsName");
             caliber = J.S(d, "caliber"); family = J.S(d, "family"); trader = J.S(d, "trader"); model = J.S(d, "model");
+            modelClass = J.S(d, "modelClass"); modelVariant = J.I(d, "modelVariant", 0);
             rpm = J.F(d, "rpm", 600); recoilV = J.F(d, "recoilV"); recoilH = J.F(d, "recoilH"); ergo = J.F(d, "ergo", 50);
             moa = J.F(d, "moa", 3); weight = J.F(d, "weight", 3); meleeDmg = J.F(d, "meleeDmg");
             magCap = J.I(d, "magCap", 10); price = J.I(d, "price", 1000); lvl = J.I(d, "lvl", 1);

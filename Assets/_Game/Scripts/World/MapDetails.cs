@@ -28,7 +28,7 @@ namespace Vykhod
             wood = AssetCatalog.TexMat("woodplanks", 1f, null, new Color(0.5f, 0.38f, 0.22f));
             bricks = AssetCatalog.TexMat("bricks", 1.5f, null, new Color(0.6f, 0.35f, 0.3f));
             float half = World.Half;
-            int clusters = Mathf.RoundToInt(half * half * 4f / 2600f * density);
+            int clusters = Mathf.RoundToInt(half * half * 4f / 1500f * density);
             int placed = 0; bool roads = World.RoadPoints.Count > 20;
             for (int i = 0; i < clusters * 4 && placed < clusters; i++)
             {
@@ -48,9 +48,14 @@ namespace Vykhod
                 if (!Free(p, 2.2f)) continue;
                 bool nearSpawn = false; foreach (var s in World.PlayerSpawns) if (Vector3.Distance(s, p) < 8) { nearSpawn = true; break; }
                 if (nearSpawn) continue;
-                int kind = R.Next(0, outdoor ? 15 : 8);
+                bool green = World.Map.kind == "suburb" || World.Map.kind == "osm";
+                int kind = R.Next(0, outdoor ? (green ? 19 : 16) : 8);
                 switch (kind)
                 {
+                    case 15: TreeLine(p, yaw); break;
+                    case 16: Rocks(p); break;
+                    case 17: GrassPatch(p); break;
+                    case 18: GrassPatch(p); break;
                     case 0: Jersey(p, yaw); break;
                     case 1: Sandbags(p, yaw); break;
                     case 2: CrateStack(p, yaw); break;
@@ -197,12 +202,54 @@ namespace Vykhod
             if (Chance(0.5)) PH("fire_hydrant", p + new Vector3(1.5f, 0, 1.0f), R.Next(0, 360), 0.8f);
         }
 
+        static bool Nat(string id, Vector3 p, float size, bool collider = false) => AssetCatalog.Prop(id, "quaternius_nature", T, p, R.Next(0, 360), size, collider) != null;
+
+        /// <summary>Ряд деревьев вдоль дороги (аллея) — читаемые ориентиры и укрытие от снайперов.</summary>
+        static void TreeLine(Vector3 p, float yaw)
+        {
+            var rot = Quaternion.Euler(0, yaw, 0); int n = R.Next(3, 7); string kind = Chance(0.4) ? "pine" : null;
+            for (int i = 0; i < n; i++)
+            {
+                var pos = World.Snap(p + rot * new Vector3((i - (n - 1) / 2f) * Rnd(5.5f, 7f), 0, Rnd(-0.8f, 0.8f)));
+                if (Free(pos, 1.5f)) MeshKit.Tree(T, pos, R, kind);
+            }
+            if (Chance(0.5)) GrassPatch(p + rot * new Vector3(0, 0, 2.5f));
+        }
+
+        /// <summary>Валуны и камни — укрытие в чистом поле.</summary>
+        static void Rocks(Vector3 p)
+        {
+            int n = R.Next(2, 5);
+            string[] ids = { "Rock_Medium_1", "Rock_Medium_2", "Rock_Medium_3" };
+            for (int i = 0; i < n; i++)
+            {
+                var pos = p + new Vector3(Rnd(-2.5f, 2.5f), 0, Rnd(-2.5f, 2.5f));
+                if (!Nat(ids[R.Next(ids.Length)], pos, Rnd(1.6f, 3.2f), true)) AssetCatalog.Prop(Chance(0.5) ? "rock-a" : "rock-b", "survival", T, pos, R.Next(0, 360), Rnd(1.5f, 3f), true);
+            }
+            for (int i = 0; i < 4; i++) Nat("Pebble_Round_" + R.Next(1, 6), p + new Vector3(Rnd(-3.5f, 3.5f), 0, Rnd(-3.5f, 3.5f)), Rnd(0.3f, 0.6f));
+            if (Chance(0.5)) GrassPatch(p + new Vector3(Rnd(-2, 2), 0, Rnd(-2, 2)));
+        }
+
+        /// <summary>Пятно травы, клевера, папоротника и цветов (без коллайдеров).</summary>
+        static void GrassPatch(Vector3 p)
+        {
+            int n = R.Next(7, 14);
+            string[] ids = { "Grass_Common_Tall", "Grass_Common_Short", "Grass_Wispy_Tall", "Grass_Wispy_Short", "Clover_1", "Clover_2", "Fern_1", "Flower_3_Group", "Flower_4_Group", "Plant_1", "Plant_7" };
+            for (int i = 0; i < n; i++)
+            {
+                var pos = World.Snap(p + new Vector3(Rnd(-3.5f, 3.5f), 0, Rnd(-3.5f, 3.5f)));
+                if (Physics.CheckSphere(pos + Vector3.up * 0.5f, 0.3f)) continue;
+                Nat(ids[R.Next(ids.Length)], pos, Rnd(0.6f, 1.3f));
+            }
+        }
+
         static void Bushes(Vector3 p)
         {
             int n = R.Next(3, 7);
             for (int i = 0; i < n; i++)
             {
                 var pos = p + new Vector3(Rnd(-3, 3), 0, Rnd(-3, 3));
+                if (Nat(Chance(0.7) ? "Bush_Common" : "Bush_Common_Flowers", pos, Rnd(1.4f, 2.4f), true)) continue;
                 var bush = AssetCatalog.Prop("bush", "nature", T, pos, R.Next(0, 360), Rnd(1.2f, 2.2f), true);
                 if (bush != null) { foreach (var r in bush.GetComponentsInChildren<Renderer>()) foreach (var m in r.materials) m.color = Color.Lerp(m.color, new Color(0.12f, 0.3f, 0.1f), 0.75f); }
                 else

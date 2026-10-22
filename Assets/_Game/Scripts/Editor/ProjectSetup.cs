@@ -37,8 +37,25 @@ namespace Vykhod.EditorTools
             ConfigureImports();
             MakeSkyMaterial();
             MakeAnimator();
+            MakePostFx();
             AssetDatabase.SaveAssets(); AssetDatabase.Refresh();
             Debug.Log("[Vykhod] Проект настроен. Откройте сцену " + ScenePath + " и нажмите Play.");
+        }
+
+        /// <summary>Префаб со ссылкой на PostProcessResources пакета Post Processing (иначе из кода до шейдеров стека не добраться).</summary>
+        [MenuItem("Vykhod/Make PostFx prefab")]
+        public static void MakePostFx()
+        {
+            string p = $"{PrefabDir}/PostFx.prefab";
+            var res = AssetDatabase.LoadAssetAtPath<UnityEngine.Rendering.PostProcessing.PostProcessResources>("Packages/com.unity.postprocessing/PostProcessing/PostProcessResources.asset");
+            if (res == null) { var g = AssetDatabase.FindAssets("t:PostProcessResources"); if (g.Length > 0) res = AssetDatabase.LoadAssetAtPath<UnityEngine.Rendering.PostProcessing.PostProcessResources>(AssetDatabase.GUIDToAssetPath(g[0])); }
+            if (res == null) { Debug.LogWarning("[Vykhod] PostProcessResources не найден — пакет com.unity.postprocessing не установлен?"); return; }
+            var existing = AssetDatabase.LoadAssetAtPath<GameObject>(p);
+            if (existing != null && existing.GetComponent<PostFxHolder>() != null && existing.GetComponent<PostFxHolder>().resources != null) return;
+            Directory.CreateDirectory(PrefabDir);
+            var go = new GameObject("PostFx"); go.AddComponent<PostFxHolder>().resources = res;
+            PrefabUtility.SaveAsPrefabAsset(go, p); UnityEngine.Object.DestroyImmediate(go);
+            Debug.Log("[Vykhod] Префаб PostFx создан");
         }
 
         /// <summary>Для автоматизации: настройка + сборка Windows одной командой.</summary>
@@ -232,12 +249,18 @@ namespace Vykhod.EditorTools
         public static void ConfigureImports()
         {
             int changed = 0;
-            foreach (var guid in AssetDatabase.FindAssets("t:Model", new[] { "Assets/Resources/Imported/quaternius_guns", "Assets/Resources/Imported/kenney_weapon-pack", "Assets/Resources/Imported/polyhaven_models" }))
+            var modelDirs = new[] { "Assets/Resources/Imported/quaternius_guns", "Assets/Resources/Imported/kenney_weapon-pack", "Assets/Resources/Imported/polyhaven_models", "Assets/Resources/Imported/guns_flat", "Assets/Resources/Imported/guns_oga", "Assets/Resources/Imported/quaternius_nature" }.Where(Directory.Exists).ToArray();
+            foreach (var guid in AssetDatabase.FindAssets("t:Model", modelDirs))
             {
-                var path = AssetDatabase.GUIDToAssetPath(guid); var mi = AssetImporter.GetAtPath(path) as ModelImporter; if (mi == null || mi.isReadable) continue;
-                mi.isReadable = true; mi.SaveAndReimport(); changed++;
+                var path = AssetDatabase.GUIDToAssetPath(guid); var mi = AssetImporter.GetAtPath(path) as ModelImporter; if (mi == null) continue;
+                bool dirty = false;
+                if (!mi.isReadable) { mi.isReadable = true; dirty = true; }
+                // оружие и природа — статичные меши: без риг-импорта и анимаций (быстрее, меньше мусора)
+                if ((path.Contains("guns_") || path.Contains("quaternius_nature")) && mi.animationType != ModelImporterAnimationType.None) { mi.animationType = ModelImporterAnimationType.None; mi.importAnimation = false; dirty = true; }
+                if (dirty) { mi.SaveAndReimport(); changed++; }
             }
-            foreach (var guid in AssetDatabase.FindAssets("t:Texture2D", new[] { "Assets/Resources/Imported/textures_cc0", "Assets/Resources/Imported/polyhaven_models" }))
+            var texDirs = new[] { "Assets/Resources/Imported/textures_cc0", "Assets/Resources/Imported/polyhaven_models", "Assets/Resources/Imported/guns_oga", "Assets/Resources/Imported/quaternius_nature" }.Where(Directory.Exists).ToArray();
+            foreach (var guid in AssetDatabase.FindAssets("t:Texture2D", texDirs))
             {
                 var path = AssetDatabase.GUIDToAssetPath(guid); string n = Path.GetFileNameWithoutExtension(path).ToLowerInvariant();
                 bool isNormal = n.EndsWith("_normal") || n.Contains("_nor_gl") || n.Contains("_nor_");

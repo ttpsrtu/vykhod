@@ -100,8 +100,8 @@ namespace Vykhod
             Hit("head", new Vector3(0, 1.62f, 0), 0.2f, 2.3f); Hit("thorax", new Vector3(0, 1.15f, 0), 0.32f, 1f); Hit("stomach", new Vector3(0, 0.78f, 0), 0.3f, 1.1f); Hit("legs", new Vector3(0, 0.35f, 0), 0.28f, 0.65f);
             eye = new GameObject("eye").transform; eye.SetParent(transform, false); eye.localPosition = new Vector3(0, 1.6f, 0.1f);
             gunT = new GameObject("gun").transform; gunT.SetParent(eye, false); gunT.localPosition = new Vector3(0.25f, -0.25f, 0.3f);
-            var gp = AssetCatalog.FindModel(WDef.model, "weapon|guns");
-            var g = gp != null ? AssetCatalog.Spawn(gp, gunT, WDef.cls == "pistol" ? 0.25f : 0.8f, false, false) : AssetCatalog.GunPlaceholder(WDef, gunT);
+            var gp = AssetCatalog.GunModel(WDef);
+            var g = gp != null ? AssetCatalog.Spawn(gp, gunT, WDef.cls == "pistol" ? 0.25f : 0.8f, false, false, WDef.modelVariant) : AssetCatalog.GunPlaceholder(WDef, gunT);
             if (gp != null) { AssetCatalog.OrientGun(g); AssetCatalog.Recenter(g); }
             gameObject.layer = 0;
         }

@@ -194,10 +194,41 @@ namespace Vykhod
             return go;
         }
 
-        public static GameObject Tree(Transform parent, Vector3 pos, System.Random rng)
+        static List<string> natTrees, natPines, natDead, natTwisted;
+        static void LoadNature()
         {
-            var path = AssetCatalog.FindModel("tree", "nature|suburban|survival");
-            GameObject go = path != null ? AssetCatalog.Spawn(path, parent, 5f + (float)rng.NextDouble() * 4f, false) : null;
+            if (natTrees != null) return;
+            natTrees = new List<string>(); natPines = new List<string>(); natDead = new List<string>(); natTwisted = new List<string>();
+            foreach (var p in AssetCatalog.FindModels("tree", "quaternius_nature")) { if (p.Contains("Dead")) natDead.Add(p); else if (p.Contains("Twisted")) natTwisted.Add(p); else natTrees.Add(p); }
+            foreach (var p in AssetCatalog.FindModels("pine", "quaternius_nature")) natPines.Add(p);
+        }
+
+        /// <summary>Дерево: стилизованные модели Quaternius Nature (обычные/сосны/сухие), запасной вариант — Kenney или примитив.</summary>
+        public static GameObject Tree(Transform parent, Vector3 pos, System.Random rng, string kind = null)
+        {
+            LoadNature();
+            string path = null; float size = 0;
+            List<string> pool = kind == "pine" ? natPines : kind == "dead" ? natDead : natTrees;
+            if (pool.Count == 0 && natTrees.Count > 0) pool = natTrees;
+            if (pool.Count > 0)
+            {
+                if (kind == null && natPines.Count > 0 && rng.NextDouble() < 0.3) pool = natPines;
+                else if (kind == null && natDead.Count > 0 && rng.NextDouble() < 0.06) pool = natDead;
+                else if (kind == null && natTwisted.Count > 0 && rng.NextDouble() < 0.15) pool = natTwisted; // красно-жёлтая листва — редкий акцент
+                path = pool[rng.Next(pool.Count)];
+                size = pool == natPines ? 10f + (float)rng.NextDouble() * 5f : pool == natDead ? 6f + (float)rng.NextDouble() * 3f : 7f + (float)rng.NextDouble() * 4f;
+            }
+            else { path = AssetCatalog.FindModel("tree", "nature|suburban|survival"); size = 5f + (float)rng.NextDouble() * 4f; }
+            GameObject go = path != null ? AssetCatalog.Spawn(path, parent, size, false) : null;
+            if (go != null && path.Contains("quaternius_nature"))
+            {
+                // пивот у основания ствола; ствол — тонкий коллайдер
+                var b = AssetCatalog.MeshBounds(go); go.transform.position += Vector3.up * (-b.min.y);
+                var cc = go.AddComponent<CapsuleCollider>(); cc.radius = 0.35f; cc.height = size; cc.center = Vector3.up * size * 0.5f;
+                go.transform.position = pos; go.transform.rotation = Quaternion.Euler(0, (float)rng.NextDouble() * 360, 0);
+                go.isStatic = true;
+                return go;
+            }
             if (go == null)
             {
                 go = new GameObject("tree"); go.transform.SetParent(parent, false);

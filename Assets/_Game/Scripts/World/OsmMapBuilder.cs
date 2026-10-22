@@ -43,10 +43,10 @@ namespace Vykhod
                     : kind == "parking" ? AssetCatalog.TexMat("asphalt", 4f, null, new Color(0.35f, 0.35f, 0.36f), 1)
                     : AssetCatalog.TexMat("gravel", 2f, null, new Color(0.5f, 0.5f, 0.45f));
                 MeshKit.Slab(root, poly, 0.0f, 0.03f, am, false, "area_" + kind);
-                if ((kind == "park" || kind == "forest" || kind == "grass") && trees < 220)
+                if ((kind == "park" || kind == "forest" || kind == "grass") && trees < 900)
                 {
-                    int n = Mathf.Clamp((int)(Mathf.Abs(MeshKit.SignedArea(poly)) / (kind == "forest" ? 250 : 700)), 1, 40);
-                    for (int i = 0; i < n && trees < 220; i++) if (Buildings.RandomInside(poly, rng, 1f, out var tp) && Mathf.Abs(tp.x) < half && Mathf.Abs(tp.y) < half) { MeshKit.Tree(root, new Vector3(tp.x, 0, tp.y), rng); trees++; }
+                    int n = Mathf.Clamp((int)(Mathf.Abs(MeshKit.SignedArea(poly)) / (kind == "forest" ? 120 : 350)), 1, 120);
+                    for (int i = 0; i < n && trees < 900; i++) if (Buildings.RandomInside(poly, rng, 1f, out var tp) && Mathf.Abs(tp.x) < half && Mathf.Abs(tp.y) < half) { MeshKit.Tree(root, new Vector3(tp.x, 0, tp.y), rng, kind == "forest" && rng.NextDouble() < 0.5 ? "pine" : null); trees++; }
                 }
             }
 
@@ -77,6 +77,18 @@ namespace Vykhod
                     }
             }
 
+            // --- озеленение дворов и пустырей: деревья не ближе 7 м к дорогам и не внутри зданий (здания строятся ниже и сами вычистят место)
+            var bpolys = J.DL(d, "buildings").Select(Poly).Where(bp => bp.Count >= 3).ToList();
+            for (int i = 0; i < 4000 && trees < 1500; i++)
+            {
+                var p = new Vector2((float)rng.NextDouble() * 2 * half - half, (float)rng.NextDouble() * 2 * half - half);
+                if (map.id != "mirea" && rng.NextDouble() < 0.5) continue;
+                bool nearRoad = false; foreach (var rp in World.RoadPoints) if ((rp - p).sqrMagnitude < 49) { nearRoad = true; break; }
+                if (nearRoad) continue;
+                bool inBuilding = false; foreach (var bp in bpolys) if (MeshKit.PointInPoly(p, bp)) { inBuilding = true; break; }
+                if (inBuilding) continue;
+                MeshKit.Tree(root, new Vector3(p.x, 0, p.y), rng, rng.NextDouble() < 0.3 ? "pine" : null); trees++;
+            }
             // --- здания
             var bl = new List<B>();
             foreach (var b in J.DL(d, "buildings"))

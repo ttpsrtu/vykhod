@@ -57,7 +57,7 @@ namespace Vykhod
                 default: ProceduralMaps.BuildIndustrial(); break;
             }
             Physics.SyncTransforms();
-            MapDetails.Decorate(map.kind == "metro" ? 0.6f : map.kind == "mall" ? 0.5f : 1.1f, !Underground);
+            MapDetails.Decorate(map.kind == "metro" ? 0.6f : map.kind == "mall" ? 1.4f : map.kind == "industrial" ? 2.2f : 2.0f, !Underground);
             Bounds();
             PlaceExtracts();
             PlacePois();
@@ -98,10 +98,11 @@ namespace Vykhod
             }
             else
             {
-                Sun.intensity = 1.35f; Sun.color = new Color(1f, 0.97f, 0.9f); lgo.transform.rotation = Quaternion.Euler(48, 35, 0);
+                // тёплое предвечернее солнце под углом: длинные тени, объём на фасадах
+                Sun.intensity = 1.5f; Sun.color = new Color(1f, 0.94f, 0.84f); lgo.transform.rotation = Quaternion.Euler(44, 35, 0); Sun.shadowStrength = 0.82f;
                 RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Trilight;
                 RenderSettings.ambientSkyColor = new Color(0.65f, 0.8f, 1f); RenderSettings.ambientEquatorColor = new Color(0.6f, 0.62f, 0.7f); RenderSettings.ambientGroundColor = new Color(0.35f, 0.4f, 0.3f);
-                RenderSettings.fog = true; RenderSettings.fogMode = FogMode.Linear; RenderSettings.fogStartDistance = 200; RenderSettings.fogEndDistance = 900; RenderSettings.fogColor = new Color(0.62f, 0.8f, 1f);
+                RenderSettings.fog = true; RenderSettings.fogMode = FogMode.Linear; RenderSettings.fogStartDistance = 120; RenderSettings.fogEndDistance = 750; RenderSettings.fogColor = new Color(0.72f, 0.8f, 0.9f);
             }
             // небо: HDRI-панорама (создаётся редакторным скриптом в Resources/Materials/Sky), ночью приглушаем
             var sky = Underground ? null : Resources.Load<Material>("Materials/Sky");
@@ -111,9 +112,10 @@ namespace Vykhod
                 if (sky.HasProperty("_Exposure")) sky.SetFloat("_Exposure", Night ? 0.12f : 1.0f);
                 if (sky.HasProperty("_Tint")) sky.SetColor("_Tint", Night ? new Color(0.35f, 0.4f, 0.7f) : new Color(0.5f, 0.5f, 0.5f));
                 if (sky.HasProperty("_Rotation")) sky.SetFloat("_Rotation", 215f);
-                RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Skybox; RenderSettings.ambientIntensity = Night ? 0.6f : 1.1f;
+                RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Skybox; RenderSettings.ambientIntensity = Night ? 0.6f : 0.95f;
                 DynamicGI.UpdateEnvironment();
             }
+            PostFx.Apply();
         }
 
         public static Color SkyColor => Underground ? new Color(0.01f, 0.01f, 0.015f) : Night ? new Color(0.1f, 0.12f, 0.32f) : new Color(0.42f, 0.74f, 1f);

@@ -95,6 +95,8 @@ namespace Vykhod
                 if (pp.Count > 0) pool = pp;
             }
             string h = hint.ToLowerInvariant();
+            // подсказка с '/' — часть пути (например "guns_oga/machinegun/MachineGun"), чтобы различать одноимённые файлы разных паков
+            if (h.Contains("/")) return pool.FirstOrDefault(m => m.ToLowerInvariant().EndsWith(h)) ?? pool.FirstOrDefault(m => m.ToLowerInvariant().Contains(h));
             var keys = synonyms.TryGetValue(h, out var s) ? s : new[] { h };
             foreach (var k in keys)
             {
@@ -125,13 +127,14 @@ namespace Vykhod
         }
 
         /// <summary>Создаёт экземпляр модели, нормализуя размер (targetSize = макс. габарит в метрах; 0 = как есть).</summary>
-        public static GameObject Spawn(string path, Transform parent, float targetSize = 0, bool colliders = false, bool center = false)
+        public static GameObject Spawn(string path, Transform parent, float targetSize = 0, bool colliders = false, bool center = false, int variant = 0)
         {
             var prefab = LoadPrefab(path);
             if (prefab == null) return null;
             var go = Object.Instantiate(prefab, parent);
             go.transform.localPosition = Vector3.zero; go.transform.localRotation = Quaternion.identity;
             if (path.Contains("polyhaven_models")) ApplyPolyhavenTextures(go, path);
+            else if (path.Contains("guns_oga") || path.Contains("guns_flat") || path.Contains("quaternius_nature") || path.Contains("quaternius_guns")) FixImportedMaterials(go, path, variant);
             Normalize(go, targetSize, colliders);
             if (center)
             {
@@ -200,6 +203,82 @@ namespace Vykhod
             }
             if (mat == null) return;
             foreach (var r in go.GetComponentsInChildren<Renderer>()) { var ms = r.sharedMaterials; for (int i = 0; i < ms.Length; i++) ms[i] = mat; r.sharedMaterials = ms; }
+        }
+
+        /// <summary>Путь модели оружия: сначала конкретная модель из данных (АК → AK, M4A1 → M4A1…), затем запасная по классу.</summary>
+        public static string GunModel(WeaponDef def)
+        {
+            if (def == null) return null;
+            var p = !string.IsNullOrEmpty(def.model) ? FindModel(def.model, "guns|weapon") : null;
+            if (p == null && !string.IsNullOrEmpty(def.modelClass)) p = FindModel(def.modelClass, "weapon|guns");
+            return p;
+        }
+
+        static string FileStem(string path) { int i = path.LastIndexOf('/'); return (i >= 0 ? path.Substring(i + 1) : path).ToLowerInvariant(); }
+        static readonly Dictionary<string, Material> fixMatCache = new Dictionary<string, Material>();
+        static Material gunmetal;
+
+        /// <summary>
+        /// Материалы импортированных моделей: текстуры из папки пакета (Albedo/Diffuse + Normal, или по имени материала как у Quaternius Nature),
+        /// прозрачность листвы (cutout), а у нетекстурированных моделей (byzmod, Glock, Soviet_*) вместо белого «Default-Material» — воронёный металл.
+        /// </summary>
+        public static void FixImportedMaterials(GameObject go, string modelPath, int variant = 0)
+        {
+            string lp = modelPath.ToLowerInvariant();
+            string dir = lp.Substring(0, lp.LastIndexOf('/') + 1);
+            string baseDir = dir;
+            foreach (var sub in new[] { "/fbx/", "/fbx (unity)/", "/obj/" }) if (baseDir.EndsWith(sub)) { baseDir = baseDir.Substring(0, baseDir.Length - sub.Length + 1); break; }
+            var texs = allTextures.Where(t => t.ToLowerInvariant().StartsWith(baseDir)).ToList();
+            if (gunmetal == null) gunmetal = Mat(new Color(0.16f, 0.17f, 0.19f), 0.45f);
+            bool gunPack = lp.Contains("guns_");
+            foreach (var r in go.GetComponentsInChildren<Renderer>())
+            {
+                var ms = r.sharedMaterials; bool changed = false;
+                for (int i = 0; i < ms.Length; i++)
+                {
+                    var m = ms[i]; string mn = m != null ? m.name.ToLowerInvariant().Replace(" (instance)", "") : "";
+                    bool isDefault = m == null || mn.StartsWith("default") || mn == "no name" || mn.Length == 0;
+                    string key = lp + "|" + mn + "|" + variant;
+                    if (!fixMatCache.TryGetValue(key, out var nm))
+                    {
+                        nm = null; string tex = null, nor = null;
+                        if (!isDefault && texs.Count > 0)
+                        {
+                            // по имени материала: Bark_NormalTree → Bark_NormalTree.png, Leaves_NormalTree → Leaves_NormalTree_C.png
+                            tex = texs.FirstOrDefault(t => FileStem(t) == mn + "_c") ?? texs.FirstOrDefault(t => FileStem(t) == mn) ?? texs.FirstOrDefault(t => FileStem(t) == mn + "_diffuse");
+                            nor = texs.FirstOrDefault(t => FileStem(t) == mn + "_normal");
+                        }
+                        if (tex == null && texs.Count > 0 && gunPack)
+                        {
+                            // по папке модели: ak/Textures/AK_1/AK_1_Albedo (variant выбирает набор), m4a1/M4A1Diffuse
+                            var sets = texs.Where(t => { var f = FileStem(t); return (f.Contains("albedo") || f.Contains("diffuse") || f.EndsWith("_color") || f.Contains("basecolor")) && !t.ToLowerInvariant().Contains("ammunition"); }).OrderBy(t => t).ToList();
+                            if (sets.Count > 0)
+                            {
+                                tex = sets[Mathf.Abs(variant) % sets.Count];
+                                string tdir = tex.Substring(0, tex.LastIndexOf('/') + 1).ToLowerInvariant();
+                                nor = texs.FirstOrDefault(t => t.ToLowerInvariant().StartsWith(tdir) && FileStem(t).EndsWith("_normal"));
+                            }
+                        }
+                        if (tex != null)
+                        {
+                            var t2d = Resources.Load<Texture2D>(tex);
+                            if (t2d != null)
+                            {
+                                nm = new Material(Shader.Find("Standard")) { name = mn + "_fx", enableInstancing = true, mainTexture = t2d };
+                                nm.SetFloat("_Glossiness", gunPack ? 0.35f : 0.1f); nm.SetFloat("_Metallic", 0f);
+                                var n2d = nor != null ? Resources.Load<Texture2D>(nor) : null; if (n2d != null) { nm.EnableKeyword("_NORMALMAP"); nm.SetTexture("_BumpMap", n2d); }
+                                bool foliage = !gunPack && (mn.Contains("leaves") || mn.Contains("leaf") || mn.Contains("grass") || mn.Contains("flower") || mn.Contains("clover") || mn.Contains("petal") || mn.Contains("fern") || mn.Contains("plant") || mn.Contains("mushroom"));
+                                if (foliage && UnityEngine.Experimental.Rendering.GraphicsFormatUtility.HasAlphaChannel(t2d.graphicsFormat))
+                                { nm.SetFloat("_Mode", 1); nm.EnableKeyword("_ALPHATEST_ON"); nm.SetFloat("_Cutoff", 0.4f); nm.renderQueue = 2450; }
+                            }
+                        }
+                        else if (gunPack && (isDefault || ((m.mainTexture == null || m.mainTexture.name.ToLowerInvariant().Contains("uv")) && m.HasProperty("_Color") && m.color.r > 0.85f && m.color.g > 0.85f && m.color.b > 0.85f))) nm = gunmetal;
+                        fixMatCache[key] = nm;
+                    }
+                    if (nm != null) { ms[i] = nm; changed = true; }
+                }
+                if (changed) r.sharedMaterials = ms;
+            }
         }
 
         /// <summary>Сдвинуть модель так, чтобы центр её габаритов оказался в точке привязки.</summary>

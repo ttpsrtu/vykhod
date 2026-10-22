@@ -82,6 +82,7 @@ namespace Vykhod
             Cam.clearFlags = RenderSettings.skybox != null && !World.Underground ? CameraClearFlags.Skybox : CameraClearFlags.SolidColor;
             Cam.allowHDR = true; Cam.allowMSAA = true;
             Cam.tag = "MainCamera";
+            PostFx.Attach(Cam);
             var rootListener = Game.Manager.GetComponent<AudioListener>(); if (rootListener != null) rootListener.enabled = false;
             cgo.AddComponent<AudioListener>();
             var fl = new GameObject("Flashlight").AddComponent<Light>(); fl.transform.SetParent(cgo.transform, false); fl.type = LightType.Spot; fl.range = 45; fl.spotAngle = 45; fl.intensity = 2.5f; fl.shadows = LightShadows.None; fl.enabled = false; remoteLight = fl;
@@ -140,7 +141,7 @@ namespace Vykhod
             {
                 // третье лицо: оружие в руках и поворот тела
                 string w = WeaponId.Value.ToString();
-                if (w != shownWeapon) { shownWeapon = w; foreach (Transform ch in remoteGun) Destroy(ch.gameObject); var def = Database.Weapon(w); if (def != null) { var p = AssetCatalog.FindModel(def.model, "weapon|guns"); var g = p != null ? AssetCatalog.Spawn(p, remoteGun, def.cls == "pistol" ? 0.25f : 0.8f, false, false) : AssetCatalog.GunPlaceholder(def, remoteGun); if (p != null) { AssetCatalog.OrientGun(g); AssetCatalog.Recenter(g); } } }
+                if (w != shownWeapon) { shownWeapon = w; foreach (Transform ch in remoteGun) Destroy(ch.gameObject); var def = Database.Weapon(w); if (def != null) { var p = AssetCatalog.GunModel(def); var g = p != null ? AssetCatalog.Spawn(p, remoteGun, def.cls == "pistol" ? 0.25f : 0.8f, false, false, def.modelVariant) : AssetCatalog.GunPlaceholder(def, remoteGun); if (p != null) { AssetCatalog.OrientGun(g); AssetCatalog.Recenter(g); } } }
                 if (body != null && bodyAnim == null) body.transform.localScale = new Vector3(1, Crouching.Value ? 0.7f : 1f, 1);
                 if (remoteLight == null && Flashlight.Value) { remoteLight = new GameObject("rfl").AddComponent<Light>(); remoteLight.transform.SetParent(remoteGun, false); remoteLight.type = LightType.Spot; remoteLight.range = 40; remoteLight.spotAngle = 45; remoteLight.intensity = 2f; remoteLight.shadows = LightShadows.None; }
                 if (remoteLight != null) remoteLight.enabled = Flashlight.Value;

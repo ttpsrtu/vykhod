@@ -1,0 +1,38 @@
+Pack: guns_oga
+License: CC0 1.0
+Source: OpenGameArt CC0 firearm models by several authors (per-file sources below)
+Download: https://opengameart.org/sites/default/files/ak_0.zip
+Download: https://opengameart.org/sites/default/files/m4a1.zip
+Download: https://opengameart.org/sites/default/files/soviet_assault_rifle_3d.zip
+Download: https://opengameart.org/sites/default/files/soviet_special_sniper_rifle_3d.zip
+Download: https://opengameart.org/sites/default/files/FPS%20Pack_0.zip
+Download: https://opengameart.org/sites/default/files/MachineGun.zip
+Download: https://opengameart.org/sites/default/files/ak47.obj
+Download: https://opengameart.org/sites/default/files/m16.obj
+Download: https://opengameart.org/sites/default/files/kar98k_0.obj
+Download: https://opengameart.org/sites/default/files/magnum_44.obj
+Download: https://opengameart.org/sites/default/files/pistol.obj
+Download: https://opengameart.org/sites/default/files/12_gauge.obj
+Download: https://opengameart.org/sites/default/files/sniper.obj
+Download: https://opengameart.org/sites/default/files/colt_1911.obj
+Download: https://opengameart.org/sites/default/files/mauser_c96.obj
+Download: https://opengameart.org/sites/default/files/Glock_HighPoly.obj
+Note: Named real-world firearms so weapon models match their names (AK / M4A1 / VSS / Glock / 1911 / Kar98k ...).
+  ak/  <- https://opengameart.org/content/ak (loafbrr_1, CC0) - textured AK, 2670 tris, two texture sets
+  m4a1/  <- https://opengameart.org/content/low-poly-m4a1 (MallNinjaMax, CC0) - hand-painted M4A1
+  soviet_ar/  <- https://opengameart.org/content/soviet-assault-rifle-3d (GGBotNet, CC0) - AK-type rifle, untextured
+  soviet_vss/  <- https://opengameart.org/content/soviet-special-sniper-rifle-3d (GGBotNet, CC0) - VSS-type rifle, untextured
+  quaternius_fps/  <- https://opengameart.org/content/low-poly-animated-guns (Quaternius, CC0) - AK-style rifle, AWP-style sniper, pistol, revolver, shotgun, P90
+  machinegun/  <- https://opengameart.org/content/machine-gun (Harrison1, CC0) - light machine gun
+  byz_ak47.obj  <- https://opengameart.org/content/low-poly-weapon-pack (byzmod3d, CC0)
+  byz_m16.obj  <- https://opengameart.org/content/low-poly-weapon-pack (byzmod3d, CC0)
+  byz_kar98k.obj  <- https://opengameart.org/content/low-poly-weapon-pack (byzmod3d, CC0)
+  byz_magnum44.obj  <- https://opengameart.org/content/low-poly-weapon-pack (byzmod3d, CC0)
+  byz_pistol.obj  <- https://opengameart.org/content/low-poly-weapon-pack (byzmod3d, CC0)
+  byz_12gauge.obj  <- https://opengameart.org/content/low-poly-weapon-pack (byzmod3d, CC0)
+  byz_sniper.obj  <- https://opengameart.org/content/low-poly-weapon-pack (byzmod3d, CC0)
+  byz_colt1911.obj  <- https://opengameart.org/content/low-poly-weapon-pack (byzmod3d, CC0)
+  byz_mauser_c96.obj  <- https://opengameart.org/content/low-poly-weapon-pack (byzmod3d, CC0)
+  Glock_HighPoly.obj  <- https://opengameart.org/content/high-poly-glock-18-no-textures (locarem, CC0)
+Fetched: 2026-10-22 by Tools/fetch_assets.py
+Only FBX/HDR/JPEG/JPG/MP3/MTL/OBJ/OGG/OTF/PNG/TTF/WAV files were kept; previews, vectors, spritesheets, GLTF/GLB, .blend and sample scenes were removed.

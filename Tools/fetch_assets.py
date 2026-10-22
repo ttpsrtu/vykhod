@@ -77,6 +77,59 @@ PACKS = [
          url="https://opengameart.org/sites/default/files/ultimate_gun_pack_by_quaternius.zip",
          source="https://opengameart.org/content/low-poly-guns-pack (Quaternius 'Ultimate Gun Pack', CC0)",
          note="40 low-poly gun models, FBX/OBJ."),
+    dict(name="guns_flat", kind="multi", license="CC0 1.0",
+         source="OpenGameArt 'CC0 Flat Guns East' + 'CC0 Flat Guns West' by Pichuliru (CC0)",
+         keep_ext={".obj", ".mtl"},
+         items=[
+             dict(kind="zip", url="https://opengameart.org/sites/default/files/flat_guns_east.zip", sub="east",
+                  source="https://opengameart.org/content/cc0-flat-guns-east (Pichuliru, CC0) - 10 guns based on Russian designs"),
+             dict(kind="zip", url="https://opengameart.org/sites/default/files/flat_guns_west.zip", sub="west",
+                  source="https://opengameart.org/content/cc0-flat-guns-west (Pichuliru, CC0) - 10 guns based on US/European designs"),
+         ],
+         note="Flat-shaded low-poly firearms with recognisable silhouettes (AK/SVD/Saiga/PP vs M4/SCAR/MP5/Benelli...). "
+              "OBJ+MTL kept (the FBX files are rigged and import as skinned meshes)."),
+    dict(name="guns_oga", kind="multi", license="CC0 1.0",
+         source="OpenGameArt CC0 firearm models by several authors (per-file sources below)",
+         items=[
+             dict(kind="zip", url="https://opengameart.org/sites/default/files/ak_0.zip", sub="ak",
+                  source="https://opengameart.org/content/ak (loafbrr_1, CC0) - textured AK, 2670 tris, two texture sets"),
+             dict(kind="zip", url="https://opengameart.org/sites/default/files/m4a1.zip", sub="m4a1",
+                  source="https://opengameart.org/content/low-poly-m4a1 (MallNinjaMax, CC0) - hand-painted M4A1"),
+             dict(kind="zip", url="https://opengameart.org/sites/default/files/soviet_assault_rifle_3d.zip", sub="soviet_ar",
+                  source="https://opengameart.org/content/soviet-assault-rifle-3d (GGBotNet, CC0) - AK-type rifle, untextured"),
+             dict(kind="zip", url="https://opengameart.org/sites/default/files/soviet_special_sniper_rifle_3d.zip", sub="soviet_vss",
+                  source="https://opengameart.org/content/soviet-special-sniper-rifle-3d (GGBotNet, CC0) - VSS-type rifle, untextured"),
+             dict(kind="zip", url="https://opengameart.org/sites/default/files/FPS%20Pack_0.zip", sub="quaternius_fps",
+                  source="https://opengameart.org/content/low-poly-animated-guns (Quaternius, CC0) - AK-style rifle, AWP-style sniper, pistol, revolver, shotgun, P90"),
+             dict(kind="zip", url="https://opengameart.org/sites/default/files/MachineGun.zip", sub="machinegun",
+                  source="https://opengameart.org/content/machine-gun (Harrison1, CC0) - light machine gun"),
+             dict(kind="file", url="https://opengameart.org/sites/default/files/ak47.obj", sub="byzmod", target="byz_ak47.obj",
+                  source="https://opengameart.org/content/low-poly-weapon-pack (byzmod3d, CC0)"),
+             dict(kind="file", url="https://opengameart.org/sites/default/files/m16.obj", sub="byzmod", target="byz_m16.obj",
+                  source="https://opengameart.org/content/low-poly-weapon-pack (byzmod3d, CC0)"),
+             dict(kind="file", url="https://opengameart.org/sites/default/files/kar98k_0.obj", sub="byzmod", target="byz_kar98k.obj",
+                  source="https://opengameart.org/content/low-poly-weapon-pack (byzmod3d, CC0)"),
+             dict(kind="file", url="https://opengameart.org/sites/default/files/magnum_44.obj", sub="byzmod", target="byz_magnum44.obj",
+                  source="https://opengameart.org/content/low-poly-weapon-pack (byzmod3d, CC0)"),
+             dict(kind="file", url="https://opengameart.org/sites/default/files/pistol.obj", sub="byzmod", target="byz_pistol.obj",
+                  source="https://opengameart.org/content/low-poly-weapon-pack (byzmod3d, CC0)"),
+             dict(kind="file", url="https://opengameart.org/sites/default/files/12_gauge.obj", sub="byzmod", target="byz_12gauge.obj",
+                  source="https://opengameart.org/content/low-poly-weapon-pack (byzmod3d, CC0)"),
+             dict(kind="file", url="https://opengameart.org/sites/default/files/sniper.obj", sub="byzmod", target="byz_sniper.obj",
+                  source="https://opengameart.org/content/low-poly-weapon-pack (byzmod3d, CC0)"),
+             dict(kind="file", url="https://opengameart.org/sites/default/files/colt_1911.obj", sub="byzmod", target="byz_colt1911.obj",
+                  source="https://opengameart.org/content/low-poly-weapon-pack (byzmod3d, CC0)"),
+             dict(kind="file", url="https://opengameart.org/sites/default/files/mauser_c96.obj", sub="byzmod", target="byz_mauser_c96.obj",
+                  source="https://opengameart.org/content/low-poly-weapon-pack (byzmod3d, CC0)"),
+             dict(kind="file", url="https://opengameart.org/sites/default/files/Glock_HighPoly.obj", sub="glock", target="Glock_HighPoly.obj",
+                  source="https://opengameart.org/content/high-poly-glock-18-no-textures (locarem, CC0)"),
+         ],
+         note="Named real-world firearms so weapon models match their names (AK / M4A1 / VSS / Glock / 1911 / Kar98k ...)."),
+    dict(name="quaternius_nature", kind="zip", license="CC0 1.0",
+         url="https://opengameart.org/sites/default/files/stylized_nature_megakitstandard.zip",
+         source="https://opengameart.org/content/stylized-nature-megakit (Quaternius 'Stylized Nature MegaKit' Standard, CC0)",
+         junk_dirs={"fbx"},   # the zip ships FBX/ and 'FBX (Unity)/' duplicates; keep only the Unity-oriented set
+         note="Stylized trees, bushes, rocks and grass (FBX + textures) - replaces the cartoon Kenney trees."),
     dict(name="kenney_blaster-kit", kind="kenney", slug="blaster-kit", license="CC0 1.0", optional=True),
     # ---- city / environment ----
     dict(name="kenney_city-kit-commercial", kind="kenney", slug="city-kit-commercial", license="CC0 1.0"),
@@ -349,7 +402,7 @@ def plan_members(zf: zipfile.ZipFile, keep_ext=None, junk_dirs=None):
     if len(roots) == 1 and not top_files:
         strip_root = next(iter(roots))
     keep = []
-    have_fbx = any(n.lower().endswith(".fbx") for n in names)
+    have_fbx = ".fbx" in keep_ext and any(n.lower().endswith(".fbx") for n in names)
     for info, n in zip(infos, names):
         parts = n.split("/")
         if strip_root and parts[0] == strip_root:

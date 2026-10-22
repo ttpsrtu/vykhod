@@ -47,9 +47,12 @@ namespace Vykhod
             {
                 case 0: QualitySettings.shadows = ShadowQuality.Disable; QualitySettings.shadowDistance = 0; QualitySettings.antiAliasing = 0; QualitySettings.lodBias = 0.6f; QualitySettings.pixelLightCount = 1; break;
                 case 1: QualitySettings.shadows = ShadowQuality.HardOnly; QualitySettings.shadowDistance = 60; QualitySettings.antiAliasing = 2; QualitySettings.lodBias = 1f; QualitySettings.pixelLightCount = 2; break;
-                default: QualitySettings.shadows = ShadowQuality.All; QualitySettings.shadowDistance = 120; QualitySettings.antiAliasing = 4; QualitySettings.lodBias = 1.3f; QualitySettings.pixelLightCount = 4; break;
+                default: QualitySettings.shadows = ShadowQuality.All; QualitySettings.shadowDistance = 160; QualitySettings.antiAliasing = 4; QualitySettings.lodBias = 1.3f; QualitySettings.pixelLightCount = 4; break;
             }
-            QualitySettings.shadowCascades = quality >= 2 ? 2 : 1;
+            QualitySettings.shadowCascades = quality >= 2 ? 4 : quality == 1 ? 2 : 1;
+            QualitySettings.shadowResolution = quality >= 2 ? ShadowResolution.High : ShadowResolution.Medium;
+            QualitySettings.shadowProjection = ShadowProjection.CloseFit;
+            PostFx.Apply();
             QualitySettings.realtimeReflectionProbes = false;
             QualitySettings.softParticles = false;
         }
@@ -108,6 +111,7 @@ namespace Vykhod
                 if (args[i] == "-autoraid" && i + 1 < args.Length) StartCoroutine(AutoRaid(args[i + 1]));
                 if (args[i] == "-autojoin" && i + 1 < args.Length) StartCoroutine(AutoJoin(args[i + 1]));
                 if (args[i] == "-shots" && i + 1 < args.Length) StartCoroutine(AutoShots(args[i + 1]));
+                if (args[i] == "-gallery" && i + 1 < args.Length) StartCoroutine(Gallery(args[i + 1]));
                 if (args[i] == "-autoquit" && i + 1 < args.Length && float.TryParse(args[i + 1], out var sec)) StartCoroutine(AutoQuit(sec));
             }
         }
@@ -186,6 +190,64 @@ namespace Vykhod
         }
 
         System.Collections.IEnumerator AutoQuit(float sec) { yield return new WaitForSeconds(sec); Debug.Log("[AutoTest] выход"); Application.Quit(); }
+
+        /// <summary>
+        /// Галерея моделей: VYKHOD.exe -gallery <папка> — скриншоты всех моделей оружейных паков с именами файлов (20_models_N.png)
+        /// и всех стволов из данных с их названиями и выбранной моделью (21_weapons_N.png). Для проверки «оружие совпадает с надписью».
+        /// </summary>
+        System.Collections.IEnumerator Gallery(string dir)
+        {
+            System.IO.Directory.CreateDirectory(dir);
+            yield return new WaitForSeconds(1f);
+            foreach (var c in FindObjectsByType<Canvas>(FindObjectsInactive.Include, FindObjectsSortMode.None)) c.enabled = false;
+            SetSceneCameras(false);
+            var root = new GameObject("Gallery").transform;
+            var sun = new GameObject("sun").AddComponent<Light>(); sun.transform.SetParent(root, false); sun.type = LightType.Directional; sun.transform.rotation = Quaternion.Euler(35, -40, 0); sun.intensity = 1.3f; sun.color = new Color(1f, 0.97f, 0.92f);
+            RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Flat; RenderSettings.ambientLight = new Color(0.55f, 0.57f, 0.62f); RenderSettings.skybox = null; RenderSettings.fog = false;
+            var cam = new GameObject("gcam").AddComponent<Camera>(); cam.transform.SetParent(root, false); cam.clearFlags = CameraClearFlags.SolidColor; cam.backgroundColor = new Color(0.2f, 0.22f, 0.26f);
+            cam.orthographic = true; cam.orthographicSize = 3.5f; cam.transform.position = new Vector3(0, 0, -10); cam.nearClipPlane = 0.1f; cam.farClipPlane = 50;
+            // 1) все модели оружейных паков
+            var models = AssetCatalog.FindModels("", "guns").Concat(AssetCatalog.FindModels("", "weapon-pack")).Distinct()
+                .Where(m => { var l = m.ToLowerInvariant(); return !l.Contains("accessories") && !l.Contains("ammo") && !l.Contains("bullet") && !l.Contains("grenade") && !l.Contains("rocket") && !l.Contains("flamethrower") && !l.Contains("magazine"); })
+                .Select(m => (path: m, label: System.IO.Path.GetFileNameWithoutExtension(m) + "\n" + PackOf(m), variant: 0)).ToList();
+            yield return GalleryPages(cam, root, models, dir, "20_models");
+            // 2) оружие из данных → выбранная модель
+            var ws = Database.Weapons.Values.Where(w => !w.IsMelee).OrderBy(w => w.cls).ThenBy(w => w.lvl)
+                .Select(w => { var p = AssetCatalog.GunModel(w); return (path: p, label: w.name + "\n" + (p != null ? System.IO.Path.GetFileNameWithoutExtension(p) : "—"), variant: w.modelVariant); }).ToList();
+            yield return GalleryPages(cam, root, ws, dir, "21_weapons");
+            Debug.Log("[Gallery] готово"); Application.Quit();
+        }
+
+        static string PackOf(string path) { int i = path.IndexOf("imported/", System.StringComparison.OrdinalIgnoreCase); var rest = i >= 0 ? path.Substring(i + 9) : path; int j = rest.IndexOf('/'); return j > 0 ? rest.Substring(0, j) : rest; }
+
+        System.Collections.IEnumerator GalleryPages(Camera cam, Transform root, List<(string path, string label, int variant)> items, string dir, string prefix)
+        {
+            const int cols = 8, rows = 4; float cw = 1.55f, ch = 1.7f;
+            var font = AssetCatalog.Font;
+            for (int page = 0; page * cols * rows < items.Count; page++)
+            {
+                var pr = new GameObject("page").transform; pr.SetParent(root, false);
+                for (int k = 0; k < cols * rows && page * cols * rows + k < items.Count; k++)
+                {
+                    var it = items[page * cols * rows + k]; int col = k % cols, row = k / cols;
+                    var cell = new GameObject("cell").transform; cell.SetParent(pr, false); cell.position = new Vector3((col - (cols - 1) / 2f) * cw, ((rows - 1) / 2f - row) * ch + 0.25f, 0);
+                    if (it.path != null)
+                    {
+                        var wrap = new GameObject("wrap").transform; wrap.SetParent(cell, false); wrap.localRotation = Quaternion.Euler(0, 90, 0);
+                        var g = AssetCatalog.Spawn(it.path, wrap, 1.35f, false, false, it.variant);
+                        if (g != null) { AssetCatalog.OrientGun(g); AssetCatalog.Recenter(g); }
+                    }
+                    var tgo = new GameObject("label"); tgo.transform.SetParent(cell, false); tgo.transform.localPosition = new Vector3(0, -0.62f, -0.5f);
+                    var tm = tgo.AddComponent<TextMesh>(); tm.text = it.label; tm.fontSize = 48; tm.characterSize = 0.045f; tm.anchor = TextAnchor.UpperCenter; tm.alignment = TextAlignment.Center; tm.color = Color.white;
+                    if (font != null) { tm.font = font; tgo.GetComponent<MeshRenderer>().sharedMaterial = font.material; }
+                }
+                yield return new WaitForSeconds(0.8f);
+                ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir, $"{prefix}_{page}.png"));
+                yield return new WaitForSeconds(0.8f);
+                Destroy(pr.gameObject);
+                yield return null;
+            }
+        }
 
         /// <summary>Камеры и слушатели сцены (фон меню) выключаем на время рейда — у игрока своя камера.</summary>
         public void SetSceneCameras(bool on)
